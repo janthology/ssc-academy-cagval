@@ -1,4 +1,9 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 /** @type {import('next').NextConfig} */
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Course thumbnails are local /public assets, so next/image optimization works
 // without an allowlist. This entry is defensive: Supabase-signed images (e.g.
@@ -12,6 +17,11 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  // Explicitly pin the tracing root to this package's directory.
+  // Next.js 15.5 detects the outer package-lock.json and pnpm-lock.yaml and
+  // mis-identifies the workspace root — this silences that warning and ensures
+  // build traces are scoped correctly for Vercel's serverless bundler.
+  outputFileTracingRoot: __dirname,
   // pdfkit reads its .afm font metrics from disk relative to its own location.
   // Bundling it into vendor-chunks/ breaks that path, so load it from node_modules.
   serverExternalPackages: ['pdfkit'],
