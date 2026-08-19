@@ -130,7 +130,15 @@ export function EnrolledCourses({ enrolledCourses = [], user }: EnrolledCoursesP
 }
 
 function CourseCard({ course }: { course: EnrolledCourse }) {
-  const [imgSrc, setImgSrc] = useState(course.image || "/placeholder.svg")
+  // Guard against bare filenames stored in DB (e.g. "1756827216758_dostcertlogo.png")
+  // that aren't valid src paths — fall back immediately rather than triggering a
+  // 404 request that causes a React render loop via onError → setState → re-render.
+  const isValidSrc = (src: string) =>
+    src.startsWith("http://") || src.startsWith("https://") || src.startsWith("/")
+  const [imgSrc, setImgSrc] = useState(
+    isValidSrc(course.image) ? course.image : "/placeholder.svg"
+  )
+  const [errored, setErrored] = useState(false)
   return (
     <Card>
       <CardContent className="p-6">
@@ -142,7 +150,7 @@ function CourseCard({ course }: { course: EnrolledCourse }) {
               fill
               sizes="(max-width: 768px) 100vw, 128px"
               className="object-cover"
-              onError={() => setImgSrc("/placeholder.jpg")}
+              onError={() => { if (!errored) { setErrored(true); setImgSrc("/placeholder.svg") } }}
             />
           </div>
 
