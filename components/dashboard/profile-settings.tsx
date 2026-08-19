@@ -168,13 +168,13 @@ export function ProfileSettings() {
           province: userData.province || "",
           city: userData.city || "",
         })
-        setAvatarPreview(userData.avatar || null)
+        setAvatarPreview(null)
         if (userData.avatar) {
           const { data, error } = await supabaseBrowser.storage
             .from("avatars")
             .createSignedUrl(userData.avatar, 60)
           if (error) {
-            setAvatarPreview(userData.avatar)
+            setAvatarPreview(null)
           } else {
             setAvatarPreview(data.signedUrl)
           }
@@ -363,7 +363,7 @@ export function ProfileSettings() {
             <CardContent className="space-y-6">
               <div className="flex items-center gap-6">
                 <Avatar className="w-24 h-24">
-                  <AvatarImage src={avatarPreview || user.avatar || "/placeholder.svg"} alt="Profile" />
+                  <AvatarImage src={avatarPreview || "/placeholder.svg"} alt="Profile" />
                   <AvatarFallback className="text-lg">{user.name?.[0] || "U"}</AvatarFallback>
                 </Avatar>
                 <div className="space-y-2">
