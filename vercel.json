@@ -1,0 +1,14 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "functions": {
+    "app/certificates/[id]/download/route.ts": {
+      "maxDuration": 30
+    },
+    "app/api/certificates/issue/route.ts": {
+      "maxDuration": 15
+    }
+  }
+}

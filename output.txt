@@ -1,0 +1,2083 @@
+Folder PATH listing for volume Windows
+Volume serial number is 64EB-A5A8
+C:.
++---.next
+ª   +---cache
+ª   ª   +---swc
+ª   ª   ª   +---plugins
+ª   ª   ª       +---v7_windows_x86_64_8.0.0
+ª   ª   +---webpack
+ª   ª       +---client-development
+ª   ª       +---client-development-fallback
+ª   ª       +---client-production
+ª   ª       +---edge-server-development
+ª   ª       +---edge-server-production
+ª   ª       +---server-development
+ª   ª       +---server-production
+ª   +---server
+ª   ª   +---app
+ª   ª   ª   +---api
+ª   ª   ª   ª   +---courses
+ª   ª   ª   +---certificates
+ª   ª   ª   ª   +---[id]
+ª   ª   ª   ª       +---download
+ª   ª   ª   +---courses
+ª   ª   ª   ª   +---[id]
+ª   ª   ª   +---dashboard
+ª   ª   ª   ª   +---certificates
+ª   ª   ª   ª   +---courses
+ª   ª   ª   +---learning-paths
+ª   ª   ª   +---_not-found
+ª   ª   +---static
+ª   ª   ª   +---webpack
+ª   ª   +---vendor-chunks
+ª   ª       +---data
+ª   +---static
+ª   ª   +---chunks
+ª   ª   ª   +---app
+ª   ª   ª       +---api
+ª   ª   ª       ª   +---courses
+ª   ª   ª       +---certificates
+ª   ª   ª       ª   +---[id]
+ª   ª   ª       ª       +---download
+ª   ª   ª       +---courses
+ª   ª   ª       ª   +---[id]
+ª   ª   ª       +---dashboard
+ª   ª   ª       ª   +---certificates
+ª   ª   ª       ª   +---courses
+ª   ª   ª       +---learning-paths
+ª   ª   ª       +---_not-found
+ª   ª   +---css
+ª   ª   ª   +---app
+ª   ª   +---development
+ª   ª   +---media
+ª   ª   +---webpack
+ª   ª       +---app
+ª   ª           +---courses
+ª   +---types
+ª       +---app
+ª           +---api
+ª           ª   +---courses
+ª           +---certificates
+ª           ª   +---[id]
+ª           ª       +---download
+ª           +---courses
+ª           ª   +---[id]
+ª           +---dashboard
+ª           ª   +---certificates
+ª           ª   +---courses
+ª           +---learning-paths
++---.vscode
++---app
+ª   +---admin
+ª   ª   +---analytics
+ª   ª   +---courses
+ª   ª   +---users
+ª   +---api
+ª   ª   +---analytics
+ª   ª   +---certificates
+ª   ª   +---courses
+ª   ª   +---enrollments
+ª   ª   +---users
+ª   +---certificates
+ª   ª   +---[id]
+ª   ª       +---download
+ª   +---courses
+ª   ª   +---[id]
+ª   +---dashboard
+ª   ª   +---certificates
+ª   ª   +---courses
+ª   ª   +---profile
+ª   +---learning-paths
+ª   +---login
+ª   +---register
+ª   +---verify
+ª       +---[id]
++---components
+ª   +---admin
+ª   +---auth
+ª   +---certificates
+ª   +---courses
+ª   +---dashboard
+ª   +---learning-paths
+ª   +---ui
++---hooks
++---lib
+ª   +---database
+ª   +---supabase
+ª   +---types
++---node_modules
+ª   +---.bin
+ª   +---@alloc
+ª   ª   +---quick-lru
+ª   +---@babel
+ª   ª   +---runtime
+ª   ª       +---helpers
+ª   ª       ª   +---esm
+ª   ª       +---regenerator
+ª   +---@date-fns
+ª   ª   +---tz
+ª   ª       +---constants
+ª   ª       +---date
+ª   ª       +---tz
+ª   ª       +---tzOffset
+ª   ª       +---tzScan
+ª   +---@emnapi
+ª   ª   +---runtime
+ª   ª       +---dist
+ª   +---@floating-ui
+ª   ª   +---core
+ª   ª   ª   +---dist
+ª   ª   +---dom
+ª   ª   ª   +---dist
+ª   ª   +---react-dom
+ª   ª   ª   +---dist
+ª   ª   +---utils
+ª   ª       +---dist
+ª   ª       +---dom
+ª   +---@hookform
+ª   ª   +---resolvers
+ª   ª       +---ajv
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---arktype
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---class-validator
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---computed-types
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---dist
+ª   ª       +---effect-ts
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---fluentvalidation-ts
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---io-ts
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---joi
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---nope
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---superstruct
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---typanion
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---typebox
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---typeschema
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---valibot
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---vest
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---vine
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---yup
+ª   ª       ª   +---dist
+ª   ª       ª   +---src
+ª   ª       ª       +---__tests__
+ª   ª       ª           +---__fixtures__
+ª   ª       ª           +---__snapshots__
+ª   ª       +---zod
+ª   ª           +---dist
+ª   ª           +---src
+ª   ª               +---__tests__
+ª   ª                   +---__fixtures__
+ª   ª                   +---__snapshots__
+ª   +---@img
+ª   ª   +---sharp-win32-x64
+ª   ª       +---lib
+ª   +---@isaacs
+ª   ª   +---fs-minipass
+ª   ª       +---dist
+ª   ª           +---commonjs
+ª   ª           +---esm
+ª   +---@jridgewell
+ª   ª   +---gen-mapping
+ª   ª   ª   +---dist
+ª   ª   ª   ª   +---types
+ª   ª   ª   +---src
+ª   ª   ª   +---types
+ª   ª   +---remapping
+ª   ª   ª   +---dist
+ª   ª   ª   +---src
+ª   ª   ª   +---types
+ª   ª   +---resolve-uri
+ª   ª   ª   +---dist
+ª   ª   ª       +---types
+ª   ª   +---sourcemap-codec
+ª   ª   ª   +---dist
+ª   ª   ª   +---src
+ª   ª   ª   +---types
+ª   ª   +---trace-mapping
+ª   ª       +---dist
+ª   ª       +---src
+ª   ª       +---types
+ª   +---@next
+ª   ª   +---env
+ª   ª   ª   +---dist
+ª   ª   +---swc-win32-x64-msvc
+ª   +---@radix-ui
+ª   ª   +---number
+ª   ª   ª   +---dist
+ª   ª   +---primitive
+ª   ª   ª   +---dist
+ª   ª   +---react-accordion
+ª   ª   ª   +---dist
+ª   ª   +---react-alert-dialog
+ª   ª   ª   +---dist
+ª   ª   ª   +---src
+ª   ª   +---react-arrow
+ª   ª   ª   +---dist
+ª   ª   +---react-aspect-ratio
+ª   ª   ª   +---dist
+ª   ª   +---react-avatar
+ª   ª   ª   +---dist
+ª   ª   +---react-checkbox
+ª   ª   ª   +---dist
+ª   ª   +---react-collapsible
+ª   ª   ª   +---dist
+ª   ª   +---react-collection
+ª   ª   ª   +---dist
+ª   ª   +---react-compose-refs
+ª   ª   ª   +---dist
+ª   ª   +---react-context
+ª   ª   ª   +---dist
+ª   ª   +---react-context-menu
+ª   ª   ª   +---dist
+ª   ª   +---react-dialog
+ª   ª   ª   +---dist
+ª   ª   +---react-direction
+ª   ª   ª   +---dist
+ª   ª   +---react-dismissable-layer
+ª   ª   ª   +---dist
+ª   ª   +---react-dropdown-menu
+ª   ª   ª   +---dist
+ª   ª   +---react-focus-guards
+ª   ª   ª   +---dist
+ª   ª   +---react-focus-scope
+ª   ª   ª   +---dist
+ª   ª   +---react-hover-card
+ª   ª   ª   +---dist
+ª   ª   +---react-id
+ª   ª   ª   +---dist
+ª   ª   +---react-label
+ª   ª   ª   +---dist
+ª   ª   +---react-menu
+ª   ª   ª   +---dist
+ª   ª   +---react-menubar
+ª   ª   ª   +---dist
+ª   ª   +---react-navigation-menu
+ª   ª   ª   +---dist
+ª   ª   +---react-popover
+ª   ª   ª   +---dist
+ª   ª   +---react-popper
+ª   ª   ª   +---dist
+ª   ª   +---react-portal
+ª   ª   ª   +---dist
+ª   ª   +---react-presence
+ª   ª   ª   +---dist
+ª   ª   +---react-primitive
+ª   ª   ª   +---dist
+ª   ª   +---react-progress
+ª   ª   ª   +---dist
+ª   ª   +---react-radio-group
+ª   ª   ª   +---dist
+ª   ª   +---react-roving-focus
+ª   ª   ª   +---dist
+ª   ª   +---react-scroll-area
+ª   ª   ª   +---dist
+ª   ª   +---react-select
+ª   ª   ª   +---dist
+ª   ª   +---react-separator
+ª   ª   ª   +---dist
+ª   ª   +---react-slider
+ª   ª   ª   +---dist
+ª   ª   +---react-slot
+ª   ª   ª   +---dist
+ª   ª   +---react-switch
+ª   ª   ª   +---dist
+ª   ª   +---react-tabs
+ª   ª   ª   +---dist
+ª   ª   +---react-toast
+ª   ª   ª   +---dist
+ª   ª   +---react-toggle
+ª   ª   ª   +---dist
+ª   ª   +---react-toggle-group
+ª   ª   ª   +---dist
+ª   ª   +---react-tooltip
+ª   ª   ª   +---dist
+ª   ª   +---react-use-callback-ref
+ª   ª   ª   +---dist
+ª   ª   +---react-use-controllable-state
+ª   ª   ª   +---dist
+ª   ª   +---react-use-escape-keydown
+ª   ª   ª   +---dist
+ª   ª   +---react-use-layout-effect
+ª   ª   ª   +---dist
+ª   ª   +---react-use-previous
+ª   ª   ª   +---dist
+ª   ª   +---react-use-rect
+ª   ª   ª   +---dist
+ª   ª   +---react-use-size
+ª   ª   ª   +---dist
+ª   ª   +---react-visually-hidden
+ª   ª   ª   +---dist
+ª   ª   +---rect
+ª   ª       +---dist
+ª   +---@supabase
+ª   ª   +---auth-js
+ª   ª   ª   +---dist
+ª   ª   ª   ª   +---main
+ª   ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   +---module
+ª   ª   ª   ª       +---lib
+ª   ª   ª   +---src
+ª   ª   ª       +---lib
+ª   ª   +---functions-js
+ª   ª   ª   +---dist
+ª   ª   ª   ª   +---main
+ª   ª   ª   ª   +---module
+ª   ª   ª   +---src
+ª   ª   +---node-fetch
+ª   ª   ª   +---lib
+ª   ª   +---postgrest-js
+ª   ª   ª   +---dist
+ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   ª   +---select-query-parser
+ª   ª   ª   ª   +---esm
+ª   ª   ª   +---src
+ª   ª   ª       +---select-query-parser
+ª   ª   +---realtime-js
+ª   ª   ª   +---dist
+ª   ª   ª   ª   +---main
+ª   ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   +---module
+ª   ª   ª   ª       +---lib
+ª   ª   ª   +---src
+ª   ª   ª       +---lib
+ª   ª   +---ssr
+ª   ª   ª   +---dist
+ª   ª   ª   ª   +---main
+ª   ª   ª   ª   ª   +---utils
+ª   ª   ª   ª   +---module
+ª   ª   ª   ª       +---utils
+ª   ª   ª   +---docs
+ª   ª   ª   +---src
+ª   ª   ª       +---utils
+ª   ª   +---storage-js
+ª   ª   ª   +---dist
+ª   ª   ª   ª   +---main
+ª   ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   ª   +---packages
+ª   ª   ª   ª   +---module
+ª   ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   ª   +---packages
+ª   ª   ª   ª   +---umd
+ª   ª   ª   +---src
+ª   ª   ª       +---lib
+ª   ª   ª       +---packages
+ª   ª   +---supabase-js
+ª   ª       +---dist
+ª   ª       ª   +---main
+ª   ª       ª   ª   +---lib
+ª   ª       ª   +---module
+ª   ª       ª   ª   +---lib
+ª   ª       ª   +---umd
+ª   ª       +---src
+ª   ª           +---lib
+ª   +---@swc
+ª   ª   +---counter
+ª   ª   +---helpers
+ª   ª       +---cjs
+ª   ª       +---esm
+ª   ª       +---scripts
+ª   ª       +---src
+ª   ª       +---_
+ª   ª           +---index
+ª   ª           +---_apply_decorated_descriptor
+ª   ª           +---_apply_decs_2203_r
+ª   ª           +---_array_like_to_array
+ª   ª           +---_array_without_holes
+ª   ª           +---_array_with_holes
+ª   ª           +---_assert_this_initialized
+ª   ª           +---_async_generator
+ª   ª           +---_async_generator_delegate
+ª   ª           +---_async_iterator
+ª   ª           +---_async_to_generator
+ª   ª           +---_await_async_generator
+ª   ª           +---_await_value
+ª   ª           +---_call_super
+ª   ª           +---_check_private_redeclaration
+ª   ª           +---_class_apply_descriptor_destructure
+ª   ª           +---_class_apply_descriptor_get
+ª   ª           +---_class_apply_descriptor_set
+ª   ª           +---_class_apply_descriptor_update
+ª   ª           +---_class_call_check
+ª   ª           +---_class_check_private_static_access
+ª   ª           +---_class_check_private_static_field_descriptor
+ª   ª           +---_class_extract_field_descriptor
+ª   ª           +---_class_name_tdz_error
+ª   ª           +---_class_private_field_destructure
+ª   ª           +---_class_private_field_get
+ª   ª           +---_class_private_field_init
+ª   ª           +---_class_private_field_loose_base
+ª   ª           +---_class_private_field_loose_key
+ª   ª           +---_class_private_field_set
+ª   ª           +---_class_private_field_update
+ª   ª           +---_class_private_method_get
+ª   ª           +---_class_private_method_init
+ª   ª           +---_class_private_method_set
+ª   ª           +---_class_static_private_field_destructure
+ª   ª           +---_class_static_private_field_spec_get
+ª   ª           +---_class_static_private_field_spec_set
+ª   ª           +---_class_static_private_field_update
+ª   ª           +---_class_static_private_method_get
+ª   ª           +---_construct
+ª   ª           +---_create_class
+ª   ª           +---_create_for_of_iterator_helper_loose
+ª   ª           +---_create_super
+ª   ª           +---_decorate
+ª   ª           +---_defaults
+ª   ª           +---_define_enumerable_properties
+ª   ª           +---_define_property
+ª   ª           +---_dispose
+ª   ª           +---_export_star
+ª   ª           +---_extends
+ª   ª           +---_get
+ª   ª           +---_get_prototype_of
+ª   ª           +---_identity
+ª   ª           +---_inherits
+ª   ª           +---_inherits_loose
+ª   ª           +---_initializer_define_property
+ª   ª           +---_initializer_warning_helper
+ª   ª           +---_instanceof
+ª   ª           +---_interop_require_default
+ª   ª           +---_interop_require_wildcard
+ª   ª           +---_is_native_function
+ª   ª           +---_is_native_reflect_construct
+ª   ª           +---_iterable_to_array
+ª   ª           +---_iterable_to_array_limit
+ª   ª           +---_iterable_to_array_limit_loose
+ª   ª           +---_jsx
+ª   ª           +---_new_arrow_check
+ª   ª           +---_non_iterable_rest
+ª   ª           +---_non_iterable_spread
+ª   ª           +---_object_destructuring_empty
+ª   ª           +---_object_spread
+ª   ª           +---_object_spread_props
+ª   ª           +---_object_without_properties
+ª   ª           +---_object_without_properties_loose
+ª   ª           +---_possible_constructor_return
+ª   ª           +---_read_only_error
+ª   ª           +---_set
+ª   ª           +---_set_prototype_of
+ª   ª           +---_skip_first_generator_next
+ª   ª           +---_sliced_to_array
+ª   ª           +---_sliced_to_array_loose
+ª   ª           +---_super_prop_base
+ª   ª           +---_tagged_template_literal
+ª   ª           +---_tagged_template_literal_loose
+ª   ª           +---_throw
+ª   ª           +---_to_array
+ª   ª           +---_to_consumable_array
+ª   ª           +---_to_primitive
+ª   ª           +---_to_property_key
+ª   ª           +---_ts_add_disposable_resource
+ª   ª           +---_ts_decorate
+ª   ª           +---_ts_dispose_resources
+ª   ª           +---_ts_generator
+ª   ª           +---_ts_metadata
+ª   ª           +---_ts_param
+ª   ª           +---_ts_values
+ª   ª           +---_type_of
+ª   ª           +---_unsupported_iterable_to_array
+ª   ª           +---_update
+ª   ª           +---_using
+ª   ª           +---_using_ctx
+ª   ª           +---_wrap_async_generator
+ª   ª           +---_wrap_native_super
+ª   ª           +---_write_only_error
+ª   +---@tailwindcss
+ª   ª   +---node
+ª   ª   ª   +---dist
+ª   ª   +---oxide
+ª   ª   ª   +---scripts
+ª   ª   +---oxide-win32-x64-msvc
+ª   ª   +---postcss
+ª   ª       +---dist
+ª   +---@types
+ª   ª   +---d3-array
+ª   ª   +---d3-color
+ª   ª   +---d3-ease
+ª   ª   +---d3-interpolate
+ª   ª   +---d3-path
+ª   ª   +---d3-scale
+ª   ª   +---d3-shape
+ª   ª   +---d3-time
+ª   ª   +---d3-timer
+ª   ª   +---node
+ª   ª   ª   +---assert
+ª   ª   ª   +---compatibility
+ª   ª   ª   +---dns
+ª   ª   ª   +---fs
+ª   ª   ª   +---readline
+ª   ª   ª   +---stream
+ª   ª   ª   +---timers
+ª   ª   ª   +---ts5.6
+ª   ª   +---pdfkit
+ª   ª   +---phoenix
+ª   ª   +---react
+ª   ª   ª   +---ts5.0
+ª   ª   ª       +---v18
+ª   ª   ª           +---ts5.0
+ª   ª   +---react-dom
+ª   ª   ª   +---test-utils
+ª   ª   +---ws
+ª   +---aria-hidden
+ª   ª   +---dist
+ª   ª       +---es2015
+ª   ª       +---es2019
+ª   ª       +---es5
+ª   +---autoprefixer
+ª   ª   +---bin
+ª   ª   +---data
+ª   ª   +---lib
+ª   ª       +---hacks
+ª   +---base64-js
+ª   +---brotli
+ª   ª   +---build
+ª   ª   +---dec
+ª   ª   +---enc
+ª   +---browserslist
+ª   +---busboy
+ª   ª   +---.github
+ª   ª   ª   +---workflows
+ª   ª   +---bench
+ª   ª   +---lib
+ª   ª   ª   +---types
+ª   ª   +---test
+ª   +---caniuse-lite
+ª   ª   +---data
+ª   ª   ª   +---features
+ª   ª   ª   +---regions
+ª   ª   +---dist
+ª   ª       +---lib
+ª   ª       +---unpacker
+ª   +---chownr
+ª   ª   +---dist
+ª   ª       +---commonjs
+ª   ª       +---esm
+ª   +---class-variance-authority
+ª   ª   +---dist
+ª   +---client-only
+ª   +---clone
+ª   +---clsx
+ª   ª   +---dist
+ª   +---cmdk
+ª   ª   +---dist
+ª   +---color
+ª   +---color-convert
+ª   +---color-name
+ª   +---color-string
+ª   +---cookie
+ª   ª   +---dist
+ª   +---crypto-js
+ª   ª   +---docs
+ª   +---csstype
+ª   +---d3-array
+ª   ª   +---dist
+ª   ª   +---src
+ª   ª       +---threshold
+ª   +---d3-color
+ª   ª   +---dist
+ª   ª   +---src
+ª   +---d3-ease
+ª   ª   +---dist
+ª   ª   +---src
+ª   +---d3-format
+ª   ª   +---dist
+ª   ª   +---locale
+ª   ª   +---src
+ª   +---d3-interpolate
+ª   ª   +---dist
+ª   ª   +---src
+ª   ª       +---transform
+ª   +---d3-path
+ª   ª   +---dist
+ª   ª   +---src
+ª   +---d3-scale
+ª   ª   +---dist
+ª   ª   +---src
+ª   +---d3-shape
+ª   ª   +---dist
+ª   ª   +---src
+ª   ª       +---curve
+ª   ª       +---offset
+ª   ª       +---order
+ª   ª       +---symbol
+ª   +---d3-time
+ª   ª   +---dist
+ª   ª   +---src
+ª   +---d3-time-format
+ª   ª   +---dist
+ª   ª   +---locale
+ª   ª   +---src
+ª   +---d3-timer
+ª   ª   +---dist
+ª   ª   +---src
+ª   +---date-fns
+ª   ª   +---docs
+ª   ª   +---fp
+ª   ª   ª   +---_lib
+ª   ª   +---locale
+ª   ª   ª   +---af
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ar
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ar-DZ
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ar-EG
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ar-MA
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ar-SA
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ar-TN
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---az
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---be
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---be-tarask
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---bg
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---bn
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---bs
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ca
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ckb
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---cs
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---cy
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---da
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---de
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---de-AT
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---el
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---en-AU
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---en-CA
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---en-GB
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---en-IE
+ª   ª   ª   +---en-IN
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---en-NZ
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---en-US
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---en-ZA
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---eo
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---es
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---et
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---eu
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---fa-IR
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---fi
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---fr
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---fr-CA
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---fr-CH
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---fy
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---gd
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---gl
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---gu
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---he
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---hi
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---hr
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ht
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---hu
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---hy
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---id
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---is
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---it
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---it-CH
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ja
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ja-Hira
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ka
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---kk
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---km
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---kn
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ko
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---lb
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---lt
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---lv
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---mk
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---mn
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ms
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---mt
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---nb
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---nl
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---nl-BE
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---nn
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---oc
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---pl
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---pt
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---pt-BR
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ro
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ru
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---se
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---sk
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---sl
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---sq
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---sr
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---sr-Latn
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---sv
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ta
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---te
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---th
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---tr
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---ug
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---uk
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---uz
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---uz-Cyrl
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---vi
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---zh-CN
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---zh-HK
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---zh-TW
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---_lib
+ª   ª   +---parse
+ª   ª   ª   +---_lib
+ª   ª   ª       +---parsers
+ª   ª   +---_lib
+ª   ª       +---format
+ª   +---date-fns-jalali
+ª   ª   +---docs
+ª   ª   +---fp
+ª   ª   ª   +---_lib
+ª   ª   +---locale
+ª   ª   ª   +---en-US
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---fa-IR
+ª   ª   ª   ª   +---_lib
+ª   ª   ª   +---_lib
+ª   ª   +---parse
+ª   ª   ª   +---_lib
+ª   ª   ª       +---parsers
+ª   ª   +---_core
+ª   ª   +---_lib
+ª   ª       +---format
+ª   +---decimal.js-light
+ª   ª   +---doc
+ª   +---detect-libc
+ª   ª   +---lib
+ª   +---detect-node-es
+ª   ª   +---es5
+ª   ª   +---esm
+ª   +---dfa
+ª   +---dom-helpers
+ª   ª   +---activeElement
+ª   ª   +---addClass
+ª   ª   +---addEventListener
+ª   ª   +---animate
+ª   ª   +---animationFrame
+ª   ª   +---attribute
+ª   ª   +---camelize
+ª   ª   +---camelizeStyle
+ª   ª   +---canUseDOM
+ª   ª   +---childElements
+ª   ª   +---childNodes
+ª   ª   +---cjs
+ª   ª   +---clear
+ª   ª   +---closest
+ª   ª   +---collectElements
+ª   ª   +---collectSiblings
+ª   ª   +---contains
+ª   ª   +---css
+ª   ª   +---esm
+ª   ª   +---filterEventHandler
+ª   ª   +---getComputedStyle
+ª   ª   +---getScrollAccessor
+ª   ª   +---hasClass
+ª   ª   +---height
+ª   ª   +---hyphenate
+ª   ª   +---hyphenateStyle
+ª   ª   +---insertAfter
+ª   ª   +---isDocument
+ª   ª   +---isInput
+ª   ª   +---isTransform
+ª   ª   +---isVisible
+ª   ª   +---isWindow
+ª   ª   +---listen
+ª   ª   +---matches
+ª   ª   +---nextUntil
+ª   ª   +---offset
+ª   ª   +---offsetParent
+ª   ª   +---ownerDocument
+ª   ª   +---ownerWindow
+ª   ª   +---parents
+ª   ª   +---position
+ª   ª   +---prepend
+ª   ª   +---querySelectorAll
+ª   ª   +---remove
+ª   ª   +---removeClass
+ª   ª   +---removeEventListener
+ª   ª   +---scrollbarSize
+ª   ª   +---scrollLeft
+ª   ª   +---scrollParent
+ª   ª   +---scrollTo
+ª   ª   +---scrollTop
+ª   ª   +---siblings
+ª   ª   +---text
+ª   ª   +---toggleClass
+ª   ª   +---transitionEnd
+ª   ª   +---triggerEvent
+ª   ª   +---width
+ª   +---electron-to-chromium
+ª   +---embla-carousel
+ª   ª   +---cjs
+ª   ª   ª   +---components
+ª   ª   +---components
+ª   ª   +---esm
+ª   ª       +---components
+ª   +---embla-carousel-react
+ª   ª   +---cjs
+ª   ª   ª   +---components
+ª   ª   +---components
+ª   ª   +---esm
+ª   ª       +---components
+ª   +---embla-carousel-reactive-utils
+ª   ª   +---cjs
+ª   ª   ª   +---components
+ª   ª   +---components
+ª   ª   +---esm
+ª   ª       +---components
+ª   +---enhanced-resolve
+ª   ª   +---lib
+ª   ª       +---util
+ª   +---escalade
+ª   ª   +---dist
+ª   ª   +---sync
+ª   +---eventemitter3
+ª   ª   +---umd
+ª   +---fast-deep-equal
+ª   ª   +---es6
+ª   +---fast-equals
+ª   ª   +---config
+ª   ª   ª   +---rollup
+ª   ª   ª   +---tsconfig
+ª   ª   +---dist
+ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---types
+ª   ª   ª   +---esm
+ª   ª   ª   ª   +---types
+ª   ª   ª   +---min
+ª   ª   ª   ª   +---types
+ª   ª   ª   +---umd
+ª   ª   ª       +---types
+ª   ª   +---recipes
+ª   ª   +---scripts
+ª   ª   +---src
+ª   +---fontkit
+ª   ª   +---dist
+ª   ª   +---src
+ª   ª       +---aat
+ª   ª       +---cff
+ª   ª       +---glyph
+ª   ª       +---layout
+ª   ª       +---opentype
+ª   ª       ª   +---shapers
+ª   ª       +---subset
+ª   ª       +---tables
+ª   +---fraction.js
+ª   +---geist
+ª   ª   +---dist
+ª   ª   ª   +---fonts
+ª   ª   ª       +---geist-mono
+ª   ª   ª       +---geist-sans
+ª   ª   +---font
+ª   +---get-nonce
+ª   ª   +---dist
+ª   ª       +---es2015
+ª   ª       +---es5
+ª   +---graceful-fs
+ª   +---input-otp
+ª   ª   +---dist
+ª   +---internmap
+ª   ª   +---dist
+ª   ª   +---src
+ª   +---is-arrayish
+ª   +---jiti
+ª   ª   +---dist
+ª   ª   +---lib
+ª   +---jpeg-exif
+ª   ª   +---lib
+ª   ª   +---src
+ª   ª   +---test
+ª   +---js-tokens
+ª   +---lightningcss
+ª   ª   +---node
+ª   +---lightningcss-win32-x64-msvc
+ª   +---linebreak
+ª   ª   +---dist
+ª   ª   +---node_modules
+ª   ª       +---base64-js
+ª   ª           +---bench
+ª   ª           +---lib
+ª   ª           +---test
+ª   +---lodash
+ª   ª   +---fp
+ª   +---loose-envify
+ª   +---lucide-react
+ª   ª   +---dist
+ª   ª       +---cjs
+ª   ª       +---esm
+ª   ª       ª   +---icons
+ª   ª       ª   +---shared
+ª   ª       ª       +---src
+ª   ª       +---umd
+ª   +---magic-string
+ª   ª   +---dist
+ª   +---minipass
+ª   ª   +---dist
+ª   ª       +---commonjs
+ª   ª       +---esm
+ª   +---minizlib
+ª   ª   +---dist
+ª   ª       +---commonjs
+ª   ª       +---esm
+ª   +---mkdirp
+ª   ª   +---dist
+ª   ª       +---cjs
+ª   ª       ª   +---src
+ª   ª       +---mjs
+ª   +---nanoid
+ª   ª   +---async
+ª   ª   +---bin
+ª   ª   +---non-secure
+ª   ª   +---url-alphabet
+ª   +---next
+ª   ª   +---compat
+ª   ª   +---dist
+ª   ª   ª   +---api
+ª   ª   ª   +---bin
+ª   ª   ª   +---build
+ª   ª   ª   ª   +---analysis
+ª   ª   ª   ª   +---babel
+ª   ª   ª   ª   ª   +---loader
+ª   ª   ª   ª   ª   +---plugins
+ª   ª   ª   ª   +---jest
+ª   ª   ª   ª   ª   +---__mocks__
+ª   ª   ª   ª   +---manifests
+ª   ª   ª   ª   ª   +---formatter
+ª   ª   ª   ª   +---next-config-ts
+ª   ª   ª   ª   +---output
+ª   ª   ª   ª   +---polyfills
+ª   ª   ª   ª   ª   +---fetch
+ª   ª   ª   ª   ª   +---object.assign
+ª   ª   ª   ª   +---segment-config
+ª   ª   ª   ª   ª   +---app
+ª   ª   ª   ª   ª   +---middleware
+ª   ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   +---static-paths
+ª   ª   ª   ª   +---swc
+ª   ª   ª   ª   +---templates
+ª   ª   ª   ª   +---turbopack-build
+ª   ª   ª   ª   +---turborepo-access-trace
+ª   ª   ª   ª   +---webpack
+ª   ª   ª   ª   ª   +---alias
+ª   ª   ª   ª   ª   +---config
+ª   ª   ª   ª   ª   ª   +---blocks
+ª   ª   ª   ª   ª   ª       +---css
+ª   ª   ª   ª   ª   ª       ª   +---loaders
+ª   ª   ª   ª   ª   ª       +---images
+ª   ª   ª   ª   ª   +---loaders
+ª   ª   ª   ª   ª   ª   +---css-loader
+ª   ª   ª   ª   ª   ª   ª   +---src
+ª   ª   ª   ª   ª   ª   ª       +---plugins
+ª   ª   ª   ª   ª   ª   ª       +---runtime
+ª   ª   ª   ª   ª   ª   +---lightningcss-loader
+ª   ª   ª   ª   ª   ª   ª   +---src
+ª   ª   ª   ª   ª   ª   +---metadata
+ª   ª   ª   ª   ª   ª   +---next-app-loader
+ª   ª   ª   ª   ª   ª   +---next-edge-app-route-loader
+ª   ª   ª   ª   ª   ª   +---next-edge-ssr-loader
+ª   ª   ª   ª   ª   ª   +---next-flight-loader
+ª   ª   ª   ª   ª   ª   +---next-font-loader
+ª   ª   ª   ª   ª   ª   +---next-image-loader
+ª   ª   ª   ª   ª   ª   +---next-route-loader
+ª   ª   ª   ª   ª   ª   +---next-style-loader
+ª   ª   ª   ª   ª   ª   ª   +---runtime
+ª   ª   ª   ª   ª   ª   +---postcss-loader
+ª   ª   ª   ª   ª   ª   ª   +---src
+ª   ª   ª   ª   ª   ª   +---resolve-url-loader
+ª   ª   ª   ª   ª   ª       +---lib
+ª   ª   ª   ª   ª   +---plugins
+ª   ª   ª   ª   ª       +---minify-webpack-plugin
+ª   ª   ª   ª   ª       ª   +---src
+ª   ª   ª   ª   ª       +---next-types-plugin
+ª   ª   ª   ª   ª       +---telemetry-plugin
+ª   ª   ª   ª   ª       +---wellknown-errors-plugin
+ª   ª   ª   ª   +---webpack-build
+ª   ª   ª   ª   +---webpack-config-rules
+ª   ª   ª   +---cli
+ª   ª   ª   ª   +---internal
+ª   ª   ª   +---client
+ª   ª   ª   ª   +---app-dir
+ª   ª   ª   ª   +---compat
+ª   ª   ª   ª   +---components
+ª   ª   ª   ª   ª   +---errors
+ª   ª   ª   ª   ª   +---globals
+ª   ª   ª   ª   ª   +---http-access-fallback
+ª   ª   ª   ª   ª   +---metadata
+ª   ª   ª   ª   ª   +---react-dev-overlay
+ª   ª   ª   ª   ª   ª   +---app
+ª   ª   ª   ª   ª   ª   +---font
+ª   ª   ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   ª   ª   +---server
+ª   ª   ª   ª   ª   ª   +---ui
+ª   ª   ª   ª   ª   ª   ª   +---components
+ª   ª   ª   ª   ª   ª   ª   ª   +---call-stack-frame
+ª   ª   ª   ª   ª   ª   ª   ª   +---code-frame
+ª   ª   ª   ª   ª   ª   ª   ª   +---copy-button
+ª   ª   ª   ª   ª   ª   ª   ª   +---dialog
+ª   ª   ª   ª   ª   ª   ª   ª   +---errors
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---call-stack
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---dev-tools-indicator
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---dev-tools-info
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---dialog
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---environment-name-label
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-message
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-bottom-stack
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-footer
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-feedback
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-layout
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-nav
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-pagination
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-toolbar
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-type-label
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---overlay
+ª   ª   ª   ª   ª   ª   ª   ª   +---hot-linked-text
+ª   ª   ª   ª   ª   ª   ª   ª   +---hydration-diff
+ª   ª   ª   ª   ª   ª   ª   ª   +---overlay
+ª   ª   ª   ª   ª   ª   ª   ª   +---terminal
+ª   ª   ª   ª   ª   ª   ª   ª   +---toast
+ª   ª   ª   ª   ª   ª   ª   ª   +---version-staleness-info
+ª   ª   ª   ª   ª   ª   ª   +---container
+ª   ª   ª   ª   ª   ª   ª   ª   +---runtime-error
+ª   ª   ª   ª   ª   ª   ª   +---hooks
+ª   ª   ª   ª   ª   ª   ª   +---icons
+ª   ª   ª   ª   ª   ª   ª   ª   +---thumbs
+ª   ª   ª   ª   ª   ª   ª   +---storybook
+ª   ª   ª   ª   ª   ª   ª   +---styles
+ª   ª   ª   ª   ª   ª   ª   +---utils
+ª   ª   ª   ª   ª   ª   +---utils
+ª   ª   ª   ª   ª   ª       +---dev-indicator
+ª   ª   ª   ª   ª   +---router-reducer
+ª   ª   ª   ª   ª   ª   +---reducers
+ª   ª   ª   ª   ª   +---segment-cache-impl
+ª   ª   ª   ª   +---dev
+ª   ª   ª   ª   ª   +---dev-build-indicator
+ª   ª   ª   ª   ª   ª   +---internal
+ª   ª   ª   ª   ª   +---error-overlay
+ª   ª   ª   ª   +---legacy
+ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   +---portal
+ª   ª   ª   ª   +---react-client-callbacks
+ª   ª   ª   ª   +---request
+ª   ª   ª   ª   +---tracing
+ª   ª   ª   +---compiled
+ª   ª   ª   ª   +---@ampproject
+ª   ª   ª   ª   ª   +---toolbox-optimizer
+ª   ª   ª   ª   +---@babel
+ª   ª   ª   ª   ª   +---runtime
+ª   ª   ª   ª   ª       +---helpers
+ª   ª   ª   ª   ª       ª   +---esm
+ª   ª   ª   ª   ª       +---regenerator
+ª   ª   ª   ª   +---@edge-runtime
+ª   ª   ª   ª   ª   +---cookies
+ª   ª   ª   ª   ª   +---ponyfill
+ª   ª   ª   ª   ª   +---primitives
+ª   ª   ª   ª   +---@hapi
+ª   ª   ª   ª   ª   +---accept
+ª   ª   ª   ª   +---@mswjs
+ª   ª   ª   ª   ª   +---interceptors
+ª   ª   ª   ª   ª       +---ClientRequest
+ª   ª   ª   ª   +---@napi-rs
+ª   ª   ª   ª   ª   +---triples
+ª   ª   ª   ª   +---@next
+ª   ª   ª   ª   ª   +---font
+ª   ª   ª   ª   ª   ª   +---dist
+ª   ª   ª   ª   ª   ª   ª   +---fontkit
+ª   ª   ª   ª   ª   ª   ª   +---google
+ª   ª   ª   ª   ª   ª   ª   +---local
+ª   ª   ª   ª   ª   ª   +---google
+ª   ª   ª   ª   ª   ª   +---local
+ª   ª   ª   ª   ª   +---react-refresh-utils
+ª   ª   ª   ª   ª       +---dist
+ª   ª   ª   ª   ª           +---internal
+ª   ª   ª   ª   +---@opentelemetry
+ª   ª   ª   ª   ª   +---api
+ª   ª   ª   ª   +---@vercel
+ª   ª   ª   ª   ª   +---nft
+ª   ª   ª   ª   ª   +---og
+ª   ª   ª   ª   ª       +---emoji
+ª   ª   ª   ª   ª       +---figma
+ª   ª   ª   ª   ª       +---language
+ª   ª   ª   ª   ª       +---satori
+ª   ª   ª   ª   +---acorn
+ª   ª   ª   ª   +---amphtml-validator
+ª   ª   ª   ª   +---anser
+ª   ª   ª   ª   +---assert
+ª   ª   ª   ª   +---async-retry
+ª   ª   ª   ª   +---async-sema
+ª   ª   ª   ª   +---babel
+ª   ª   ª   ª   +---babel-packages
+ª   ª   ª   ª   +---browserify-zlib
+ª   ª   ª   ª   +---browserslist
+ª   ª   ª   ª   +---buffer
+ª   ª   ª   ª   +---bytes
+ª   ª   ª   ª   +---ci-info
+ª   ª   ª   ª   +---cli-select
+ª   ª   ª   ª   +---client-only
+ª   ª   ª   ª   +---commander
+ª   ª   ª   ª   +---comment-json
+ª   ª   ª   ª   +---compression
+ª   ª   ª   ª   +---conf
+ª   ª   ª   ª   +---constants-browserify
+ª   ª   ª   ª   +---content-disposition
+ª   ª   ª   ª   +---content-type
+ª   ª   ª   ª   +---cookie
+ª   ª   ª   ª   +---cross-spawn
+ª   ª   ª   ª   +---crypto-browserify
+ª   ª   ª   ª   +---css.escape
+ª   ª   ª   ª   +---cssnano-simple
+ª   ª   ª   ª   +---data-uri-to-buffer
+ª   ª   ª   ª   +---debug
+ª   ª   ª   ª   +---devalue
+ª   ª   ª   ª   +---domain-browser
+ª   ª   ª   ª   +---edge-runtime
+ª   ª   ª   ª   +---events
+ª   ª   ª   ª   +---find-up
+ª   ª   ª   ª   +---fresh
+ª   ª   ª   ª   +---glob
+ª   ª   ª   ª   +---gzip-size
+ª   ª   ª   ª   +---http-proxy
+ª   ª   ª   ª   +---http-proxy-agent
+ª   ª   ª   ª   +---https-browserify
+ª   ª   ª   ª   +---https-proxy-agent
+ª   ª   ª   ª   +---icss-utils
+ª   ª   ª   ª   +---ignore-loader
+ª   ª   ª   ª   +---image-size
+ª   ª   ª   ª   +---is-animated
+ª   ª   ª   ª   +---is-docker
+ª   ª   ª   ª   +---is-wsl
+ª   ª   ª   ª   +---jest-worker
+ª   ª   ª   ª   +---json5
+ª   ª   ª   ª   +---jsonwebtoken
+ª   ª   ª   ª   +---loader-runner
+ª   ª   ª   ª   +---loader-utils2
+ª   ª   ª   ª   +---loader-utils3
+ª   ª   ª   ª   +---lodash.curry
+ª   ª   ª   ª   +---lru-cache
+ª   ª   ª   ª   +---mini-css-extract-plugin
+ª   ª   ª   ª   ª   +---hmr
+ª   ª   ª   ª   +---nanoid
+ª   ª   ª   ª   +---native-url
+ª   ª   ª   ª   +---neo-async
+ª   ª   ª   ª   +---next-server
+ª   ª   ª   ª   +---node-html-parser
+ª   ª   ª   ª   +---ora
+ª   ª   ª   ª   +---os-browserify
+ª   ª   ª   ª   +---p-limit
+ª   ª   ª   ª   +---p-queue
+ª   ª   ª   ª   +---path-browserify
+ª   ª   ª   ª   +---path-to-regexp
+ª   ª   ª   ª   +---picomatch
+ª   ª   ª   ª   +---postcss-flexbugs-fixes
+ª   ª   ª   ª   +---postcss-modules-extract-imports
+ª   ª   ª   ª   +---postcss-modules-local-by-default
+ª   ª   ª   ª   +---postcss-modules-scope
+ª   ª   ª   ª   +---postcss-modules-values
+ª   ª   ª   ª   +---postcss-plugin-stub-for-cssnano-simple
+ª   ª   ª   ª   +---postcss-preset-env
+ª   ª   ª   ª   +---postcss-safe-parser
+ª   ª   ª   ª   +---postcss-scss
+ª   ª   ª   ª   +---postcss-value-parser
+ª   ª   ª   ª   +---process
+ª   ª   ª   ª   +---punycode
+ª   ª   ª   ª   +---querystring-es3
+ª   ª   ª   ª   +---raw-body
+ª   ª   ª   ª   +---react
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-dom
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-dom-experimental
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-experimental
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-is
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-refresh
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-server-dom-turbopack
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-server-dom-turbopack-experimental
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-server-dom-webpack
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---react-server-dom-webpack-experimental
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---regenerator-runtime
+ª   ª   ª   ª   +---sass-loader
+ª   ª   ª   ª   +---scheduler
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---scheduler-experimental
+ª   ª   ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---schema-utils2
+ª   ª   ª   ª   +---schema-utils3
+ª   ª   ª   ª   +---semver
+ª   ª   ª   ª   +---send
+ª   ª   ª   ª   +---server-only
+ª   ª   ª   ª   +---setimmediate
+ª   ª   ª   ª   +---shell-quote
+ª   ª   ª   ª   +---source-map
+ª   ª   ª   ª   +---source-map08
+ª   ª   ª   ª   +---stacktrace-parser
+ª   ª   ª   ª   +---stream-browserify
+ª   ª   ª   ª   +---stream-http
+ª   ª   ª   ª   +---string-hash
+ª   ª   ª   ª   +---string_decoder
+ª   ª   ª   ª   +---strip-ansi
+ª   ª   ª   ª   +---superstruct
+ª   ª   ª   ª   +---tar
+ª   ª   ª   ª   +---terser
+ª   ª   ª   ª   +---text-table
+ª   ª   ª   ª   +---timers-browserify
+ª   ª   ª   ª   +---tty-browserify
+ª   ª   ª   ª   +---ua-parser-js
+ª   ª   ª   ª   +---unistore
+ª   ª   ª   ª   +---util
+ª   ª   ª   ª   +---vm-browserify
+ª   ª   ª   ª   +---watchpack
+ª   ª   ª   ª   +---web-vitals
+ª   ª   ª   ª   +---web-vitals-attribution
+ª   ª   ª   ª   +---webpack
+ª   ª   ª   ª   +---webpack-sources1
+ª   ª   ª   ª   +---webpack-sources3
+ª   ª   ª   ª   +---ws
+ª   ª   ª   ª   +---zod
+ª   ª   ª   ª   +---zod-validation-error
+ª   ª   ª   +---diagnostics
+ª   ª   ª   +---esm
+ª   ª   ª   ª   +---api
+ª   ª   ª   ª   +---build
+ª   ª   ª   ª   ª   +---analysis
+ª   ª   ª   ª   ª   +---babel
+ª   ª   ª   ª   ª   ª   +---loader
+ª   ª   ª   ª   ª   ª   +---plugins
+ª   ª   ª   ª   ª   +---manifests
+ª   ª   ª   ª   ª   ª   +---formatter
+ª   ª   ª   ª   ª   +---next-config-ts
+ª   ª   ª   ª   ª   +---output
+ª   ª   ª   ª   ª   +---polyfills
+ª   ª   ª   ª   ª   ª   +---fetch
+ª   ª   ª   ª   ª   ª   +---object.assign
+ª   ª   ª   ª   ª   +---segment-config
+ª   ª   ª   ª   ª   ª   +---app
+ª   ª   ª   ª   ª   ª   +---middleware
+ª   ª   ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   ª   +---static-paths
+ª   ª   ª   ª   ª   +---swc
+ª   ª   ª   ª   ª   +---templates
+ª   ª   ª   ª   ª   +---turbopack-build
+ª   ª   ª   ª   ª   +---turborepo-access-trace
+ª   ª   ª   ª   ª   +---webpack
+ª   ª   ª   ª   ª   ª   +---alias
+ª   ª   ª   ª   ª   ª   +---config
+ª   ª   ª   ª   ª   ª   ª   +---blocks
+ª   ª   ª   ª   ª   ª   ª       +---css
+ª   ª   ª   ª   ª   ª   ª       ª   +---loaders
+ª   ª   ª   ª   ª   ª   ª       +---images
+ª   ª   ª   ª   ª   ª   +---loaders
+ª   ª   ª   ª   ª   ª   ª   +---css-loader
+ª   ª   ª   ª   ª   ª   ª   ª   +---src
+ª   ª   ª   ª   ª   ª   ª   ª       +---plugins
+ª   ª   ª   ª   ª   ª   ª   ª       +---runtime
+ª   ª   ª   ª   ª   ª   ª   +---lightningcss-loader
+ª   ª   ª   ª   ª   ª   ª   ª   +---src
+ª   ª   ª   ª   ª   ª   ª   +---metadata
+ª   ª   ª   ª   ª   ª   ª   +---next-app-loader
+ª   ª   ª   ª   ª   ª   ª   +---next-edge-app-route-loader
+ª   ª   ª   ª   ª   ª   ª   +---next-edge-ssr-loader
+ª   ª   ª   ª   ª   ª   ª   +---next-flight-loader
+ª   ª   ª   ª   ª   ª   ª   +---next-font-loader
+ª   ª   ª   ª   ª   ª   ª   +---next-image-loader
+ª   ª   ª   ª   ª   ª   ª   +---next-route-loader
+ª   ª   ª   ª   ª   ª   ª   +---next-style-loader
+ª   ª   ª   ª   ª   ª   ª   ª   +---runtime
+ª   ª   ª   ª   ª   ª   ª   +---postcss-loader
+ª   ª   ª   ª   ª   ª   ª   ª   +---src
+ª   ª   ª   ª   ª   ª   ª   +---resolve-url-loader
+ª   ª   ª   ª   ª   ª   ª       +---lib
+ª   ª   ª   ª   ª   ª   +---plugins
+ª   ª   ª   ª   ª   ª       +---minify-webpack-plugin
+ª   ª   ª   ª   ª   ª       ª   +---src
+ª   ª   ª   ª   ª   ª       +---next-types-plugin
+ª   ª   ª   ª   ª   ª       +---telemetry-plugin
+ª   ª   ª   ª   ª   ª       +---wellknown-errors-plugin
+ª   ª   ª   ª   ª   +---webpack-build
+ª   ª   ª   ª   ª   +---webpack-config-rules
+ª   ª   ª   ª   +---client
+ª   ª   ª   ª   ª   +---app-dir
+ª   ª   ª   ª   ª   +---compat
+ª   ª   ª   ª   ª   +---components
+ª   ª   ª   ª   ª   ª   +---errors
+ª   ª   ª   ª   ª   ª   +---globals
+ª   ª   ª   ª   ª   ª   +---http-access-fallback
+ª   ª   ª   ª   ª   ª   +---metadata
+ª   ª   ª   ª   ª   ª   +---react-dev-overlay
+ª   ª   ª   ª   ª   ª   ª   +---app
+ª   ª   ª   ª   ª   ª   ª   +---font
+ª   ª   ª   ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   ª   ª   ª   +---server
+ª   ª   ª   ª   ª   ª   ª   +---ui
+ª   ª   ª   ª   ª   ª   ª   ª   +---components
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---call-stack-frame
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---code-frame
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---copy-button
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---dialog
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---errors
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---call-stack
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---dev-tools-indicator
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---dev-tools-info
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---dialog
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---environment-name-label
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-message
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-bottom-stack
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-footer
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-feedback
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-layout
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-nav
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-pagination
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-overlay-toolbar
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---error-type-label
+ª   ª   ª   ª   ª   ª   ª   ª   ª   ª   +---overlay
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---hot-linked-text
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---hydration-diff
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---overlay
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---terminal
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---toast
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---version-staleness-info
+ª   ª   ª   ª   ª   ª   ª   ª   +---container
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---runtime-error
+ª   ª   ª   ª   ª   ª   ª   ª   +---hooks
+ª   ª   ª   ª   ª   ª   ª   ª   +---icons
+ª   ª   ª   ª   ª   ª   ª   ª   ª   +---thumbs
+ª   ª   ª   ª   ª   ª   ª   ª   +---storybook
+ª   ª   ª   ª   ª   ª   ª   ª   +---styles
+ª   ª   ª   ª   ª   ª   ª   ª   +---utils
+ª   ª   ª   ª   ª   ª   ª   +---utils
+ª   ª   ª   ª   ª   ª   ª       +---dev-indicator
+ª   ª   ª   ª   ª   ª   +---router-reducer
+ª   ª   ª   ª   ª   ª   ª   +---reducers
+ª   ª   ª   ª   ª   ª   +---segment-cache-impl
+ª   ª   ª   ª   ª   +---dev
+ª   ª   ª   ª   ª   ª   +---dev-build-indicator
+ª   ª   ª   ª   ª   ª   ª   +---internal
+ª   ª   ª   ª   ª   ª   +---error-overlay
+ª   ª   ª   ª   ª   +---legacy
+ª   ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   ª   +---portal
+ª   ª   ª   ª   ª   +---react-client-callbacks
+ª   ª   ª   ª   ª   +---request
+ª   ª   ª   ª   ª   +---tracing
+ª   ª   ª   ª   +---export
+ª   ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   ª   +---routes
+ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   ª   +---eslint
+ª   ª   ª   ª   ª   +---fs
+ª   ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   ª   +---memory
+ª   ª   ª   ª   ª   +---metadata
+ª   ª   ª   ª   ª   ª   +---generate
+ª   ª   ª   ª   ª   ª   +---resolvers
+ª   ª   ª   ª   ª   ª   +---types
+ª   ª   ª   ª   ª   +---typescript
+ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   +---server
+ª   ª   ª   ª   ª   +---after
+ª   ª   ª   ª   ª   +---api-utils
+ª   ª   ª   ª   ª   ª   +---node
+ª   ª   ª   ª   ª   +---app-render
+ª   ª   ª   ª   ª   ª   +---metadata-insertion
+ª   ª   ª   ª   ª   ª   +---rsc
+ª   ª   ª   ª   ª   +---async-storage
+ª   ª   ª   ª   ª   +---base-http
+ª   ª   ª   ª   ª   +---dev
+ª   ª   ª   ª   ª   +---instrumentation
+ª   ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   ª   ª   +---cache-handlers
+ª   ª   ª   ª   ª   ª   +---experimental
+ª   ª   ª   ª   ª   ª   +---incremental-cache
+ª   ª   ª   ª   ª   ª   +---module-loader
+ª   ª   ª   ª   ª   ª   +---router-utils
+ª   ª   ª   ª   ª   ª   +---server-ipc
+ª   ª   ª   ª   ª   ª   +---trace
+ª   ª   ª   ª   ª   +---node-environment-extensions
+ª   ª   ª   ª   ª   +---normalizers
+ª   ª   ª   ª   ª   ª   +---built
+ª   ª   ª   ª   ª   ª   ª   +---app
+ª   ª   ª   ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   ª   ª   +---request
+ª   ª   ª   ª   ª   +---og
+ª   ª   ª   ª   ª   +---request
+ª   ª   ª   ª   ª   +---response-cache
+ª   ª   ª   ª   ª   +---resume-data-cache
+ª   ª   ª   ª   ª   +---route-definitions
+ª   ª   ª   ª   ª   +---route-matcher-managers
+ª   ª   ª   ª   ª   +---route-matcher-providers
+ª   ª   ª   ª   ª   ª   +---dev
+ª   ª   ª   ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   ª   ª   ª       +---file-reader
+ª   ª   ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   ª   ª       +---manifest-loaders
+ª   ª   ª   ª   ª   +---route-matchers
+ª   ª   ª   ª   ª   +---route-matches
+ª   ª   ª   ª   ª   +---route-modules
+ª   ª   ª   ª   ª   ª   +---app-page
+ª   ª   ª   ª   ª   ª   ª   +---vendored
+ª   ª   ª   ª   ª   ª   ª       +---contexts
+ª   ª   ª   ª   ª   ª   ª       +---rsc
+ª   ª   ª   ª   ª   ª   ª       +---ssr
+ª   ª   ª   ª   ª   ª   +---app-route
+ª   ª   ª   ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   ª   ª   ª   +---builtin
+ª   ª   ª   ª   ª   ª   ª   +---vendored
+ª   ª   ª   ª   ª   ª   ª       +---contexts
+ª   ª   ª   ª   ª   ª   +---pages-api
+ª   ª   ª   ª   ª   +---stream-utils
+ª   ª   ª   ª   ª   +---typescript
+ª   ª   ª   ª   ª   ª   +---rules
+ª   ª   ª   ª   ª   +---use-cache
+ª   ª   ª   ª   ª   +---web
+ª   ª   ª   ª   ª       +---exports
+ª   ª   ª   ª   ª       +---sandbox
+ª   ª   ª   ª   ª       +---spec-extension
+ª   ª   ª   ª   ª           +---adapters
+ª   ª   ª   ª   +---shared
+ª   ª   ª   ª       +---lib
+ª   ª   ª   ª           +---i18n
+ª   ª   ª   ª           +---isomorphic
+ª   ª   ª   ª           +---lazy-dynamic
+ª   ª   ª   ª           +---page-path
+ª   ª   ª   ª           +---router
+ª   ª   ª   ª           ª   +---utils
+ª   ª   ª   ª           +---segment-cache
+ª   ª   ª   ª           +---turbopack
+ª   ª   ª   ª           +---utils
+ª   ª   ª   +---experimental
+ª   ª   ª   ª   +---testing
+ª   ª   ª   ª   ª   +---server
+ª   ª   ª   ª   +---testmode
+ª   ª   ª   ª       +---playwright
+ª   ª   ª   ª       +---proxy
+ª   ª   ª   +---export
+ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   +---routes
+ª   ª   ª   +---lib
+ª   ª   ª   ª   +---eslint
+ª   ª   ª   ª   +---fs
+ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   +---memory
+ª   ª   ª   ª   +---metadata
+ª   ª   ª   ª   ª   +---generate
+ª   ª   ª   ª   ª   +---resolvers
+ª   ª   ª   ª   ª   +---types
+ª   ª   ª   ª   +---typescript
+ª   ª   ª   +---pages
+ª   ª   ª   +---server
+ª   ª   ª   ª   +---after
+ª   ª   ª   ª   +---api-utils
+ª   ª   ª   ª   ª   +---node
+ª   ª   ª   ª   +---app-render
+ª   ª   ª   ª   ª   +---metadata-insertion
+ª   ª   ª   ª   ª   +---rsc
+ª   ª   ª   ª   +---async-storage
+ª   ª   ª   ª   +---base-http
+ª   ª   ª   ª   +---dev
+ª   ª   ª   ª   +---instrumentation
+ª   ª   ª   ª   +---lib
+ª   ª   ª   ª   ª   +---cache-handlers
+ª   ª   ª   ª   ª   +---experimental
+ª   ª   ª   ª   ª   +---incremental-cache
+ª   ª   ª   ª   ª   +---module-loader
+ª   ª   ª   ª   ª   +---router-utils
+ª   ª   ª   ª   ª   +---server-ipc
+ª   ª   ª   ª   ª   +---trace
+ª   ª   ª   ª   +---node-environment-extensions
+ª   ª   ª   ª   +---normalizers
+ª   ª   ª   ª   ª   +---built
+ª   ª   ª   ª   ª   ª   +---app
+ª   ª   ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   ª   +---request
+ª   ª   ª   ª   +---og
+ª   ª   ª   ª   +---request
+ª   ª   ª   ª   +---response-cache
+ª   ª   ª   ª   +---resume-data-cache
+ª   ª   ª   ª   +---route-definitions
+ª   ª   ª   ª   +---route-matcher-managers
+ª   ª   ª   ª   +---route-matcher-providers
+ª   ª   ª   ª   ª   +---dev
+ª   ª   ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   ª   ª       +---file-reader
+ª   ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   ª       +---manifest-loaders
+ª   ª   ª   ª   +---route-matchers
+ª   ª   ª   ª   +---route-matches
+ª   ª   ª   ª   +---route-modules
+ª   ª   ª   ª   ª   +---app-page
+ª   ª   ª   ª   ª   ª   +---vendored
+ª   ª   ª   ª   ª   ª       +---contexts
+ª   ª   ª   ª   ª   ª       +---rsc
+ª   ª   ª   ª   ª   ª       +---ssr
+ª   ª   ª   ª   ª   +---app-route
+ª   ª   ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   ª   +---pages
+ª   ª   ª   ª   ª   ª   +---builtin
+ª   ª   ª   ª   ª   ª   +---vendored
+ª   ª   ª   ª   ª   ª       +---contexts
+ª   ª   ª   ª   ª   +---pages-api
+ª   ª   ª   ª   +---stream-utils
+ª   ª   ª   ª   +---typescript
+ª   ª   ª   ª   ª   +---rules
+ª   ª   ª   ª   +---use-cache
+ª   ª   ª   ª   +---web
+ª   ª   ª   ª       +---exports
+ª   ª   ª   ª       +---sandbox
+ª   ª   ª   ª       +---spec-extension
+ª   ª   ª   ª           +---adapters
+ª   ª   ª   +---shared
+ª   ª   ª   ª   +---lib
+ª   ª   ª   ª       +---i18n
+ª   ª   ª   ª       +---isomorphic
+ª   ª   ª   ª       +---lazy-dynamic
+ª   ª   ª   ª       +---page-path
+ª   ª   ª   ª       +---router
+ª   ª   ª   ª       ª   +---utils
+ª   ª   ª   ª       +---segment-cache
+ª   ª   ª   ª       +---turbopack
+ª   ª   ª   ª       +---utils
+ª   ª   ª   +---styled-jsx
+ª   ª   ª   ª   +---types
+ª   ª   ª   +---telemetry
+ª   ª   ª   ª   +---events
+ª   ª   ª   +---trace
+ª   ª   ª       +---report
+ª   ª   +---experimental
+ª   ª   ª   +---testing
+ª   ª   ª   +---testmode
+ª   ª   ª       +---playwright
+ª   ª   +---font
+ª   ª   ª   +---google
+ª   ª   ª   +---local
+ª   ª   +---image-types
+ª   ª   +---legacy
+ª   ª   +---navigation-types
+ª   ª   ª   +---compat
+ª   ª   +---node_modules
+ª   ª   ª   +---postcss
+ª   ª   ª       +---lib
+ª   ª   +---types
+ª   +---next-themes
+ª   ª   +---dist
+ª   +---node-releases
+ª   ª   +---data
+ª   ª       +---processed
+ª   ª       +---release-schedule
+ª   +---normalize-range
+ª   +---object-assign
+ª   +---pako
+ª   ª   +---dist
+ª   ª   +---lib
+ª   ª       +---utils
+ª   ª       +---zlib
+ª   +---pdfkit
+ª   ª   +---js
+ª   ª       +---data
+ª   +---picocolors
+ª   +---png-js
+ª   ª   +---examples
+ª   ª   +---images
+ª   ª   +---test
+ª   ª       +---images
+ª   ª       +---__snapshots__
+ª   +---postcss
+ª   ª   +---lib
+ª   +---postcss-value-parser
+ª   ª   +---lib
+ª   +---prop-types
+ª   ª   +---lib
+ª   ª   +---node_modules
+ª   ª       +---react-is
+ª   ª           +---cjs
+ª   ª           +---umd
+ª   +---react
+ª   ª   +---cjs
+ª   +---react-day-picker
+ª   ª   +---dist
+ª   ª   ª   +---cjs
+ª   ª   ª   ª   +---classes
+ª   ª   ª   ª   +---components
+ª   ª   ª   ª   +---formatters
+ª   ª   ª   ª   +---helpers
+ª   ª   ª   ª   +---labels
+ª   ª   ª   ª   +---selection
+ª   ª   ª   ª   +---types
+ª   ª   ª   ª   +---utils
+ª   ª   ª   +---esm
+ª   ª   ª       +---classes
+ª   ª   ª       +---components
+ª   ª   ª       +---formatters
+ª   ª   ª       +---helpers
+ª   ª   ª       +---labels
+ª   ª   ª       +---selection
+ª   ª   ª       +---types
+ª   ª   ª       +---utils
+ª   ª   +---src
+ª   ª       +---classes
+ª   ª       +---components
+ª   ª       +---formatters
+ª   ª       +---helpers
+ª   ª       +---labels
+ª   ª       +---selection
+ª   ª       +---types
+ª   ª       +---utils
+ª   +---react-dom
+ª   ª   +---cjs
+ª   +---react-hook-form
+ª   ª   +---dist
+ª   ª       +---logic
+ª   ª       +---types
+ª   ª       ª   +---path
+ª   ª       +---utils
+ª   +---react-is
+ª   ª   +---cjs
+ª   ª   +---umd
+ª   +---react-remove-scroll
+ª   ª   +---dist
+ª   ª   ª   +---es2015
+ª   ª   ª   +---es2019
+ª   ª   ª   +---es5
+ª   ª   +---sidecar
+ª   ª   +---UI
+ª   +---react-remove-scroll-bar
+ª   ª   +---constants
+ª   ª   +---dist
+ª   ª       +---es2015
+ª   ª       +---es2019
+ª   ª       +---es5
+ª   +---react-resizable-panels
+ª   ª   +---dist
+ª   ª       +---declarations
+ª   ª           +---src
+ª   ª               +---utils
+ª   ª                   +---dom
+ª   ª                   +---rects
+ª   +---react-smooth
+ª   ª   +---es6
+ª   ª   +---lib
+ª   ª   +---src
+ª   ª   +---umd
+ª   +---react-style-singleton
+ª   ª   +---dist
+ª   ª       +---es2015
+ª   ª       +---es2019
+ª   ª       +---es5
+ª   +---react-transition-group
+ª   ª   +---cjs
+ª   ª   ª   +---utils
+ª   ª   +---config
+ª   ª   +---CSSTransition
+ª   ª   +---dist
+ª   ª   +---esm
+ª   ª   ª   +---utils
+ª   ª   +---ReplaceTransition
+ª   ª   +---SwitchTransition
+ª   ª   +---Transition
+ª   ª   +---TransitionGroup
+ª   ª   +---TransitionGroupContext
+ª   +---recharts
+ª   ª   +---es6
+ª   ª   ª   +---cartesian
+ª   ª   ª   +---chart
+ª   ª   ª   +---component
+ª   ª   ª   +---container
+ª   ª   ª   +---context
+ª   ª   ª   +---numberAxis
+ª   ª   ª   +---polar
+ª   ª   ª   +---shape
+ª   ª   ª   +---util
+ª   ª   ª       +---cursor
+ª   ª   ª       +---payload
+ª   ª   ª       +---tooltip
+ª   ª   +---lib
+ª   ª   ª   +---cartesian
+ª   ª   ª   +---chart
+ª   ª   ª   +---component
+ª   ª   ª   +---container
+ª   ª   ª   +---context
+ª   ª   ª   +---numberAxis
+ª   ª   ª   +---polar
+ª   ª   ª   +---shape
+ª   ª   ª   +---util
+ª   ª   ª       +---cursor
+ª   ª   ª       +---payload
+ª   ª   ª       +---tooltip
+ª   ª   +---types
+ª   ª   ª   +---cartesian
+ª   ª   ª   +---chart
+ª   ª   ª   +---component
+ª   ª   ª   +---container
+ª   ª   ª   +---context
+ª   ª   ª   +---numberAxis
+ª   ª   ª   +---polar
+ª   ª   ª   +---shape
+ª   ª   ª   +---util
+ª   ª   ª       +---cursor
+ª   ª   ª       +---payload
+ª   ª   ª       +---tooltip
+ª   ª   +---umd
+ª   +---recharts-scale
+ª   ª   +---es6
+ª   ª   ª   +---util
+ª   ª   +---lib
+ª   ª   ª   +---util
+ª   ª   +---src
+ª   ª   ª   +---util
+ª   ª   +---umd
+ª   +---restructure
+ª   ª   +---dist
+ª   ª   +---src
+ª   ª   +---test
+ª   +---scheduler
+ª   ª   +---cjs
+ª   +---semver
+ª   ª   +---bin
+ª   ª   +---classes
+ª   ª   +---functions
+ª   ª   +---internal
+ª   ª   +---ranges
+ª   +---sharp
+ª   ª   +---install
+ª   ª   +---lib
+ª   ª   +---src
+ª   +---simple-swizzle
+ª   +---sonner
+ª   ª   +---dist
+ª   +---source-map-js
+ª   ª   +---lib
+ª   +---streamsearch
+ª   ª   +---.github
+ª   ª   ª   +---workflows
+ª   ª   +---lib
+ª   ª   +---test
+ª   +---styled-jsx
+ª   ª   +---dist
+ª   ª   ª   +---babel
+ª   ª   ª   +---index
+ª   ª   ª   +---webpack
+ª   ª   +---lib
+ª   +---tailwind-merge
+ª   ª   +---dist
+ª   ª   ª   +---es5
+ª   ª   +---src
+ª   ª       +---lib
+ª   +---tailwindcss
+ª   ª   +---dist
+ª   +---tailwindcss-animate
+ª   +---tapable
+ª   ª   +---lib
+ª   +---tar
+ª   ª   +---dist
+ª   ª       +---commonjs
+ª   ª       +---esm
+ª   +---tiny-inflate
+ª   ª   +---test
+ª   +---tiny-invariant
+ª   ª   +---dist
+ª   ª   ª   +---esm
+ª   ª   +---src
+ª   +---tr46
+ª   ª   +---lib
+ª   +---tslib
+ª   ª   +---modules
+ª   +---tw-animate-css
+ª   ª   +---dist
+ª   +---typescript
+ª   ª   +---bin
+ª   ª   +---lib
+ª   ª       +---cs
+ª   ª       +---de
+ª   ª       +---es
+ª   ª       +---fr
+ª   ª       +---it
+ª   ª       +---ja
+ª   ª       +---ko
+ª   ª       +---pl
+ª   ª       +---pt-br
+ª   ª       +---ru
+ª   ª       +---tr
+ª   ª       +---zh-cn
+ª   ª       +---zh-tw
+ª   +---undici-types
+ª   +---unicode-properties
+ª   ª   +---dist
+ª   +---unicode-trie
+ª   ª   +---test
+ª   +---update-browserslist-db
+ª   +---use-callback-ref
+ª   ª   +---dist
+ª   ª       +---es2015
+ª   ª       +---es2019
+ª   ª       +---es5
+ª   +---use-sidecar
+ª   ª   +---dist
+ª   ª       +---es2015
+ª   ª       +---es2019
+ª   ª       +---es5
+ª   +---use-sync-external-store
+ª   ª   +---cjs
+ª   ª   ª   +---use-sync-external-store-shim
+ª   ª   +---shim
+ª   +---vaul
+ª   ª   +---dist
+ª   +---victory-vendor
+ª   ª   +---es
+ª   ª   +---lib
+ª   ª   +---lib-vendor
+ª   ª       +---d3-array
+ª   ª       ª   +---src
+ª   ª       ª       +---threshold
+ª   ª       +---d3-color
+ª   ª       ª   +---src
+ª   ª       +---d3-ease
+ª   ª       ª   +---src
+ª   ª       +---d3-format
+ª   ª       ª   +---src
+ª   ª       +---d3-interpolate
+ª   ª       ª   +---src
+ª   ª       ª       +---transform
+ª   ª       +---d3-path
+ª   ª       ª   +---src
+ª   ª       +---d3-scale
+ª   ª       ª   +---src
+ª   ª       +---d3-shape
+ª   ª       ª   +---src
+ª   ª       ª       +---curve
+ª   ª       ª       +---offset
+ª   ª       ª       +---order
+ª   ª       ª       +---symbol
+ª   ª       +---d3-time
+ª   ª       ª   +---src
+ª   ª       +---d3-time-format
+ª   ª       ª   +---src
+ª   ª       +---d3-timer
+ª   ª       ª   +---src
+ª   ª       +---d3-voronoi
+ª   ª       ª   +---src
+ª   ª       +---internmap
+ª   ª           +---src
+ª   +---webidl-conversions
+ª   ª   +---lib
+ª   +---whatwg-url
+ª   ª   +---lib
+ª   +---ws
+ª   ª   +---lib
+ª   +---yallist
+ª   ª   +---dist
+ª   ª       +---commonjs
+ª   ª       +---esm
+ª   +---zod
+ª       +---dist
+ª       ª   +---cjs
+ª       ª   ª   +---v3
+ª       ª   ª   ª   +---benchmarks
+ª       ª   ª   ª   +---helpers
+ª       ª   ª   ª   +---locales
+ª       ª   ª   ª   +---tests
+ª       ª   ª   +---v4
+ª       ª   ª       +---classic
+ª       ª   ª       +---core
+ª       ª   ª       +---locales
+ª       ª   ª       +---mini
+ª       ª   +---esm
+ª       ª   ª   +---v3
+ª       ª   ª   ª   +---benchmarks
+ª       ª   ª   ª   +---helpers
+ª       ª   ª   ª   +---locales
+ª       ª   ª   ª   +---tests
+ª       ª   ª   +---v4
+ª       ª   ª       +---classic
+ª       ª   ª       +---core
+ª       ª   ª       +---locales
+ª       ª   ª       +---mini
+ª       ª   +---types
+ª       ª       +---v3
+ª       ª       ª   +---benchmarks
+ª       ª       ª   +---helpers
+ª       ª       ª   +---locales
+ª       ª       ª   +---tests
+ª       ª       +---v4
+ª       ª           +---classic
+ª       ª           +---core
+ª       ª           +---locales
+ª       ª           +---mini
+ª       +---v3
+ª       +---v4
+ª       ª   +---core
+ª       ª   +---locales
+ª       +---v4-mini
++---public
++---styles
