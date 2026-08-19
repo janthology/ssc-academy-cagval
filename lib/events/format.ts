@@ -12,11 +12,11 @@ export const EVENT_TYPE_OPTIONS = Object.entries(EVENT_TYPE_LABEL) as [Event["ev
 
 /** "Dec 15, 2025" */
 export function eventDate(iso: string) {
-  return new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })
+  return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
 }
 
 /** "2:00 PM", or "2:00 PM – 4:00 PM" when an end time exists. */
 export function eventTime(startsAt: string, endsAt?: string | null) {
-  const f = (s: string) => new Date(s).toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit" })
+  const f = (s: string) => new Date(s).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
   return endsAt ? `${f(startsAt)} – ${f(endsAt)}` : f(startsAt)
 }

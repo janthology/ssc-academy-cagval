@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -43,12 +43,19 @@ export function DashboardContent({
   upcomingEvents = []
 }: DashboardContentProps) {
   const [isLoading] = useState(false)
+  // Defer current-month calculation to the client to avoid a hydration mismatch:
+  // Vercel renders in UTC; the user's browser may be in a different timezone,
+  // so new Date().getMonth() can differ between server and client renders.
+  const [currentMonth, setCurrentMonth] = useState<number | null>(null)
+  useEffect(() => { setCurrentMonth(new Date().getMonth()) }, [])
 
   if (isLoading) {
     return <div className="space-y-6">Loading dashboard...</div>
   }
 
-  const thisMonthCerts = certificates.filter(c => new Date(c.issued_at).getMonth() === new Date().getMonth()).length
+  const thisMonthCerts = currentMonth !== null
+    ? certificates.filter(c => new Date(c.issued_at).getMonth() === currentMonth).length
+    : 0
 
   const incompleteCourses = recentCourses.filter(course => course.progress !== undefined && course.progress < 100)
   const completedCourses = recentCourses.filter(course => course.progress !== undefined && course.progress === 100)

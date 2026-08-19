@@ -18,6 +18,8 @@ export function CertificatesView({ user }: CertificatesViewProps) {
   const [inProgress, setInProgress] = useState<Enrollment[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [currentMonth, setCurrentMonth] = useState<number | null>(null)
+  useEffect(() => { setCurrentMonth(new Date().getMonth()) }, [])
 
   const handleDownload = async (certificateId: string, certificateNumber: string) => {
     try {
@@ -190,7 +192,7 @@ export function CertificatesView({ user }: CertificatesViewProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{certificates.length}</div>
-            <p className="text-xs text-muted-foreground">+{certificates.filter(c => new Date(c.issued_at).getMonth() === new Date().getMonth()).length} this month</p>
+            <p className="text-xs text-muted-foreground">+{currentMonth !== null ? certificates.filter(c => new Date(c.issued_at).getMonth() === currentMonth).length : 0} this month</p>
           </CardContent>
         </Card>
 
