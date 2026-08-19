@@ -14,6 +14,15 @@ interface LearningPathProgress {
   progress: number;
 }
 
+/** Returns the thumbnail src if it looks like a real URL/path, otherwise falls back to placeholder. */
+function safeThumbnail(raw: string | null | undefined): string {
+  if (!raw) return "/placeholder.svg"
+  // Accept absolute URLs and root-relative paths (/...) only.
+  // Bare filenames like "1756827216758_dostcertlogo.png" are not valid src values.
+  if (raw.startsWith("http://") || raw.startsWith("https://") || raw.startsWith("/")) return raw
+  return "/placeholder.svg"
+}
+
 export default async function DashboardPage() {
   const client = await supabaseServer();
   const { data: { user: authUser } } = await client.auth.getUser();
@@ -242,7 +251,7 @@ export default async function DashboardPage() {
           progress: e.progress || 0,
           nextLesson: nextLessonTitle,
           timeLeft: `${remainingTimeHours} hours`,
-          image: course?.thumbnail || "/placeholder.svg",
+          image: safeThumbnail(course?.thumbnail),
           completed_at: e.completed_at || undefined,
         };
       });

@@ -190,7 +190,7 @@ export function CourseHeader({ courseId, course, enrollment, unmetPrereqs = [] }
 
       <div className="relative">
         <Image
-          src={course.thumbnail || "/placeholder.svg"}
+          src={course.thumbnail?.startsWith("http") || course.thumbnail?.startsWith("/") ? course.thumbnail : "/placeholder.svg"}
           alt={course.title}
           width={500}
           height={300}

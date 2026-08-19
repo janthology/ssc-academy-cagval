@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Award, Calendar, CheckCircle, MapPin, Building2 } from "lucide-react"
 import type { Certificate } from "@/lib/types/database"
+import { formatDate } from "@/lib/utils/dates"
 
 interface CertificateViewerProps {
   certificate: Certificate
@@ -12,8 +13,8 @@ export function CertificateViewer({ certificate }: CertificateViewerProps) {
     id: certificate.certificate_number,
     recipientName: certificate.user?.name || "Unknown Recipient",
     courseName: certificate.course?.title || "Unknown Course",
-    completionDate: certificate.issued_at ? new Date(certificate.issued_at).toLocaleDateString() : "N/A",
-    issueDate: certificate.issued_at ? new Date(certificate.issued_at).toLocaleDateString() : "N/A",
+    completionDate: formatDate(certificate.issued_at),
+    issueDate: formatDate(certificate.issued_at),
     instructor: certificate.course?.instructor || "Unknown Instructor",
     organization: certificate.user?.organization || "N/A",
     userType: certificate.user?.user_type || "N/A",

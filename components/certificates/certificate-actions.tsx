@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Download, Share2, Link2, Mail, Copy, CheckCircle } from "lucide-react"
 import type { Certificate } from "@/lib/types/database"
+import { formatDate } from "@/lib/utils/dates"
 
 interface CertificateActionsProps {
   certificate: Certificate
@@ -130,7 +131,7 @@ export function CertificateActions({ certificate }: CertificateActionsProps) {
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Issue Date:</span>
-              <span>{certificate.issued_at ? new Date(certificate.issued_at).toLocaleDateString() : "N/A"}</span>
+              <span>{formatDate(certificate.issued_at)}</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Status:</span>

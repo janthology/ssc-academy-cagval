@@ -36,7 +36,7 @@ export function CertificateVerification() {
             recipientName: body.certificate.recipientName ?? "Unknown Recipient",
             courseTitle: body.certificate.courseTitle ?? "Unknown Course",
             completionDate: body.certificate.completionDate
-              ? new Date(body.certificate.completionDate).toLocaleDateString()
+              ? new Date(body.certificate.completionDate).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })
               : "N/A",
           })
         } else if (body?.status === "revoked") {

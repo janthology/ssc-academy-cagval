@@ -97,7 +97,7 @@ export function ReviewQueue() {
                       <span>by {r.instructorName}</span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
-                        {r.submitted_at ? new Date(r.submitted_at).toLocaleString() : "—"}
+                        {r.submitted_at ? new Date(r.submitted_at).toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) : "—"}
                       </span>
                     </div>
                   </div>

@@ -169,7 +169,7 @@ export default async function DashboardCoursesPage() {
           estimatedTime: `${remainingTimeHours} hours`,
           lastAccessed: enrollment.last_accessed_at,
           rating: course?.rating || 0,
-          image: course?.thumbnail || "/placeholder.svg",
+          image: course?.thumbnail?.startsWith("http") || course?.thumbnail?.startsWith("/") ? course.thumbnail : "/placeholder.svg",
           completed_at: enrollment.completed_at || undefined,
           certificateId: certificate?.id || null,
           lessonsCompleted: `${completedLessons}/${totalLessons}`,

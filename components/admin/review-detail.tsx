@@ -157,7 +157,7 @@ export function ReviewDetail({ moduleId }: { moduleId: string }) {
           <h1 className="text-3xl font-bold text-foreground font-serif">{title}</h1>
           <p className="text-muted-foreground">
             {courseTitle} · submitted by {instructorName}
-            {submittedAt && ` · ${new Date(submittedAt).toLocaleString()}`}
+            {submittedAt && ` · ${new Date(submittedAt).toLocaleString("en-US", { year: "numeric", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })}`}
           </p>
         </div>
         <Badge variant={status === "rejected" ? "destructive" : status === "published" ? "default" : "secondary"}>
