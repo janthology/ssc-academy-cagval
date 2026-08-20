@@ -9,6 +9,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Course, Module, Lesson, Enrollment, LearningOutcome } from "@/lib/types/database"
+import { formatNumber } from "@/lib/utils/dates"
 
 // Define a minimal type for progress data relevant to this component
 interface ProgressDataItem {
@@ -285,7 +286,7 @@ export function CourseContent({ courseId, course, enrollment, progressData: init
               </div>
               <div>
                 <span className="font-medium">Students Taught:</span>
-                <p className="text-muted-foreground">{course.enrollment_count !== null ? course.enrollment_count.toLocaleString() : 0}</p>
+                <p className="text-muted-foreground">{course.enrollment_count !== null ? formatNumber(course.enrollment_count) : 0}</p>
               </div>
               <div>
                 <span className="font-medium">Specialization:</span>

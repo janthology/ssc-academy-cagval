@@ -9,6 +9,7 @@ import { BookOpen, Award, Clock, TrendingUp, Target, Calendar, Play, Building2 }
 import Link from "next/link"
 import type { User, Course, Event } from "@/lib/types/database"
 import { EVENT_TYPE_LABEL, eventDate, eventTime } from "@/lib/events/format"
+import { formatDateNumeric, getDisplayMonth } from "@/lib/utils/dates"
 
 type UpcomingEvent = Pick<Event, "id" | "title" | "event_type" | "starts_at" | "ends_at" | "location">
 
@@ -54,20 +55,11 @@ export function DashboardContent({
   }
 
   const thisMonthCerts = currentMonth !== null
-    ? certificates.filter(c => new Date(c.issued_at).getMonth() === currentMonth).length
+    ? certificates.filter(c => getDisplayMonth(c.issued_at) === currentMonth).length
     : 0
 
   const incompleteCourses = recentCourses.filter(course => course.progress !== undefined && course.progress < 100)
   const completedCourses = recentCourses.filter(course => course.progress !== undefined && course.progress === 100)
-
-  const formatDate = (dateStr: string | undefined): string => {
-    if (!dateStr) return "N/A";
-    const date = new Date(dateStr);
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  };
 
   return (
     <div className="space-y-6">
@@ -155,7 +147,7 @@ export function DashboardContent({
                         <h4 className="font-medium">{course.title}</h4>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <span>Completed: 100%</span>
-                          <span>Finished on {formatDate(course.completed_at)}</span>
+                          <span>Finished on {formatDateNumeric(course.completed_at)}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <Progress value={course.progress!} className="flex-1 h-2" />

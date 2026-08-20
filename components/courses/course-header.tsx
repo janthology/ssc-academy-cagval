@@ -7,6 +7,7 @@ import Image from "next/image"
 import { useState } from "react"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Course, Enrollment } from "@/lib/types/database"
+import { formatNumber } from "@/lib/utils/dates"
 
 interface CourseHeaderProps {
   courseId: string
@@ -130,7 +131,7 @@ export function CourseHeader({ courseId, course, enrollment, unmetPrereqs = [] }
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Users className="w-4 h-4 text-primary" />
-            <span>{course.enrollment_count !== null ? course.enrollment_count.toLocaleString() : 0} students</span>
+            <span>{course.enrollment_count !== null ? formatNumber(course.enrollment_count) : 0} students</span>
           </div>
         </div>
 

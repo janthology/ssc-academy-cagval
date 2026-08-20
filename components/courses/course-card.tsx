@@ -5,6 +5,7 @@ import { Clock, BookOpen, Users, Star } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import type { Course } from "@/lib/types/database"
+import { formatNumber } from "@/lib/utils/dates"
 
 interface CourseCardProps {
   course: Course
@@ -54,7 +55,7 @@ export function CourseCard({ course }: CourseCardProps) {
           </div>
           <div className="flex items-center gap-1 text-muted-foreground">
             <Users className="w-4 h-4" />
-            {course.enrollment_count !== null ? course.enrollment_count.toLocaleString() : 0} students
+            {course.enrollment_count !== null ? formatNumber(course.enrollment_count) : 0} students
           </div>
         </div>
 

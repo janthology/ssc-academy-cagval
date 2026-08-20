@@ -8,6 +8,7 @@ import { Award, Download, Share2, Calendar, CheckCircle, Loader2, Eye, Check } f
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Certificate, Enrollment } from "@/lib/types/database"
 import Link from "next/link"
+import { formatDate, getDisplayMonth } from "@/lib/utils/dates"
 
 interface CertificatesViewProps {
   user?: { id: string }
@@ -192,7 +193,7 @@ export function CertificatesView({ user }: CertificatesViewProps) {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{certificates.length}</div>
-            <p className="text-xs text-muted-foreground">+{currentMonth !== null ? certificates.filter(c => new Date(c.issued_at).getMonth() === currentMonth).length : 0} this month</p>
+            <p className="text-xs text-muted-foreground">+{currentMonth !== null ? certificates.filter(c => getDisplayMonth(c.issued_at) === currentMonth).length : 0} this month</p>
           </CardContent>
         </Card>
 
@@ -246,7 +247,7 @@ export function CertificatesView({ user }: CertificatesViewProps) {
                       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                         <div className="flex items-center gap-2">
                           <Calendar className="w-4 h-4 text-primary" />
-                          <span>Issued: {cert.issued_at ? new Date(cert.issued_at).toLocaleDateString() : "N/A"}</span>
+                          <span>Issued: {formatDate(cert.issued_at)}</span>
                         </div>
                         <div className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-500" />

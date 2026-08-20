@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { BookOpen, Clock, Play, CheckCircle, Calendar, Star, Eye } from "lucide-react"
 import Link from "next/link"
+import { formatDateNumeric } from "@/lib/utils/dates"
 import Image from "next/image"
 import { useState } from "react"
 import type { User } from "@/lib/types/database"
@@ -32,17 +33,6 @@ interface EnrolledCourse {
 interface EnrolledCoursesProps {
   enrolledCourses: EnrolledCourse[]
   user: User | null
-}
-
-// Utility function to format date as MM/DD/YYYY
-const formatDate = (dateStr: string | undefined): string => {
-  if (!dateStr) return "N/A"
-  const date = new Date(dateStr)
-  if (isNaN(date.getTime())) return "N/A"
-  const month = String(date.getMonth() + 1).padStart(2, "0")
-  const day = String(date.getDate()).padStart(2, "0")
-  const year = date.getFullYear()
-  return `${month}/${day}/${year}`
 }
 
 export function EnrolledCourses({ enrolledCourses = [], user }: EnrolledCoursesProps) {
@@ -175,7 +165,7 @@ function CourseCard({ course }: { course: EnrolledCourse }) {
               </div>
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-primary" />
-                <span>Last Accessed: {formatDate(course.lastAccessed)}</span>
+                <span>Last Accessed: {formatDateNumeric(course.lastAccessed)}</span>
               </div>
               <div className="flex items-center gap-2">
                 <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />

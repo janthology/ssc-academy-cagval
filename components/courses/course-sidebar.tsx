@@ -8,6 +8,7 @@ import { Clock, Users, Award, BookOpen, Download, XCircle, CheckCircle } from "l
 import Link from "next/link"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Course, Enrollment } from "@/lib/types/database"
+import { formatNumber } from "@/lib/utils/dates"
 import { useEffect, useState } from "react"
 
 // Minimal interfaces for query results
@@ -249,7 +250,7 @@ export function CourseSidebar({ courseId, enrollment, course }: CourseSidebarPro
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Users className="w-4 h-4 text-primary" />
-              <span>{course.enrollment_count !== null ? course.enrollment_count.toLocaleString() : 0} students enrolled</span>
+              <span>{course.enrollment_count !== null ? formatNumber(course.enrollment_count) : 0} students enrolled</span>
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Award className="w-4 h-4 text-primary" />

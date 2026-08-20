@@ -1,5 +1,6 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Bell, Check } from "lucide-react"
@@ -29,6 +30,12 @@ function timeAgo(iso: string): string {
 export function NotificationBell() {
   const { notifications, unreadCount, markRead, markAllRead } = useUser()
   const router = useRouter()
+  // Defer Date.now()-based timestamps to client-only to avoid hydration mismatch.
+  // The server has no user notifications on first render anyway (context default
+  // is []), but once the client loads them the relative times must not differ
+  // from a stale server-rendered value.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
 
   const openNotification = (n: Notification) => {
     if (!n.read) markRead(n.id)
@@ -77,7 +84,9 @@ export function NotificationBell() {
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium">{n.title}</p>
                   <p className="line-clamp-2 text-xs text-muted-foreground">{n.message}</p>
-                  <p className="mt-0.5 text-[10px] text-muted-foreground">{timeAgo(n.created_at)}</p>
+                  <p className="mt-0.5 text-[10px] text-muted-foreground" suppressHydrationWarning>
+                    {mounted ? timeAgo(n.created_at) : ""}
+                  </p>
                 </div>
               </DropdownMenuItem>
             ))}

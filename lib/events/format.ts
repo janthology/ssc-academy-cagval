@@ -1,4 +1,5 @@
 import type { Event } from "@/lib/types/database"
+import { formatDate, formatTimeRange } from "@/lib/utils/dates"
 
 // Slugs are stored; labels are display-only (same split as the user_type and
 // organization_type label maps used elsewhere in admin/dashboard views).
@@ -10,13 +11,12 @@ export const EVENT_TYPE_LABEL: Record<Event["event_type"], string> = {
 
 export const EVENT_TYPE_OPTIONS = Object.entries(EVENT_TYPE_LABEL) as [Event["event_type"], string][]
 
-/** "Dec 15, 2025" */
+/** "Dec 15, 2025" — uses platform timezone for SSR/client parity. */
 export function eventDate(iso: string) {
-  return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+  return formatDate(iso)
 }
 
 /** "2:00 PM", or "2:00 PM – 4:00 PM" when an end time exists. */
 export function eventTime(startsAt: string, endsAt?: string | null) {
-  const f = (s: string) => new Date(s).toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })
-  return endsAt ? `${f(startsAt)} – ${f(endsAt)}` : f(startsAt)
+  return formatTimeRange(startsAt, endsAt)
 }
