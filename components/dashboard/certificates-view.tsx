@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Award, Download, Share2, Calendar, CheckCircle, Loader2, Eye, Check } from "lucide-react"
+import { Award, Download, Calendar, CheckCircle, Loader2, Eye, Check } from "lucide-react"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Certificate, Enrollment } from "@/lib/types/database"
 import Link from "next/link"
@@ -172,16 +172,6 @@ export function CertificatesView({ user }: CertificatesViewProps) {
           <h1 className="text-3xl font-bold text-foreground font-serif">My Certificates</h1>
           <p className="text-muted-foreground">Your achievements and professional credentials</p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline" className="gap-2 bg-transparent" disabled>
-            <Share2 className="w-4 h-4" />
-            Share Profile
-          </Button>
-          <Button variant="outline" className="gap-2 bg-transparent" disabled>
-            <Download className="w-4 h-4" />
-            Download All
-          </Button>
-        </div>
       </div>
 
       {/* Stats */}
@@ -278,10 +268,6 @@ export function CertificatesView({ user }: CertificatesViewProps) {
                         >
                           <Download className="w-4 h-4" />
                           Download PDF
-                        </Button>
-                        <Button variant="outline" size="sm" className="gap-2 bg-transparent" disabled>
-                          <Share2 className="w-4 h-4" />
-                          Share
                         </Button>
                         <Button variant="secondary" size="sm" className="gap-2 bg-green-500" asChild>
                           <Link href={`/certificates/${cert.id}`}>

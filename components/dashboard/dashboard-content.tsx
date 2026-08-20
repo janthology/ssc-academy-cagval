@@ -63,23 +63,27 @@ export function DashboardContent({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-3xl font-bold text-foreground font-serif">Welcome back, {user?.name || "User"}!</h1>
           <p className="text-muted-foreground">Continue your SSC learning journey</p>
         </div>
-        <Badge variant="secondary" className="gap-2">
-          <Building2 className="w-4 h-4" />
-          {user?.organization ? `${user.user_type} - ${user.organization}` : "LGU Official - Placeholder"}
-        </Badge>
+        {(user?.organization || user?.user_type) && (
+          <Badge variant="secondary" className="w-fit gap-2">
+            <Building2 className="w-4 h-4" />
+            {user.organization
+              ? `${user.user_type} · ${user.organization}`
+              : user.user_type}
+          </Badge>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           { title: "Courses Enrolled", value: stats.coursesEnrolled, description: `${activeCount} in progress, ${completedCount} completed`, icon: BookOpen, color: "text-blue-600" },
           { title: "Certificates Earned", value: stats.certificatesEarned, description: `${thisMonthCerts} this month`, icon: Award, color: "text-green-600" },
-          { title: "Learning Hours", value: stats.learningHours, description: "This month", icon: Clock, color: "text-orange-600" },
-          { title: "Progress Score", value: `${stats.progressScore.toFixed(0)}%`, description: "Avg. Course Progress", icon: TrendingUp, color: "text-purple-600" },
+          { title: "Learning Hours", value: stats.learningHours, description: "Total time tracked", icon: Clock, color: "text-orange-600" },
+          { title: "Progress Score", value: `${stats.progressScore.toFixed(0)}%`, description: "Avg. course progress", icon: TrendingUp, color: "text-purple-600" },
         ].map((stat) => (
           <Card key={stat.title}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

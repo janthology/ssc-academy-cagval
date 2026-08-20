@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress as ProgressComponent } from "@/components/ui/progress"
 import { Badge } from "@/components/ui/badge"
-import { Clock, Users, Award, BookOpen, Download, XCircle, CheckCircle } from "lucide-react"
+import { Clock, Users, Award, BookOpen, XCircle, CheckCircle } from "lucide-react"
 import Link from "next/link"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Course, Enrollment } from "@/lib/types/database"
@@ -275,37 +275,9 @@ export function CourseSidebar({ courseId, enrollment, course }: CourseSidebarPro
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Course Resources</CardTitle>
+          <CardTitle className="text-lg">Browse More</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
-          <Button variant="outline" className="w-full justify-start gap-2 bg-transparent" disabled>
-            <Download className="w-4 h-4" />
-            Course Materials
-          </Button>
-          <Button variant="outline" className="w-full justify-start gap-2 bg-transparent" disabled>
-            <BookOpen className="w-4 h-4" />
-            Reading List
-          </Button>
-          <Button variant="outline" className="w-full justify-start gap-2 bg-transparent" disabled>
-            <Users className="w-4 h-4" />
-            Discussion Forum
-          </Button>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Related Courses</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="space-y-2">
-            <h4 className="text-sm font-medium">Smart City Data Analytics</h4>
-            <p className="text-xs text-muted-foreground">Intermediate • 6 hours</p>
-          </div>
-          <div className="space-y-2">
-            <h4 className="text-sm font-medium">Digital Governance</h4>
-            <p className="text-xs text-muted-foreground">Intermediate • 5 hours</p>
-          </div>
+        <CardContent>
           <Button variant="outline" size="sm" className="w-full bg-transparent" asChild>
             <Link href="/courses">
               View All Courses

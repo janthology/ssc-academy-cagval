@@ -487,14 +487,7 @@ export function RegisterForm() {
           onCheckedChange={(checked) => setFormData({ ...formData, agreeToTerms: checked as boolean })}
         />
         <Label htmlFor="terms" className="text-sm text-muted-foreground">
-          I agree to the{" "}
-          <Button variant="link" className="p-0 h-auto text-sm text-primary">
-            Terms of Service
-          </Button>{" "}
-          and{" "}
-          <Button variant="link" className="p-0 h-auto text-sm text-primary">
-            Privacy Policy
-          </Button>
+          I agree to the platform Terms of Service and Privacy Policy for DOST Region 02&apos;s Smart and Sustainable Communities Academy.
         </Label>
       </div>
 

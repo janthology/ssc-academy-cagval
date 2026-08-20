@@ -3,9 +3,8 @@
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Header } from "@/components/ui/header"
-import { BookOpen, BookOpenText, Users, Award, Building2, GraduationCap, MapPin } from "lucide-react"
+import { BookOpen, BookOpenText, Users, Award, Building2, GraduationCap } from "lucide-react"
 import Link from "next/link"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 
@@ -25,31 +24,25 @@ export default function HomePage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto text-center max-w-4xl">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <MapPin className="w-5 h-5 text-primary" />
-            <Badge variant="secondary" className="text-sm">
-              Region 2 - Cagayan Valley
-            </Badge>
-          </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-foreground mb-6 font-serif">
-            Master the Implementation of Smart and Sustainable Communities Program (SSCP)
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-            A learning platform that empowers LGUs, academe, students, and private individuals to co-create Smart and Sustainable Communities.
+      <section className="relative overflow-hidden border-b bg-gradient-to-b from-sky-50 via-background to-background px-4 py-16 md:py-24">
+        <div className="container mx-auto max-w-4xl text-center">
+          <p className="mb-3 text-sm font-semibold tracking-wide text-primary uppercase">
+            DOST Region 02 · Cagayan Valley
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="default" className="text-lg px-8" asChild>
-              <Link href="/learning-paths">Start Learning Today</Link>
+          <h1 className="mb-4 font-serif text-4xl font-bold tracking-tight text-foreground md:text-6xl">
+            Smart &amp; Sustainable Communities Academy
+          </h1>
+          <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
+            Master SSCP implementation with courses for LGUs, academe, students, and private learners across Region 02.
+          </p>
+          <div className="flex flex-col justify-center gap-3 sm:flex-row">
+            <Button size="lg" className="px-8 text-lg" asChild>
+              <Link href={isAuthenticated ? "/dashboard" : "/register"}>
+                {isAuthenticated ? "Go to Dashboard" : "Start Learning"}
+              </Link>
             </Button>
-            <Button size="lg" variant="secondary" className="text-lg px-8" asChild>
+            <Button size="lg" variant="secondary" className="px-8 text-lg" asChild>
               <Link href="/courses">Browse Courses</Link>
-            </Button>
-          </div>
-          <div className="mt-4 text-center">
-            <Button variant="link" asChild>
-              <Link href="/dashboard">Already enrolled? Go to Dashboard</Link>
             </Button>
           </div>
         </div>

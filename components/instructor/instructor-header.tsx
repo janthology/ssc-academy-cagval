@@ -41,13 +41,16 @@ export function InstructorHeader() {
     <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/instructor" className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <BookOpen className="w-6 h-6 text-primary-foreground" />
+          <Link href="/instructor" className="flex min-w-0 items-center gap-3">
+            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary">
+              <BookOpen className="h-6 w-6 text-primary-foreground" />
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-foreground">Cagayan Valley Smart City Academy</h1>
-              <p className="text-sm text-muted-foreground">Instructor Panel</p>
+            <div className="min-w-0">
+              <h1 className="truncate text-base font-bold text-foreground sm:text-xl">
+                <span className="sm:hidden">SSCA</span>
+                <span className="hidden sm:inline">Smart &amp; Sustainable Communities Academy</span>
+              </h1>
+              <p className="text-xs text-muted-foreground sm:text-sm">Instructor Panel</p>
             </div>
           </Link>
 

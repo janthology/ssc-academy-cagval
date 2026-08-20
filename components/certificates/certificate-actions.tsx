@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Download, Share2, Link2, Mail, Copy, CheckCircle } from "lucide-react"
+import { Download, Mail, Copy, CheckCircle } from "lucide-react"
 import type { Certificate } from "@/lib/types/database"
 import { formatDate } from "@/lib/utils/dates"
 
@@ -77,29 +77,17 @@ export function CertificateActions({ certificate }: CertificateActionsProps) {
           <CardDescription>Get your certificate in different formats and share your achievement</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-3">
-            <Button onClick={handleDownloadPDF} className="gap-2 cursor-pointer">
-              <Download className="w-4 h-4" />
-              PDF
-            </Button>
-            <Button variant="outline" className="gap-2 bg-transparent" disabled>
-              <Download className="w-4 h-4" />
-              PNG
-            </Button>
-          </div>
+          <Button onClick={handleDownloadPDF} className="w-full gap-2 cursor-pointer">
+            <Download className="w-4 h-4" />
+            Download PDF
+          </Button>
 
           <div className="space-y-3">
-            <Label>Share via</Label>
-            <div className="grid grid-cols-2 gap-3">
-              <Button variant="outline" onClick={handleShareEmail} className="gap-2 bg-transparent cursor-pointer">
-                <Mail className="w-4 h-4" />
-                Email
-              </Button>
-              <Button variant="outline" className="gap-2 bg-transparent" disabled>
-                <Share2 className="w-4 h-4" />
-                LinkedIn
-              </Button>
-            </div>
+            <Label>Share via email</Label>
+            <Button variant="outline" onClick={handleShareEmail} className="w-full gap-2 bg-transparent cursor-pointer">
+              <Mail className="w-4 h-4" />
+              Email
+            </Button>
           </div>
 
           <div className="space-y-2">
@@ -140,8 +128,8 @@ export function CertificateActions({ certificate }: CertificateActionsProps) {
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Blockchain Hash:</span>
-              <span className="font-mono text-xs">{certificate.verification_hash?.slice(0, 8) || "N/A"}...</span>
+              <span className="text-muted-foreground">Verification Hash:</span>
+              <span className="font-mono text-xs">{certificate.verification_hash?.slice(0, 8) || "N/A"}…</span>
             </div>
           </div>
 
@@ -151,11 +139,6 @@ export function CertificateActions({ certificate }: CertificateActionsProps) {
               {certificate.verification_hash || "N/A"}
             </div>
           </div>
-
-          <Button variant="outline" className="w-full gap-2 bg-transparent" disabled>
-            <Link2 className="w-4 h-4" />
-            View on Blockchain
-          </Button>
         </CardContent>
       </Card>
     </div>

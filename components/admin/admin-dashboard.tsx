@@ -211,40 +211,40 @@ export function AdminDashboard() {
         const [
           { count: pendingCourses, error: pendingCoursesError },
           { count: pendingUsers, error: pendingUsersError },
-          { count: certificateIssues, error: certificateIssuesError },
+          { count: pendingModules, error: pendingModulesError },
         ] = await Promise.all([
           supabase.from('courses').select('*', { count: 'exact', head: true }).eq('is_active', false),
           supabase.from('users').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
-          supabase.from('certificates').select('*', { count: 'exact', head: true }).eq('status', 'revoked'),
+          supabase.from('modules').select('*', { count: 'exact', head: true }).eq('status', 'pending_review'),
         ]);
 
         if (pendingCoursesError) throw new Error(pendingCoursesError.message);
         if (pendingUsersError) throw new Error(pendingUsersError.message);
-        if (certificateIssuesError) throw new Error(certificateIssuesError.message);
+        if (pendingModulesError) throw new Error(pendingModulesError.message);
 
         setPendingActions([
           {
-            title: 'Course Approvals',
+            title: 'Inactive Courses',
             count: pendingCourses || 0,
-            description: 'New courses waiting for review',
-            action: 'Review',
-            href: '/admin/courses?filter=pending',
+            description: 'Courses marked inactive in the catalog',
+            action: 'Manage',
+            href: '/admin/courses',
             prefetch: false,
           },
           {
             title: 'User Verifications',
             count: pendingUsers || 0,
-            description: 'User accounts pending verification',
+            description: 'Accounts awaiting approval',
             action: 'Verify',
-            href: '/admin/users?filter=pending',
+            href: '/admin/users',
             prefetch: false,
           },
           {
-            title: 'Certificate Issues',
-            count: certificateIssues || 0,
-            description: 'Certificate generation errors',
-            action: 'Resolve',
-            href: '/admin/certificates?filter=issues',
+            title: 'Content Review',
+            count: pendingModules || 0,
+            description: 'Modules submitted for admin review',
+            action: 'Review',
+            href: '/admin/review',
             prefetch: false,
           },
         ]);
