@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import PDFDocument from "pdfkit";
-import { supabaseAdmin } from "@/lib/supabase/admin-client";
 import { supabaseServer } from "@/lib/supabase/server-client";
 import { requireAuth } from "@/lib/auth/api-auth";
 import type { Certificate } from "@/lib/types/database";
@@ -31,16 +30,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
       return authError;
     }
 
-    // Prefer the service-role client (bypasses RLS) so we get full certificate +
-    // related user/course data in one pass. If the service role key is not
-    // configured fall back to the authenticated session client (RLS allows
-    // owners and admins to read their own certificates).
-    let supabase: ReturnType<typeof supabaseAdmin>;
-    try {
-      supabase = supabaseAdmin();
-    } catch {
-      supabase = (await supabaseServer()) as unknown as ReturnType<typeof supabaseAdmin>;
-    }
+    // Authenticated session client — RLS allows owner or admin to read the row.
+    // Do not use the service-role client here: a misconfigured
+    // SUPABASE_SERVICE_ROLE_KEY on Vercel produces "Invalid API key" and breaks
+    // downloads even when the user's session is valid.
+    const supabase = await supabaseServer();
 
     // Fetch certificate data
     const { data: certData, error: certError } = await supabase
