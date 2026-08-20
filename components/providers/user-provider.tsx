@@ -68,6 +68,17 @@ export function useUser() {
   return useContext(UserContext)
 }
 
+async function fetchMe(): Promise<UserProfile | null> {
+  // Client -> Next server -> Supabase avoids browser-side networking issues
+  // (e.g. IPv6 DNS flake) from immediately surfacing as a connection banner.
+  const res = await fetch("/api/me", { headers: { "Content-Type": "application/json" } })
+  if (!res.ok) {
+    throw new Error("Failed to fetch /api/me")
+  }
+  const json = (await res.json()) as { profile?: UserProfile | null }
+  return (json.profile ?? null) as UserProfile | null
+}
+
 // Reject if `p` doesn't settle within `ms`. getUser()/PostgREST have no native
 // timeout, and this box's IPv6 path to Supabase is dead / IPv4 intermittently
 // times out — without this the load can hang indefinitely (stuck spinner).
@@ -162,11 +173,11 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   // never changes status — used by navigation and non-signout auth events.
   const refetchBackground = useCallback(async (id: string) => {
     try {
-      const { data, error } = await withTimeout(
-        supabaseBrowser.from("users").select(PROFILE_COLUMNS).eq("id", id).single(),
-        LOAD_TIMEOUT_MS
-      )
-      if (!error && data) setProfile(data as UserProfile)
+      // `id` is kept for backwards compatibility with the existing callsites,
+      // but the source of truth is `/api/me` (RLS via cookies/session).
+      const me = await withTimeout(fetchMe(), LOAD_TIMEOUT_MS)
+      if (me) setProfile(me)
+      else setProfile(null)
     } catch {
       /* keep last-known-good */
     }
@@ -176,26 +187,10 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const loadFull = useCallback(async () => {
     setStatus("loading")
     try {
-      const { data: userData, error: userErr } = await withTimeout(
-        supabaseBrowser.auth.getUser(),
-        LOAD_TIMEOUT_MS
-      )
-      if (userErr) throw userErr
-      const user = userData?.user
-      if (!user) {
-        // genuinely not authenticated
-        setProfile(null)
-        setStatus("ready")
-        return
-      }
-      const { data, error } = await withTimeout(
-        supabaseBrowser.from("users").select(PROFILE_COLUMNS).eq("id", user.id).single(),
-        LOAD_TIMEOUT_MS
-      )
-      if (error) throw error
-      setProfile(data as UserProfile)
+      const me = await withTimeout(fetchMe(), LOAD_TIMEOUT_MS)
+      setProfile(me)
       setStatus("ready")
-      refetchNotifications(user.id)
+      if (me?.id) await refetchNotifications(me.id)
     } catch {
       // Timeout or network failure — surface a retryable error. Keep whatever
       // profile we already had (may be null on first load).
