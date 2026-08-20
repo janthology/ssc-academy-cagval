@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import PDFDocument from "pdfkit";
 import { supabaseAdmin } from "@/lib/supabase/admin-client";
+import { supabaseServer } from "@/lib/supabase/server-client";
 import { requireAuth } from "@/lib/auth/api-auth";
 import type { Certificate } from "@/lib/types/database";
+import { formatDate } from "@/lib/utils/dates";
 import fs from "fs";
 import path from "path";
 import QRCode from "qrcode";
@@ -29,10 +31,16 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
       return authError;
     }
 
-    // Data fetched with the service-role client; this route is the trust boundary
-    // and enforces ownership explicitly below (not via RLS), so a non-owner gets
-    // a deterministic 403 rather than a 404 once certificate RLS is tightened.
-    const supabase = supabaseAdmin();
+    // Prefer the service-role client (bypasses RLS) so we get full certificate +
+    // related user/course data in one pass. If the service role key is not
+    // configured fall back to the authenticated session client (RLS allows
+    // owners and admins to read their own certificates).
+    let supabase: ReturnType<typeof supabaseAdmin>;
+    try {
+      supabase = supabaseAdmin();
+    } catch {
+      supabase = (await supabaseServer()) as unknown as ReturnType<typeof supabaseAdmin>;
+    }
 
     // Fetch certificate data
     const { data: certData, error: certError } = await supabase
@@ -138,8 +146,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
       doc.text("SMART AND SUSTAINABLE COMMUNITIES ACADEMY", leftMargin + 90, 98);
 
       // --- Date (top-left under org) ---
-      const issuedDate = certificate.issued_at ? new Date(certificate.issued_at) : new Date();
-      const formattedDate = issuedDate.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+      const formattedDate = formatDate(certificate.issued_at);
       doc.font("Helvetica").fontSize(12).fillColor(LIGHT_TEXT);
       doc.text(`Issued: ${formattedDate}`, leftMargin, 160);
 
