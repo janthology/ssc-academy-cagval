@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { BookOpen, LogOut, GraduationCap } from "lucide-react"
 import {
@@ -17,6 +16,7 @@ import Link from "next/link"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { useUser } from "@/components/providers/user-provider"
 import { NotificationBell } from "@/components/notifications/notification-bell"
+import { ProfileAvatar } from "@/components/ui/profile-avatar"
 
 export function InstructorHeader() {
   const router = useRouter()
@@ -28,14 +28,6 @@ export function InstructorHeader() {
     await supabaseBrowser.auth.signOut()
     router.push("/login")
   }
-
-  const initials = name
-    .split(" ")
-    .map((part) => part[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join("")
-    .toUpperCase()
 
   return (
     <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -58,11 +50,8 @@ export function InstructorHeader() {
             <NotificationBell />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src="/placeholder.svg" alt={name} />
-                    <AvatarFallback>{initials || "IN"}</AvatarFallback>
-                  </Avatar>
+                <Button variant="ghost" size="icon" className="relative rounded-full">
+                  <ProfileAvatar avatar={profile?.avatar} name={name} />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>

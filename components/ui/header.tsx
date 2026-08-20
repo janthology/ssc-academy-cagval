@@ -1,9 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { BookOpenText, Settings, LogOut, Shield, GraduationCap } from "lucide-react"
 import {
@@ -18,28 +16,12 @@ import Link from "next/link"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { useUser } from "@/components/providers/user-provider"
 import { NotificationBell } from "@/components/notifications/notification-bell"
+import { ProfileAvatar } from "@/components/ui/profile-avatar"
 
 export function Header() {
   const router = useRouter()
   const pathname = usePathname()
   const { profile: user, loading: isLoading, error: userError, retry } = useUser()
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    const loadAvatar = async () => {
-      if (!user?.avatar) {
-        setAvatarUrl(null)
-        return
-      }
-      const { data, error } = await supabaseBrowser.storage
-        .from("avatars")
-        .createSignedUrl(user.avatar, 3600)
-      if (!cancelled) setAvatarUrl(error ? null : data.signedUrl)
-    }
-    loadAvatar()
-    return () => { cancelled = true }
-  }, [user?.avatar])
 
   const handleLogout = async () => {
     try {
@@ -92,11 +74,8 @@ export function Header() {
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full cursor-pointer">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={avatarUrl || "/placeholder.svg"} alt="User" />
-                    <AvatarFallback>{user.name?.[0] || "U"}</AvatarFallback>
-                  </Avatar>
+                <Button variant="ghost" size="icon" className="relative rounded-full cursor-pointer">
+                  <ProfileAvatar avatar={user.avatar} name={user.name} />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>

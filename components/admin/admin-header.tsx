@@ -1,9 +1,7 @@
 "use client"
 
-import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { BookOpen, LogOut, Shield } from "lucide-react"
 import {
@@ -17,42 +15,18 @@ import {
 import Link from "next/link"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { useUser } from "@/components/providers/user-provider"
+import { ProfileAvatar } from "@/components/ui/profile-avatar"
 
 export function AdminHeader() {
   const router = useRouter()
   const { profile } = useUser()
   const name = profile?.name || "Admin"
   const email = profile?.email ?? ""
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
-
-  useEffect(() => {
-    let cancelled = false
-    const loadAvatar = async () => {
-      if (!profile?.avatar) {
-        setAvatarUrl(null)
-        return
-      }
-      const { data, error } = await supabaseBrowser.storage
-        .from("avatars")
-        .createSignedUrl(profile.avatar, 3600)
-      if (!cancelled) setAvatarUrl(error ? null : data.signedUrl)
-    }
-    loadAvatar()
-    return () => { cancelled = true }
-  }, [profile?.avatar])
 
   const handleLogout = async () => {
     await supabaseBrowser.auth.signOut()
     router.push("/login")
   }
-
-  const initials = name
-    .split(" ")
-    .map((part) => part[0])
-    .filter(Boolean)
-    .slice(0, 2)
-    .join("")
-    .toUpperCase()
 
   return (
     <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
@@ -75,11 +49,8 @@ export function AdminHeader() {
           <div className="flex items-center gap-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                  <Avatar className="h-10 w-10">
-                    <AvatarImage src={avatarUrl || "/placeholder.svg"} alt={name} />
-                    <AvatarFallback>{initials || "AD"}</AvatarFallback>
-                  </Avatar>
+                <Button variant="ghost" size="icon" className="relative rounded-full">
+                  <ProfileAvatar avatar={profile?.avatar} name={name} />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56" align="end" forceMount>
