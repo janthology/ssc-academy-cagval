@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Users, Search, MoreHorizontal, Building2, MapPin, Mail, Shield, GraduationCap, Loader2, UserCheck, UserX, Check } from "lucide-react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
@@ -21,6 +21,7 @@ type UserRow = {
   id: string
   name: string
   email: string
+  avatar: string | null
   organization: string | null
   position: string | null
   user_type: string
@@ -56,7 +57,7 @@ export function UserManagement() {
       // Admin reads all users via users_admin_all RLS.
       const { data, error: qErr } = await supabaseBrowser
         .from("users")
-        .select("id, name, email, organization, position, user_type, status, region, province, city, is_admin, is_instructor")
+        .select("id, name, email, avatar, organization, position, user_type, status, region, province, city, is_admin, is_instructor")
         .order("name")
       if (qErr) throw new Error(qErr.message)
 
@@ -67,11 +68,30 @@ export function UserManagement() {
       const certsByUser: Record<string, number> = {}
       for (const c of certs ?? []) certsByUser[c.user_id] = (certsByUser[c.user_id] || 0) + 1
 
-      setUsers((data ?? []).map((u: any) => ({
+      const rows = (data ?? []).map((u: any) => ({
         ...u,
+        avatar: u.avatar ?? null,
         status: (u.status ?? "active") as Status,
         completedCourses: completedByUser[u.id] ?? 0,
         certificates: certsByUser[u.id] ?? 0,
+      })) as UserRow[]
+
+      // Resolve avatar storage paths to short-lived signed URLs for display.
+      const avatarPaths = rows.map((u) => u.avatar).filter((p): p is string => Boolean(p))
+      const avatarUrlByPath: Record<string, string> = {}
+      if (avatarPaths.length > 0) {
+        const unique = [...new Set(avatarPaths)]
+        const { data: signed } = await supabaseBrowser.storage
+          .from("avatars")
+          .createSignedUrls(unique, 3600)
+        for (const item of signed ?? []) {
+          if (item.path && item.signedUrl) avatarUrlByPath[item.path] = item.signedUrl
+        }
+      }
+
+      setUsers(rows.map((u) => ({
+        ...u,
+        avatar: u.avatar ? (avatarUrlByPath[u.avatar] ?? null) : null,
       })))
     } catch (err: any) {
       setError(err.message || "Failed to load users.")
@@ -166,7 +186,10 @@ export function UserManagement() {
 
   const UserItem = ({ user }: { user: UserRow }) => (
     <div className="flex items-center gap-4 p-4 border rounded-lg">
-      <Avatar className="h-12 w-12"><AvatarFallback>{initials(user.name)}</AvatarFallback></Avatar>
+      <Avatar className="h-12 w-12">
+        {user.avatar && <AvatarImage src={user.avatar} alt={user.name} />}
+        <AvatarFallback>{initials(user.name)}</AvatarFallback>
+      </Avatar>
       <div className="flex-1 space-y-1 min-w-0">
         <div className="flex items-center gap-2 flex-wrap">
           <h4 className="font-semibold">{user.name}</h4>

@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -22,6 +23,23 @@ export function AdminHeader() {
   const { profile } = useUser()
   const name = profile?.name || "Admin"
   const email = profile?.email ?? ""
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    const loadAvatar = async () => {
+      if (!profile?.avatar) {
+        setAvatarUrl(null)
+        return
+      }
+      const { data, error } = await supabaseBrowser.storage
+        .from("avatars")
+        .createSignedUrl(profile.avatar, 3600)
+      if (!cancelled) setAvatarUrl(error ? null : data.signedUrl)
+    }
+    loadAvatar()
+    return () => { cancelled = true }
+  }, [profile?.avatar])
 
   const handleLogout = async () => {
     await supabaseBrowser.auth.signOut()
@@ -59,7 +77,7 @@ export function AdminHeader() {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                   <Avatar className="h-10 w-10">
-                    <AvatarImage src="/placeholder.svg" alt={name} />
+                    <AvatarImage src={avatarUrl || "/placeholder.svg"} alt={name} />
                     <AvatarFallback>{initials || "AD"}</AvatarFallback>
                   </Avatar>
                 </Button>
