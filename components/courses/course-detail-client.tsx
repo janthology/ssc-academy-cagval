@@ -142,7 +142,9 @@ export function CourseDetailClient({
             <CourseContent courseId={course.id} course={course} enrollment={enrollment} progressData={progressData} />
           </div>
           <div className="lg:col-span-1">
-            <CourseSidebar courseId={course.id} enrollment={enrollment} course={course} />
+            <div className="sticky top-20 max-h-[calc(100vh-5.5rem)] overflow-y-auto">
+              <CourseSidebar courseId={course.id} enrollment={enrollment} course={course} />
+            </div>
           </div>
         </div>
       </div>

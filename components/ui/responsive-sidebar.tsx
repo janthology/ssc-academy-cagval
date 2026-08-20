@@ -27,7 +27,7 @@ export function ResponsiveSidebar({
   return (
     <>
       <div className="shrink-0 border-r bg-background md:hidden">
-        <div className="sticky top-0 z-40 p-3">
+        <div className="sticky top-16 z-40 p-3">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="sm" className="gap-2" aria-label={`Open ${title}`}>
@@ -45,7 +45,7 @@ export function ResponsiveSidebar({
         </div>
       </div>
 
-      <aside className="hidden min-h-screen w-64 shrink-0 border-r bg-card/30 md:block">
+      <aside className="sticky top-16 z-30 hidden h-[calc(100vh-4rem)] w-64 shrink-0 self-start overflow-y-auto border-r bg-card/30 md:block">
         <div className="p-6">{children}</div>
       </aside>
     </>
