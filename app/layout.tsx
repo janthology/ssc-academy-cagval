@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import localFont from "next/font/local"
 import { UserProvider } from "@/components/providers/user-provider"
+import { NavigationProgress } from "@/components/ui/navigation-progress"
 import "./globals.css"
 
 // Self-hosted to remove the build-time fetch to fonts.gstatic.com (which fails
@@ -39,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geist.variable} ${manrope.variable} antialiased`}>
       <body className="font-sans">
+        <NavigationProgress />
         <UserProvider>{children}</UserProvider>
       </body>
     </html>

@@ -1,5 +1,5 @@
 import { PageLoading } from "@/components/ui/page-loading"
 
 export default function Loading() {
-  return <PageLoading label="Loading courses…" />
+  return <PageLoading label="Loading learning paths…" />
 }
