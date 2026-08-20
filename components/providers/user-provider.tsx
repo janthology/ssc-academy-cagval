@@ -10,10 +10,10 @@ import type { User } from "@/lib/types/database"
 // used to run independently (~3-4 getUser round-trips per instructor page).
 export type UserProfile = Pick<
   User,
-  "id" | "name" | "email" | "avatar" | "user_type" | "is_admin" | "is_instructor" | "status"
+  "id" | "name" | "email" | "avatar" | "user_type" | "is_admin" | "is_instructor" | "status" | "organization_id"
 >
 
-const PROFILE_COLUMNS = "id,name,email,avatar,user_type,is_admin,is_instructor,status"
+const PROFILE_COLUMNS = "id,name,email,avatar,user_type,is_admin,is_instructor,status,organization_id"
 const NOTIFICATION_COLUMNS = "id,type,title,message,link,read,created_at,module_id,certificate_id"
 const NOTIFICATION_LIMIT = 20
 const LOAD_TIMEOUT_MS = 9000
@@ -219,11 +219,12 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     return () => sub.subscription.unsubscribe()
   }, [loadFull, refetchBackground, refetchNotifications])
 
-  // Navigation: best-effort refetch to catch DB-side role/status changes (which
-  // fire no auth event) AND pick up new notifications. No independent poll loop.
+  // Navigation: refresh notifications only (cheap). Do NOT re-hit /api/me on
+  // every route change — that doubled Auth + DB cost on every click and made
+  // public pages (courses, events) feel slow after the first paint. Profile
+  // updates still arrive via onAuthStateChange and explicit retry().
   useEffect(() => {
     if (!profileIdRef.current) return
-    refetchBackground(profileIdRef.current)
     refetchNotifications(profileIdRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])

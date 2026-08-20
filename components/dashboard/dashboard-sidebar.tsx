@@ -16,48 +16,48 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { ResponsiveSidebar } from "@/components/ui/responsive-sidebar"
+import { useUser } from "@/components/providers/user-provider"
 
 export function DashboardSidebar() {
   const pathname = usePathname()
-  const [userType, setUserType] = useState<string | null>(null)
-  const [organizationId, setOrganizationId] = useState<string | null>(null)
+  const { profile, loading: profileLoading } = useUser()
   const [courseCount, setCourseCount] = useState<number>(0)
   const [certificateCount, setCertificateCount] = useState<number>(0)
-  const [isLoading, setIsLoading] = useState(true)
+  const [countsLoading, setCountsLoading] = useState(true)
+
+  const userType = profile?.user_type ?? null
+  const organizationId = profile?.organization_id ?? null
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      const { data: { user } } = await supabaseBrowser.auth.getUser()
-      if (!user?.email) {
-        setIsLoading(false)
-        return
-      }
-
-      const { data: userData } = await supabaseBrowser
-        .from("users")
-        .select("user_type, organization_id")
-        .eq("email", user.email)
-        .single()
-      setUserType(userData?.user_type || null)
-      setOrganizationId(userData?.organization_id || null)
-
-      const { count: enrollCount } = await supabaseBrowser
-        .from("enrollments")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", user.id)
-      setCourseCount(enrollCount ?? 0)
-
-      const { count: certCount } = await supabaseBrowser
-        .from("certificates")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", user.id)
-        .eq("status", "active")
-      setCertificateCount(certCount ?? 0)
-
-      setIsLoading(false)
+    if (!profile?.id) {
+      if (!profileLoading) setCountsLoading(false)
+      return
     }
-    fetchUserData()
-  }, [])
+
+    let cancelled = false
+    const loadCounts = async () => {
+      setCountsLoading(true)
+      const [enroll, cert] = await Promise.all([
+        supabaseBrowser
+          .from("enrollments")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", profile.id),
+        supabaseBrowser
+          .from("certificates")
+          .select("id", { count: "exact", head: true })
+          .eq("user_id", profile.id)
+          .eq("status", "active"),
+      ])
+      if (cancelled) return
+      setCourseCount(enroll.count ?? 0)
+      setCertificateCount(cert.count ?? 0)
+      setCountsLoading(false)
+    }
+    loadCounts()
+    return () => { cancelled = true }
+  }, [profile?.id, profileLoading])
+
+  const isLoading = profileLoading || countsLoading
 
   const menuItems = [
     {

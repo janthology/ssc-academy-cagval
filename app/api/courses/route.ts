@@ -77,5 +77,13 @@ export async function GET(request: Request) {
     };
   });
 
-  return NextResponse.json({ courses: coursesWithModules });
+  return NextResponse.json(
+    { courses: coursesWithModules },
+    {
+      headers: {
+        // Catalog is anon-identical; let browsers/CDN reuse filter responses briefly.
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      },
+    }
+  );
 }

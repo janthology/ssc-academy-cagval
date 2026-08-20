@@ -1,21 +1,26 @@
 import { CatalogClient } from "@/components/courses/catalog-client"
-import { supabasePublic } from "@/lib/supabase/public-client"
 import type { Course } from "@/lib/types/database"
 
-// Public catalog is server-rendered and cached (ISR). The data is anon-only and
-// identical for everyone, so it is safe to cache. New courses appear within the
-// window, or immediately via revalidatePath('/courses') from the admin create
-// action. The cookieless supabasePublic client keeps this route static.
+// Public catalog is server-rendered and ISR-cached. Use a native Rest fetch with
+// next.revalidate — supabase-js issues uncached fetches that defeat ISR (same
+// pattern as app/courses/[id]/page.tsx).
 export const revalidate = 300
 
+const COLS =
+  "id,title,description,level,category,duration,thumbnail,rating,enrollment_count,target_audience,instructor,modules!course_id(id)"
+
 async function getInitialCourses(): Promise<Course[]> {
-  const { data } = await supabasePublic
-    .from("courses")
-    .select(
-      "id,title,description,level,category,duration,thumbnail,rating,enrollment_count,target_audience,instructor,modules!course_id(id)"
-    )
-    .eq("is_active", true)
-  return (data ?? []) as unknown as Course[]
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL!
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  const res = await fetch(
+    `${base}/rest/v1/courses?is_active=eq.true&select=${encodeURIComponent(COLS)}`,
+    {
+      headers: { apikey: anon, Authorization: `Bearer ${anon}` },
+      next: { revalidate: 300 },
+    }
+  )
+  if (!res.ok) return []
+  return (await res.json()) as Course[]
 }
 
 export default async function CoursesPage() {

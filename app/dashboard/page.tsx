@@ -45,11 +45,11 @@ export default async function DashboardPage() {
   type UpcomingEvent = Pick<Event, "id" | "title" | "event_type" | "starts_at" | "ends_at" | "location">;
   let upcomingEvents: UpcomingEvent[] = [];
 
-  if (authUser?.email) {
+  if (authUser?.id) {
     const { data: userData, error: userError } = await client
       .from("users")
       .select("*")
-      .eq("email", authUser.email)
+      .eq("id", authUser.id)
       .single();
 
     if (userError) {
@@ -58,20 +58,24 @@ export default async function DashboardPage() {
       user = userData as User;
     }
 
-    // Fetch enrollments with course and module details
+    // Fetch enrollments with only the course/module/lesson fields the UI needs
+    // (full course* was a large unused payload).
     const enrollmentsQueryResult = await client
       .from("enrollments")
       .select(`
-        *,
+        id,
+        user_id,
+        course_id,
+        status,
+        progress,
+        completed_at,
         course:courses(
-          *,
+          id,
+          title,
+          thumbnail,
           modules(
             id,
-            course_id,
-            title,
             order,
-            estimated_duration,
-            is_required,
             lessons(
               id,
               module_id,
@@ -92,39 +96,60 @@ export default async function DashboardPage() {
       enrollments = (enrollmentsQueryResult.data as unknown) as (Enrollment & { course?: Course | null })[];
     }
 
-    // Fetch progress data to calculate learning hours and time left
-    const { data: progressData, error: progressError } = await client
-      .from("progress")
-      .select(`
-        user_id,
-        course_id,
-        module_id,
-        lesson_id,
-        completed,
-        time_spent,
-        lesson:lessons(
+    // Independent follow-up queries in parallel (was a sequential waterfall).
+    const [
+      { data: progressData, error: progressError },
+      { data: pathsData, error: pathsError },
+      { data: eventsData, error: eventsError },
+      { data: certificates, error: certificatesError },
+    ] = await Promise.all([
+      client
+        .from("progress")
+        .select(`
+          user_id,
+          course_id,
+          module_id,
+          lesson_id,
+          completed,
+          time_spent,
+          lesson:lessons(
+            id,
+            duration
+          )
+        `)
+        .eq("user_id", user?.id),
+      client
+        .from("learningpaths")
+        .select(`
           id,
-          duration
-        )
-      `)
-      .eq("user_id", user?.id);
+          title,
+          learningpath_courses (
+            course_id
+          )
+        `)
+        .eq("status", "active"),
+      client
+        .from("events")
+        .select("id,title,event_type,starts_at,ends_at,location")
+        .eq("is_published", true)
+        .gte("starts_at", new Date().toISOString())
+        .order("starts_at", { ascending: true })
+        .limit(3),
+      client
+        .from("certificates")
+        .select("*")
+        .eq("user_id", user?.id)
+        .eq("status", "active"),
+    ]);
+
     if (progressError) console.error("Progress query error:", progressError);
+    if (pathsError) console.error("Learning paths query error:", pathsError);
+    if (eventsError) console.error("Events query error:", eventsError);
+    if (certificatesError) console.error("Certificates query error:", certificatesError);
 
-    // Fetch learning paths and associated courses
-    const { data: pathsData, error: pathsError } = await client
-      .from("learningpaths")
-      .select(`
-        id,
-        title,
-        learningpath_courses (
-          course_id
-        )
-      `)
-      .eq("status", "active");
+    upcomingEvents = (eventsData ?? []) as UpcomingEvent[];
 
-    if (pathsError) {
-      console.error("Learning paths query error:", pathsError);
-    } else if (enrollments && enrollments.length > 0) {
+    if (!pathsError && enrollments && enrollments.length > 0) {
       const enrolledCourseIds = new Set(enrollments.map(e => e.course_id));
       // Find the first learning path that contains at least one enrolled course
       const activePath = pathsData?.find(path =>
@@ -159,30 +184,10 @@ export default async function DashboardPage() {
       }
     }
 
-    // Upcoming events — platform-wide announcements, soonest three. Not
-    // user-specific, but fetched here so the widget follows the same
-    // server-fetch-then-prop pattern as everything else on this page.
-    const { data: eventsData, error: eventsError } = await client
-      .from("events")
-      .select("id,title,event_type,starts_at,ends_at,location")
-      .eq("is_published", true)
-      .gte("starts_at", new Date().toISOString())
-      .order("starts_at", { ascending: true })
-      .limit(3);
-    if (eventsError) console.error("Events query error:", eventsError);
-    upcomingEvents = (eventsData ?? []) as UpcomingEvent[];
-
     if (enrollments && enrollments.length > 0) {
       const activeEnrollments = enrollments.filter((e: Enrollment & { course?: Course | null }) => ["active", "completed"].includes(e.status));
       const activeCount = enrollments.filter((e: Enrollment & { course?: Course | null }) => e.status === "active").length;
       const completedCount = enrollments.filter((e: Enrollment & { course?: Course | null }) => e.status === "completed").length;
-
-      const { data: certificates, error: certificatesError } = await client
-        .from("certificates")
-        .select("*")
-        .eq("user_id", user?.id)
-        .eq("status", "active");
-      if (certificatesError) console.error("Certificates query error:", certificatesError);
 
       const totalLearningMinutes = progressData
         ? progressData.reduce((sum: number, p: any) => sum + (p.time_spent || 0), 0)

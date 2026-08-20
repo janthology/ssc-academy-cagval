@@ -2,25 +2,28 @@ import { Header } from "@/components/ui/header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Calendar, MapPin } from "lucide-react"
-import { supabasePublic } from "@/lib/supabase/public-client"
 import { EVENT_TYPE_LABEL, eventDate, eventTime } from "@/lib/events/format"
 import type { Event } from "@/lib/types/database"
 
-// Public events list, server-rendered and cached (ISR) — same treatment as the
-// course catalog. The data is anon-only and identical for everyone. Admin
-// create/edit/delete calls revalidatePath('/events') so changes appear at once
-// instead of waiting out the window. The cookieless supabasePublic client is
-// what keeps this route static (touching cookies() would make it dynamic).
+// Public events list — native Rest fetch + ISR (supabase-js would bypass the cache).
 export const revalidate = 300
 
+const COLS =
+  "id,title,description,event_type,starts_at,ends_at,location,is_published,created_at,updated_at"
+
 async function getUpcomingEvents(): Promise<Event[]> {
-  const { data } = await supabasePublic
-    .from("events")
-    .select("id,title,description,event_type,starts_at,ends_at,location,is_published,created_at,updated_at")
-    .eq("is_published", true)
-    .gte("starts_at", new Date().toISOString())
-    .order("starts_at", { ascending: true })
-  return (data ?? []) as Event[]
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL!
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  const now = new Date().toISOString()
+  const res = await fetch(
+    `${base}/rest/v1/events?is_published=eq.true&starts_at=gte.${encodeURIComponent(now)}&select=${COLS}&order=starts_at.asc`,
+    {
+      headers: { apikey: anon, Authorization: `Bearer ${anon}` },
+      next: { revalidate: 300 },
+    }
+  )
+  if (!res.ok) return []
+  return (await res.json()) as Event[]
 }
 
 export default async function EventsPage() {

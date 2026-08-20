@@ -5,7 +5,32 @@ import { NextResponse } from 'next/server';
 
 type CookieToSet = { name: string; value: string; options?: Record<string, unknown> }
 
+function needsAuthCheck(pathname: string): boolean {
+  if (
+    pathname.startsWith('/dashboard') ||
+    pathname.startsWith('/certificates') ||
+    pathname.startsWith('/admin') ||
+    pathname.startsWith('/instructor')
+  ) {
+    return true
+  }
+  // Course detail / module pages are protected; the catalog (/courses) is public.
+  if (pathname.startsWith('/courses/')) return true
+  // Learning-path detail pages are protected; the public list is not.
+  if (pathname.startsWith('/learning-paths/')) return true
+  return false
+}
+
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
+  // Public pages and APIs skip the Auth round-trip entirely. getUser() talks to
+  // the Supabase Auth server on every request and was the dominant cost on
+  // /courses, /events, /api/courses, and other anon-safe routes.
+  if (!needsAuthCheck(pathname)) {
+    return NextResponse.next();
+  }
+
   const cookieStore = await cookies();
 
   const supabase = createServerClient(
@@ -29,38 +54,13 @@ export async function middleware(request: NextRequest) {
   // getSession() only decodes the cookie and must not be trusted for authorization.
   const { data: { user }, error: userError } = await supabase.auth.getUser();
 
-  const pathname = request.nextUrl.pathname;
-
-  // Protected routes
-  const protectedRoutes = [
-    '/dashboard',
-    '/dashboard/*',
-    '/certificates',
-    '/certificates/*',
-    '/courses/*',
-    '/learning-paths/*',
-    '/admin',
-    '/admin/*',
-    '/instructor',
-    '/instructor/*',
-  ];
-
   // Redirect to login if not authenticated on a protected route
-  if (
-    protectedRoutes.some(route => pathname.startsWith(route.replace('*', ''))) &&
-    (!user || userError)
-  ) {
+  if (!user || userError) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  // /admin additionally requires is_admin. The check above should already have
-  // redirected unauthenticated requests; this guard keeps that independent of
-  // the protectedRoutes list staying correct.
+  // /admin additionally requires is_admin.
   if (pathname.startsWith('/admin')) {
-    if (!user) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-
     const { data, error: profileError } = await supabase
       .from('users')
       .select('is_admin')
@@ -77,10 +77,6 @@ export async function middleware(request: NextRequest) {
   // instructor RLS policies check (is_instructor() AND is_active_user()), so the
   // UI never shows a surface the database will refuse to write to.
   if (pathname.startsWith('/instructor')) {
-    if (!user) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
-
     const { data, error: profileError } = await supabase
       .from('users')
       .select('is_instructor, status')
