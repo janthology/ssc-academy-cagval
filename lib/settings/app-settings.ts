@@ -1,6 +1,6 @@
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 
-export const PLACEHOLDER_LEARNING_PATHS_KEY = "show_placeholder_learning_paths"
+export { PLACEHOLDER_LEARNING_PATHS_KEY } from "@/lib/settings/app-settings-server"
 
 /**
  * Read a boolean platform setting (public.app_settings, anon-readable).

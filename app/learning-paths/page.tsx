@@ -1,16 +1,28 @@
 import { LearningPathGrid } from "@/components/learning-paths/learning-path-grid"
 import { Header } from "@/components/ui/header"
-import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Route, Users, Building2, GraduationCap } from "lucide-react"
+import {
+  getBoolSettingCached,
+  PLACEHOLDER_LEARNING_PATHS_KEY,
+} from "@/lib/settings/app-settings-server"
+import { fetchPublicLearningPaths } from "@/lib/learning-paths/public-paths"
 
-export default function LearningPathsPage() {
+// Public list is server-rendered and ISR-cached. Per-user progress is layered
+// on in the client island after paint.
+export const revalidate = 300
+
+export default async function LearningPathsPage() {
+  const [initialPaths, showPlaceholders] = await Promise.all([
+    fetchPublicLearningPaths(),
+    getBoolSettingCached(PLACEHOLDER_LEARNING_PATHS_KEY, true),
+  ])
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
 
       <div className="container mx-auto px-4 py-8">
-        {/* Page Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Route className="w-5 h-5 text-primary" />
@@ -22,7 +34,6 @@ export default function LearningPathsPage() {
           </p>
         </div>
 
-        {/* User Type Paths */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           <div className="text-center p-6 border rounded-lg hover:shadow-lg transition-shadow">
             <Building2 className="w-12 h-12 text-primary mx-auto mb-4" />
@@ -41,10 +52,9 @@ export default function LearningPathsPage() {
             <h3 className="text-xl font-bold mb-2">Academic Researchers</h3>
             <p className="text-muted-foreground mb-4">Research methodologies and advanced smart city concepts</p>
           </div>
-
         </div>
 
-        <LearningPathGrid />
+        <LearningPathGrid initialPaths={initialPaths} showPlaceholders={showPlaceholders} />
       </div>
     </div>
   )
