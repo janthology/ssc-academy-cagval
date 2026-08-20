@@ -103,6 +103,47 @@ export function UserManagement() {
     }
   }
 
+  const setInstructor = async (user: UserRow, enable: boolean) => {
+    setWorking(true)
+    try {
+      // Instructor pages + RLS depend on BOTH:
+      //   - users.is_instructor = true/false
+      //   - users.status = 'active' when enabled
+      const payload: Partial<UserRow> & { is_instructor: boolean; status?: Status } = {
+        is_instructor: enable,
+      }
+      const nextStatus: Status = enable ? "active" : user.status
+      payload.status = nextStatus
+
+      const { error: uErr } = await supabaseBrowser
+        .from("users")
+        .update(payload as any)
+        .eq("id", user.id)
+      if (uErr) throw new Error(uErr.message)
+
+      const action = enable ? "instructor_enabled" : "instructor_disabled"
+      const verb = enable ? "enabled" : "disabled"
+      recordAdminAction(action, user.id, { message: `Instructor ${verb}: ${user.name}` })
+
+      setUsers((prev) =>
+        prev.map((u) =>
+          u.id === user.id
+            ? {
+                ...u,
+                is_instructor: enable,
+                status: nextStatus,
+              }
+            : u
+        )
+      )
+    } catch (err: any) {
+      setError(err.message || "Failed to update instructor status.")
+    } finally {
+      setWorking(false)
+      setPendingSuspend(null)
+    }
+  }
+
   const typeStats = useMemo(() => {
     const total = users.length || 1
     const byType: Record<string, number> = {}
@@ -148,6 +189,27 @@ export function UserManagement() {
       <DropdownMenu>
         <DropdownMenuTrigger asChild><Button variant="ghost" size="sm"><MoreHorizontal className="w-4 h-4" /></Button></DropdownMenuTrigger>
         <DropdownMenuContent align="end">
+          {user.is_instructor ? (
+            <DropdownMenuItem
+              className="text-destructive"
+              onClick={() => {
+                if (working) return
+                setInstructor(user, false)
+              }}
+            >
+              <UserX className="w-4 h-4 mr-2" /> Remove Instructor
+            </DropdownMenuItem>
+          ) : (
+            <DropdownMenuItem
+              onClick={() => {
+                if (working) return
+                setInstructor(user, true)
+              }}
+            >
+              <GraduationCap className="w-4 h-4 mr-2" /> Make Instructor
+            </DropdownMenuItem>
+          )}
+
           {user.status === "pending" && (
             <DropdownMenuItem onClick={() => setStatus(user, "active")}><Check className="w-4 h-4 mr-2" />Approve</DropdownMenuItem>
           )}
