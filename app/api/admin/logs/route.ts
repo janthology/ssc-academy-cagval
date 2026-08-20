@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { requireAdmin } from "@/lib/auth/api-auth"
-import { supabaseAdmin } from "@/lib/supabase/admin-client"
+import { supabaseServer } from "@/lib/supabase/server-client"
 
 export async function GET(request: Request) {
   const { error } = await requireAdmin()
@@ -14,8 +14,11 @@ export async function GET(request: Request) {
   const limit = Number.isFinite(limitParam) && limitParam > 0 ? Math.min(limitParam, 200) : 4
 
   try {
-    const admin = supabaseAdmin()
-    const { data: logs, error: logsError } = await admin
+    // Use the authenticated admin session (RLS: admin_logs_admin_read) instead of
+    // the service-role client so log reads work even when SUPABASE_SERVICE_ROLE_KEY
+    // is missing or misconfigured in the deployment environment.
+    const supabase = await supabaseServer()
+    const { data: logs, error: logsError } = await supabase
       .from("admin_logs")
       .select(`
         id,
