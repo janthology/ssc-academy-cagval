@@ -18,6 +18,7 @@ import {
   BarChart3,
 } from 'lucide-react';
 import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
 import { useAdminStats } from '@/components/admin/admin-stats-provider';
 
 interface Activity {
@@ -157,7 +158,37 @@ export function AdminDashboard() {
   );
 
   if (stats.loading) {
-    return <div className="text-center p-6">Loading...</div>;
+    return (
+      <div className="space-y-6">
+        <div className="space-y-2">
+          <Skeleton className="h-8 w-64" />
+          <Skeleton className="h-4 w-80" />
+        </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="space-y-3 rounded-lg border p-6">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-8 w-16" />
+              <Skeleton className="h-3 w-28" />
+            </div>
+          ))}
+        </div>
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="space-y-4 rounded-lg border p-6 lg:col-span-2">
+            <Skeleton className="h-5 w-40" />
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-14 w-full" />
+            ))}
+          </div>
+          <div className="space-y-4 rounded-lg border p-6">
+            <Skeleton className="h-5 w-32" />
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Skeleton key={i} className="h-16 w-full" />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
   if (stats.error) {
     return <div className="text-center p-6 text-red-600">{stats.error}</div>;
@@ -205,7 +236,11 @@ export function AdminDashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               {logsLoading ? (
-                <p className="text-sm text-muted-foreground">Loading activity…</p>
+                <div className="space-y-3">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <Skeleton key={i} className="h-14 w-full" />
+                  ))}
+                </div>
               ) : recentActivity.length === 0 ? (
                 <p className="text-sm text-muted-foreground">No recent activity</p>
               ) : (

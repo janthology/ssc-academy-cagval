@@ -16,6 +16,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { ResponsiveSidebar } from "@/components/ui/responsive-sidebar"
+import { Skeleton } from "@/components/ui/skeleton"
 import { useUser } from "@/components/providers/user-provider"
 
 export function DashboardSidebar() {
@@ -118,7 +119,11 @@ export function DashboardSidebar() {
     <>
       <nav className="space-y-2">
         {isLoading ? (
-          <p className="px-3 text-sm text-muted-foreground">Loading…</p>
+          <div className="space-y-2 px-1">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <Skeleton key={i} className="h-9 w-full" />
+            ))}
+          </div>
         ) : (
           menuItems.map((item) => {
             if (!isAuthorized(item.userTypes)) return null

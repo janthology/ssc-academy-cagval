@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import { CourseCard } from "./course-card";
-import { Loader2 } from "lucide-react";
+import { CourseCardsSkeleton } from "@/components/ui/page-skeletons";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { Course } from "@/lib/types/database";
 
 interface CourseGridProps {
@@ -83,25 +84,25 @@ export function CourseGrid({ filters, search, initialCourses = [] }: CourseGridP
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-foreground">Available Courses</h2>
-        <p className="text-muted-foreground">{courses.length} courses found</p>
+        {isLoading ? (
+          <Skeleton className="h-4 w-24" />
+        ) : (
+          <p className="text-muted-foreground">{courses.length} courses found</p>
+        )}
       </div>
 
-      {isLoading && (
-        <div className="flex justify-center">
-          <Loader2 className="h-8 w-8 animate-spin" />
-        </div>
-      )}
       {error && <p className="text-red-600">{error}</p>}
-      {!isLoading && !error && courses.length === 0 && (
+      {isLoading ? (
+        <CourseCardsSkeleton />
+      ) : !error && courses.length === 0 ? (
         <p className="text-muted-foreground">No courses found.</p>
-      )}
-      {!isLoading && !error && (
+      ) : !error ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course) => (
             <CourseCard key={course.id} course={course} />
           ))}
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

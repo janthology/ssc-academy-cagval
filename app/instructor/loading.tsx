@@ -1,5 +1,5 @@
-import { PageLoading } from "@/components/ui/page-loading"
+import { AppShellSkeleton } from "@/components/ui/page-skeletons"
 
 export default function Loading() {
-  return <PageLoading label="Loading instructor…" />
+  return <AppShellSkeleton />
 }

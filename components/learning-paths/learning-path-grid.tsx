@@ -12,6 +12,7 @@ import {
   type LearningPathWithProgress,
 } from "@/lib/learning-paths/public-paths"
 import Link from "next/link"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const mockLearningPaths: LearningPathWithProgress[] = [
   {
@@ -188,7 +189,23 @@ export function LearningPathGrid({
       </div>
 
       {isLoading ? (
-        <p className="text-center text-muted-foreground">Loading learning paths...</p>
+        <div className="grid gap-6 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="space-y-4 rounded-lg border p-6">
+              <Skeleton className="h-5 w-24" />
+              <Skeleton className="h-6 w-4/5" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-2 w-full" />
+              <div className="flex flex-wrap gap-1">
+                <Skeleton className="h-5 w-16" />
+                <Skeleton className="h-5 w-20" />
+                <Skeleton className="h-5 w-14" />
+              </div>
+              <Skeleton className="h-9 w-full" />
+            </div>
+          ))}
+        </div>
       ) : error ? (
         <p className="text-center text-red-600">{error}</p>
       ) : learningPaths.length === 0 ? (

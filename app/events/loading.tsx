@@ -1,5 +1,5 @@
-import { PageLoading } from "@/components/ui/page-loading"
+import { PublicContentSkeleton } from "@/components/ui/page-skeletons"
 
 export default function Loading() {
-  return <PageLoading label="Loading events…" />
+  return <PublicContentSkeleton cards={4} />
 }
