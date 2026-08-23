@@ -15,7 +15,8 @@ interface CertificateActionsProps {
 
 export function CertificateActions({ certificate }: CertificateActionsProps) {
   const [copied, setCopied] = useState(false)
-  const verificationUrl = `https://sscacademy.dost02onedata.com/verify/${certificate.id}`
+  const appUrl = (process.env.NEXT_PUBLIC_APP_URL || "https://sscacademy.dost02onedata.com").replace(/\/$/, "")
+  const verificationUrl = `${appUrl}/verify/${certificate.id}`
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(verificationUrl)

@@ -25,7 +25,7 @@ export function CertificateViewer({ certificate }: CertificateViewerProps) {
         : "N/A",
     grade: certificate.enrollment?.grade ? `${certificate.enrollment.grade}%` : "N/A",
     skills: certificate.course?.skills || [],
-    verificationUrl: `https://sscacademy.dost02onedata.com/verify/${certificate.id}`,
+    verificationUrl: `${(process.env.NEXT_PUBLIC_APP_URL || "https://sscacademy.dost02onedata.com").replace(/\/$/, "")}/verify/${certificate.id}`,
   }
 
   return (

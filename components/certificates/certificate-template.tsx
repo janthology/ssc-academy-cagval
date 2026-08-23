@@ -122,7 +122,7 @@ export function CertificateTemplate({
           </div>
           <div className="mt-6">
             <p className="text-xs text-muted-foreground">
-              Verify this certificate at: https://smartlearn-region2.vercel.app/verify/{certificateId}
+              Verify this certificate at: {(process.env.NEXT_PUBLIC_APP_URL || "https://sscacademy.dost02onedata.com").replace(/\/$/, "")}/verify/{certificateId}
             </p>
           </div>
         </div>
