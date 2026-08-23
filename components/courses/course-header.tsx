@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Clock, BookOpenText, Users, Star, Award, Play, Lock, AlertCircle } from "lucide-react"
 import Image from "next/image"
 import { useState } from "react"
-import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Course, Enrollment } from "@/lib/types/database"
 import { formatNumber } from "@/lib/utils/dates"
+import { enrollInCourse } from "@/lib/courses/enroll"
 
 interface CourseHeaderProps {
   courseId: string
@@ -24,84 +24,16 @@ export function CourseHeader({ courseId, course, enrollment, unmetPrereqs = [] }
 
   const handleEnroll = async () => {
     setMessage(null)
-    try {
-      const { data: { user } } = await supabaseBrowser.auth.getUser()
-      if (!user?.id) throw new Error("User not authenticated")
-
-      // Prerequisite gate — single source of truth (get_unmet_prerequisites).
-      // Re-checked here so enrollment is blocked even if the button wasn't disabled.
-      const { data: unmet, error: prereqError } = await supabaseBrowser.rpc(
-        "get_unmet_prerequisites",
-        { p_course_id: courseId }
-      )
-      if (prereqError) throw prereqError
-      if (Array.isArray(unmet) && unmet.length > 0) {
-        setMessage(
-          `Locked — complete these prerequisite course${unmet.length > 1 ? "s" : ""} first: ${unmet.join(", ")}`
-        )
-        return
-      }
-
-      // Fetch modules and lessons for the course
-      const { data: modules, error: modulesError } = await supabaseBrowser
-        .from('modules')
-        .select(`
-          id,
-          course_id,
-          lessons(id, module_id, title, order)
-        `)
-        .eq('course_id', courseId)
-        .order('order', { ascending: true, foreignTable: 'lessons' })
-
-      if (modulesError) throw modulesError
-      // Distinct from the prerequisite-lock message: the course exists but has no
-      // published module content yet.
-      if (!modules || modules.length === 0) {
-        setMessage("This course doesn't have any published content yet. Please check back later.")
-        return
-      }
-
-      // Flatten lessons from all modules
-      const lessons = modules.flatMap(module => module.lessons || [])
-
-      if (lessons.length === 0) {
-        // Silently skip progress inserts if no lessons
-      }
-
-      // Prepare enrollment and progress data
-      const enrollmentData = {
-        user_id: user.id,
-        course_id: courseId,
-        status: "active",
-        progress: 0,
-        enrolled_at: new Date().toISOString(),
-        last_accessed_at: new Date().toISOString(),
-      }
-
-      const progressData = lessons.map(lesson => ({
-        user_id: user.id,
-        course_id: courseId,
-        module_id: lesson.module_id,
-        lesson_id: lesson.id,
-        completed: false,
-        time_spent: 0,
-        completed_at: null,
-      }))
-
-      // Perform transaction: insert enrollment and progress entries
-      const { data: rpcData, error: rpcError } = await supabaseBrowser.rpc('enroll_and_track_progress', {
-        enrollment_input: enrollmentData,
-        progress_inputs: progressData,
-      })
-
-      if (rpcError) {
-        throw rpcError
-      }
-
-      window.location.reload() // Refresh to update enrollment status
-    } catch (err: any) {
-      setMessage("Failed to enroll in the course. Please try again.")
+    const result = await enrollInCourse(courseId)
+    if (!result.ok) {
+      setMessage(result.message)
+      return
     }
+    if (result.alreadyEnrolled) {
+      window.location.reload()
+      return
+    }
+    window.location.reload()
   }
 
   return (

@@ -13,6 +13,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { Switch } from "@/components/ui/switch"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { CheckCircle, AlertCircle, User2, Building2, MapPin, Mail, Phone, Camera, Bell, Shield, Download, Loader2 } from "lucide-react"
+import Link from "next/link"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { getUserByEmail } from "@/lib/database/client-queries"
 import type { User } from "@/lib/types/database"
@@ -637,9 +638,12 @@ export function ProfileSettings() {
               <div className="space-y-4">
                 <h4 className="font-medium">Account Security</h4>
                 <div className="space-y-2">
-                  <Button variant="outline" className="w-full justify-start bg-transparent" disabled>
-                    Change Password
+                  <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
+                    <Link href="/forgot-password">Change Password</Link>
                   </Button>
+                  <p className="text-xs text-muted-foreground px-1">
+                    We&apos;ll email you a secure link to set a new password.
+                  </p>
                   <Button variant="outline" className="w-full justify-start bg-transparent" disabled>
                     Enable Two-Factor Authentication
                   </Button>

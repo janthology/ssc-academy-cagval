@@ -14,86 +14,19 @@ import {
 import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
 
-const mockLearningPaths: LearningPathWithProgress[] = [
-  {
-    id: "technical-implementation",
-    title: "Technical Implementation Track",
-    description: "Hands-on technical skills for implementing smart city technologies and systems.",
-    target_audience: ["suc", "hei"],
-    status: "active",
-    created_at: "2025-09-10T00:00:00+00",
-    updated_at: "2025-09-10T00:00:00+00",
-    created_by: "d1d98402-c8d4-4f3d-8c4e-07d01bcb9dc3",
-    progress: 0,
-    courseCount: 8,
-    durationHours: 64,
-    courses: [
-      { id: "course1", title: "IoT Fundamentals", course_order: 1, level: "intermediate", duration: 8, progress: 0 },
-      { id: "course2", title: "Sensor Networks", course_order: 2, level: "intermediate", duration: 8, progress: 0 },
-      { id: "course3", title: "Data Analytics", course_order: 3, level: "intermediate", duration: 8, progress: 0 },
-      { id: "course4", title: "System Integration", course_order: 4, level: "intermediate", duration: 8, progress: 0 },
-      { id: "course5", title: "Cybersecurity", course_order: 5, level: "intermediate", duration: 8, progress: 0 },
-      { id: "course6", title: "Maintenance & Support", course_order: 6, level: "intermediate", duration: 8, progress: 0 },
-      { id: "course7", title: "Project Management", course_order: 7, level: "intermediate", duration: 8, progress: 0 },
-      { id: "course8", title: "Quality Assurance", course_order: 8, level: "intermediate", duration: 8, progress: 0 },
-    ],
-    isMock: true,
-  },
-  {
-    id: "research-academic",
-    title: "Academic Research Track",
-    description: "Advanced concepts and research methodologies for academic institutions and researchers.",
-    target_audience: ["suc", "hei"],
-    status: "active",
-    created_at: "2025-09-10T00:00:00+00",
-    updated_at: "2025-09-10T00:00:00+00",
-    created_by: "d1d98402-c8d4-4f3d-8c4e-07d01bcb9dc3",
-    progress: 0,
-    courseCount: 10,
-    durationHours: 80,
-    courses: [
-      { id: "course9", title: "Smart City Theory", course_order: 1, level: "advanced", duration: 8, progress: 0 },
-      { id: "course10", title: "Research Methodologies", course_order: 2, level: "advanced", duration: 8, progress: 0 },
-      { id: "course11", title: "Data Science", course_order: 3, level: "advanced", duration: 8, progress: 0 },
-      { id: "course12", title: "Urban Analytics", course_order: 4, level: "advanced", duration: 8, progress: 0 },
-      { id: "course13", title: "Policy Analysis", course_order: 5, level: "advanced", duration: 8, progress: 0 },
-      { id: "course14", title: "Innovation Management", course_order: 6, level: "advanced", duration: 8, progress: 0 },
-      { id: "course15", title: "Sustainability Metrics", course_order: 7, level: "advanced", duration: 8, progress: 0 },
-      { id: "course16", title: "Case Study Analysis", course_order: 8, level: "advanced", duration: 8, progress: 0 },
-      { id: "course17", title: "Publication Writing", course_order: 9, level: "advanced", duration: 8, progress: 0 },
-      { id: "course18", title: "Grant Applications", course_order: 10, level: "advanced", duration: 8, progress: 0 },
-    ],
-    isMock: true,
-  },
-]
-
-function withPlaceholders(
-  paths: LearningPathWithProgress[],
-  showPlaceholders: boolean
-): LearningPathWithProgress[] {
-  return showPlaceholders ? [...paths, ...mockLearningPaths] : paths
-}
-
 export function LearningPathGrid({
   initialPaths = [],
-  showPlaceholders = true,
 }: {
   initialPaths?: LearningPathWithProgress[]
-  showPlaceholders?: boolean
 }) {
-  const [learningPaths, setLearningPaths] = useState<LearningPathWithProgress[]>(() =>
-    withPlaceholders(initialPaths, showPlaceholders)
-  )
-  // Only show a spinner when we have nothing to render yet (SSR miss).
-  const [isLoading, setIsLoading] = useState(initialPaths.length === 0 && !showPlaceholders)
+  const [learningPaths, setLearningPaths] = useState<LearningPathWithProgress[]>(initialPaths)
+  const [isLoading, setIsLoading] = useState(initialPaths.length === 0)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     let cancelled = false
 
     const enhance = async () => {
-      // Seed from server immediately; only fetch enrollments (and a client
-      // fallback if SSR returned empty) so progress can update for signed-in users.
       try {
         const { data: { user } } = await supabaseBrowser.auth.getUser()
 
@@ -131,7 +64,7 @@ export function LearningPathGrid({
 
         if (!user?.id) {
           if (!cancelled) {
-            setLearningPaths(withPlaceholders(basePaths, showPlaceholders))
+            setLearningPaths(basePaths)
             setIsLoading(false)
           }
           return
@@ -161,13 +94,13 @@ export function LearningPathGrid({
         })
 
         if (!cancelled) {
-          setLearningPaths(withPlaceholders(withProgress, showPlaceholders))
+          setLearningPaths(withProgress)
           setIsLoading(false)
         }
       } catch (err: any) {
         if (!cancelled) {
           setError(err.message || "Failed to load learning paths")
-          setLearningPaths(withPlaceholders(initialPaths, showPlaceholders))
+          setLearningPaths(initialPaths)
           setIsLoading(false)
         }
       }
@@ -177,7 +110,6 @@ export function LearningPathGrid({
     return () => {
       cancelled = true
     }
-    // initialPaths / showPlaceholders come from SSR and are stable for this mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -213,7 +145,6 @@ export function LearningPathGrid({
       ) : (
         <div className="grid lg:grid-cols-3 gap-6">
           {learningPaths.map((path) => {
-            const buttonLink = !path.isMock ? "/dashboard/learningpaths" : "#"
             const buttonText = path.progress > 0 ? "Continue Learning Path" : "Start Learning Path"
 
             return (
@@ -265,24 +196,13 @@ export function LearningPathGrid({
                     </span>
                   </div>
 
-                  <Button
-                    className="w-full gap-2 mt-auto"
-                    asChild={!path.isMock}
-                    disabled={path.isMock}
-                  >
-                    {!path.isMock ? (
-                      <Link href={buttonLink}>
-                        <div className="flex items-center gap-2">
-                          {buttonText}
-                          <ArrowRight className="w-4 h-4" />
-                        </div>
-                      </Link>
-                    ) : (
+                  <Button className="w-full gap-2 mt-auto" asChild>
+                    <Link href={`/learning-paths/${path.id}`}>
                       <span className="flex items-center gap-2">
                         {buttonText}
                         <ArrowRight className="w-4 h-4" />
                       </span>
-                    )}
+                    </Link>
                   </Button>
                 </CardContent>
               </Card>

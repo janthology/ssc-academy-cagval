@@ -16,8 +16,7 @@ function needsAuthCheck(pathname: string): boolean {
   }
   // Course detail / module pages are protected; the catalog (/courses) is public.
   if (pathname.startsWith('/courses/')) return true
-  // Learning-path detail pages are protected; the public list is not.
-  if (pathname.startsWith('/learning-paths/')) return true
+  // Learning path list + detail are public; enrollment requires sign-in in the UI.
   return false
 }
 

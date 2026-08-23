@@ -2,10 +2,6 @@ import { LearningPathGrid } from "@/components/learning-paths/learning-path-grid
 import { Header } from "@/components/ui/header"
 import { Badge } from "@/components/ui/badge"
 import { Route, Users, Building2, GraduationCap } from "lucide-react"
-import {
-  getBoolSettingCached,
-  PLACEHOLDER_LEARNING_PATHS_KEY,
-} from "@/lib/settings/app-settings-server"
 import { fetchPublicLearningPaths } from "@/lib/learning-paths/public-paths"
 
 // Public list is server-rendered and ISR-cached. Per-user progress is layered
@@ -13,10 +9,7 @@ import { fetchPublicLearningPaths } from "@/lib/learning-paths/public-paths"
 export const revalidate = 300
 
 export default async function LearningPathsPage() {
-  const [initialPaths, showPlaceholders] = await Promise.all([
-    fetchPublicLearningPaths(),
-    getBoolSettingCached(PLACEHOLDER_LEARNING_PATHS_KEY, true),
-  ])
+  const initialPaths = await fetchPublicLearningPaths()
 
   return (
     <div className="min-h-screen bg-background">
@@ -54,7 +47,7 @@ export default async function LearningPathsPage() {
           </div>
         </div>
 
-        <LearningPathGrid initialPaths={initialPaths} showPlaceholders={showPlaceholders} />
+        <LearningPathGrid initialPaths={initialPaths} />
       </div>
     </div>
   )

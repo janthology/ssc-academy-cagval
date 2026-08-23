@@ -9,10 +9,17 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Eye, EyeOff, Mail, Lock, Building2 } from "lucide-react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { getUserByEmail } from "@/lib/database/client-queries"
 
+function safeNextPath(raw: string | null): string {
+  if (!raw || !raw.startsWith("/") || raw.startsWith("//")) return "/dashboard"
+  return raw
+}
+
 export function LoginForm() {
+  const searchParams = useSearchParams()
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -58,10 +65,7 @@ export function LoginForm() {
         return
       }
 
-      console.log("Login Successful! Redirecting to dashboard...");
-      
-      // Direct page reload to ensure auth state is fresh
-      window.location.href = "/dashboard"
+      window.location.href = safeNextPath(searchParams.get("next"))
       
     } catch (err: any) {
       // Sign-in may have succeeded before the throw; never leave a session behind

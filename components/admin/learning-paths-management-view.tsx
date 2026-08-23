@@ -4,15 +4,13 @@ import { useCallback, useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Switch } from "@/components/ui/switch"
-import { Target, Plus, Pencil, Trash2, Loader2, AlertTriangle } from "lucide-react"
+import { Target, Plus, Pencil, Trash2, Loader2 } from "lucide-react"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { recordAdminAction } from "@/lib/admin/log-client"
 import {
   LearningPathFormDialog,
   type EditableLearningPath,
 } from "@/components/admin/learning-path-form-dialog"
-import { PLACEHOLDER_LEARNING_PATHS_KEY } from "@/lib/settings/app-settings"
 
 type PathRow = {
   id: string
@@ -24,9 +22,7 @@ type PathRow = {
 }
 
 /**
- * Admin CRUD for learning paths, plus the honest disclosure + toggle for the
- * two built-in placeholder tracks.
- *
+ * Admin CRUD for learning paths.
  * Reads every path (learningpaths_public_read admits admins to archived rows).
  * The join column is `learningpath_id` — see migration 006 naming drift.
  */
@@ -37,7 +33,6 @@ export function LearningPathsManagementView() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editing, setEditing] = useState<EditableLearningPath | null>(null)
   const [confirmId, setConfirmId] = useState<string | null>(null)
-  const [showPlaceholders, setShowPlaceholders] = useState<boolean | null>(null)
 
   const load = useCallback(async () => {
     setLoading(true)
@@ -49,41 +44,13 @@ export function LearningPathsManagementView() {
       .order("title")
     if (loadErr) setError(loadErr.message)
     setPaths((data ?? []) as unknown as PathRow[])
-
-    const { data: setting } = await supabaseBrowser
-      .from("app_settings")
-      .select("bool_value")
-      .eq("key", PLACEHOLDER_LEARNING_PATHS_KEY)
-      .maybeSingle()
-    setShowPlaceholders(setting?.bool_value ?? true)
     setLoading(false)
   }, [])
 
   useEffect(() => { load() }, [load])
 
-  const togglePlaceholders = async (next: boolean) => {
-    setError(null)
-    setShowPlaceholders(next) // optimistic
-    const { data: { user } } = await supabaseBrowser.auth.getUser()
-    const { error: upErr } = await supabaseBrowser
-      .from("app_settings")
-      .update({ bool_value: next, updated_at: new Date().toISOString(), updated_by: user?.id ?? null })
-      .eq("key", PLACEHOLDER_LEARNING_PATHS_KEY)
-    if (upErr) {
-      setError(upErr.message)
-      setShowPlaceholders(!next) // revert
-      return
-    }
-    recordAdminAction("setting_updated", null, {
-      message: `Placeholder learning paths ${next ? "shown" : "hidden"}`,
-      data: { key: PLACEHOLDER_LEARNING_PATHS_KEY, value: next },
-    })
-  }
-
   const remove = async (p: PathRow) => {
     setError(null)
-    // Delete the links explicitly rather than relying on ON DELETE CASCADE —
-    // the live FK's delete rule is unverified, and this is correct either way.
     const { error: linkErr } = await supabaseBrowser
       .from("learningpath_courses")
       .delete()
@@ -124,42 +91,6 @@ export function LearningPathsManagementView() {
 
       {error && <p className="text-sm text-destructive">{error}</p>}
 
-      <Card className="border-amber-500/40">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base">
-            <AlertTriangle className="h-4 w-4 text-amber-600" />
-            Placeholder learning paths
-          </CardTitle>
-          <CardDescription>Built-in demonstration content, not real courses</CardDescription>
-        </CardHeader>
-        <CardContent className="flex items-start justify-between gap-6">
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p>
-              Two built-in tracks — <strong>Technical Implementation Track</strong> and{" "}
-              <strong>Academic Research Track</strong> — are shown to all users alongside your real
-              learning paths.
-            </p>
-            <p>
-              <strong>They are demonstration content.</strong> None of the ~18 courses they list
-              exist on this platform, and their buttons do nothing. Every title was checked against
-              the course catalogue: zero exact matches and no close equivalents.
-            </p>
-            <p>Turn this off once you have real learning paths to show in their place.</p>
-          </div>
-          <div className="flex shrink-0 flex-col items-center gap-2">
-            <Switch
-              checked={showPlaceholders ?? true}
-              onCheckedChange={togglePlaceholders}
-              disabled={showPlaceholders === null}
-              aria-label="Show placeholder learning paths"
-            />
-            <span className="text-xs text-muted-foreground">
-              {showPlaceholders === null ? "…" : showPlaceholders ? "Shown" : "Hidden"}
-            </span>
-          </div>
-        </CardContent>
-      </Card>
-
       {loading ? (
         <div className="text-center"><Loader2 className="mx-auto h-8 w-8 animate-spin" /></div>
       ) : (
@@ -167,7 +98,7 @@ export function LearningPathsManagementView() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Target className="h-5 w-5" />
-              Real learning paths
+              Learning paths
             </CardTitle>
             <CardDescription>{paths.length} defined</CardDescription>
           </CardHeader>
@@ -210,8 +141,8 @@ export function LearningPathsManagementView() {
                       </Button>
                       {confirmId === p.id ? (
                         <>
-                          <Button variant="destructive" size="sm" onClick={() => remove(p)}>Confirm</Button>
-                          <Button variant="ghost" size="sm" onClick={() => setConfirmId(null)}>Cancel</Button>
+                          <Button size="sm" variant="destructive" onClick={() => remove(p)}>Confirm</Button>
+                          <Button size="sm" variant="outline" onClick={() => setConfirmId(null)}>Cancel</Button>
                         </>
                       ) : (
                         <Button
@@ -232,10 +163,10 @@ export function LearningPathsManagementView() {
       )}
 
       <LearningPathFormDialog
-        path={editing}
         open={dialogOpen}
         onOpenChange={setDialogOpen}
-        onSaved={load}
+        path={editing}
+        onSaved={() => { setDialogOpen(false); load() }}
       />
     </div>
   )

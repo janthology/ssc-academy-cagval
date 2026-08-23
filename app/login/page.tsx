@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { LoginForm } from "@/components/auth/login-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BookOpenText } from "lucide-react"
@@ -25,10 +26,12 @@ export default function LoginPage() {
             <CardDescription>Sign in to continue your SSC learning journey</CardDescription>
           </CardHeader>
           <CardContent>
-            <LoginForm />
+            <Suspense fallback={<p className="text-sm text-muted-foreground text-center">Loading…</p>}>
+              <LoginForm />
+            </Suspense>
             <div className="text-center mt-6">
               <p className="text-sm text-muted-foreground">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link href="/register" className="text-primary hover:underline font-medium">
                   Register here
                 </Link>

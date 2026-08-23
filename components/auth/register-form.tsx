@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Eye, EyeOff, Mail, Lock, User, Building2, MapPin, CheckCircle, AlertCircle } from "lucide-react"
+import Link from "next/link"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { OrganizationPicker } from "@/components/organizations/organization-picker"
@@ -487,7 +488,15 @@ export function RegisterForm() {
           onCheckedChange={(checked) => setFormData({ ...formData, agreeToTerms: checked as boolean })}
         />
         <Label htmlFor="terms" className="text-sm text-muted-foreground">
-          I agree to the platform Terms of Service and Privacy Policy for DOST Region 02&apos;s Smart and Sustainable Communities Academy.
+          I agree to the platform{" "}
+          <Link href="/terms" className="underline underline-offset-2 hover:text-foreground" target="_blank">
+            Terms of Service
+          </Link>{" "}
+          and{" "}
+          <Link href="/privacy" className="underline underline-offset-2 hover:text-foreground" target="_blank">
+            Privacy Policy
+          </Link>{" "}
+          for DOST Region 02&apos;s Smart and Sustainable Communities Academy.
         </Label>
       </div>
 

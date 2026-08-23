@@ -95,3 +95,22 @@ export async function fetchPublicLearningPaths(): Promise<LearningPathWithProgre
   const rows = (await res.json()) as RawPath[]
   return mapLearningPaths(rows)
 }
+
+/** Fetch a single active learning path by id (ISR-safe). */
+export async function fetchPublicLearningPath(
+  id: string
+): Promise<LearningPathWithProgress | null> {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL!
+  const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  const res = await fetch(
+    `${base}/rest/v1/learningpaths?id=eq.${encodeURIComponent(id)}&status=eq.active&select=${encodeURIComponent(PATH_SELECT)}`,
+    {
+      headers: { apikey: anon, Authorization: `Bearer ${anon}` },
+      next: { revalidate: 300 },
+    }
+  )
+  if (!res.ok) return null
+  const rows = (await res.json()) as RawPath[]
+  const mapped = mapLearningPaths(rows)
+  return mapped[0] ?? null
+}
