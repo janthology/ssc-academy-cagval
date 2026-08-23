@@ -1,3 +1,4 @@
+import { Suspense } from "react"
 import { ForgotPasswordForm } from "@/components/auth/forgot-password-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { BookOpenText } from "lucide-react"
@@ -25,7 +26,9 @@ export default function ForgotPasswordPage() {
             <CardDescription>Enter your email and we&apos;ll send you a reset link</CardDescription>
           </CardHeader>
           <CardContent>
-            <ForgotPasswordForm />
+            <Suspense fallback={<p className="text-center text-sm text-muted-foreground">Loading…</p>}>
+              <ForgotPasswordForm />
+            </Suspense>
           </CardContent>
         </Card>
       </div>

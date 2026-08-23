@@ -1,8 +1,9 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -22,10 +23,39 @@ import { supabaseBrowser } from "@/lib/supabase/browser-client"
  * PKCE flow, and the code verifier that completes the exchange lives in this
  * browser's storage.
  */
+function safeReturnPath(raw: string | null): string | null {
+  if (!raw || !raw.startsWith("/") || raw.startsWith("//")) return null
+  return raw
+}
+
 export function ForgotPasswordForm() {
+  const searchParams = useSearchParams()
+  const returnTo = safeReturnPath(searchParams.get("from"))
   const [email, setEmail] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   const [sent, setSent] = useState(false)
+  const [isSignedIn, setIsSignedIn] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    const load = async () => {
+      const { data: { user } } = await supabaseBrowser.auth.getUser()
+      if (cancelled) return
+      setIsSignedIn(Boolean(user))
+      if (user?.email) setEmail((prev) => prev || user.email || "")
+    }
+    load()
+    return () => { cancelled = true }
+  }, [])
+
+  // Logged-in change-password flow: prefer explicit `from`, else profile.
+  const backHref = returnTo ?? (isSignedIn ? "/dashboard/profile" : "/login")
+  const backLabel =
+    isSignedIn || returnTo
+      ? backHref.includes("/dashboard/profile")
+        ? "Back to profile"
+        : "Back"
+      : "Back to sign in"
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -64,7 +94,7 @@ export function ForgotPasswordForm() {
             Send to a different address
           </Button>
           <Button variant="ghost" asChild>
-            <Link href="/login">Back to sign in</Link>
+            <Link href={backHref}>{backLabel}</Link>
           </Button>
         </div>
       </div>
@@ -97,8 +127,8 @@ export function ForgotPasswordForm() {
       </Button>
 
       <div className="text-center">
-        <Link href="/login" className="text-sm text-muted-foreground hover:underline">
-          Back to sign in
+        <Link href={backHref} className="text-sm text-muted-foreground hover:underline">
+          {backLabel}
         </Link>
       </div>
     </form>

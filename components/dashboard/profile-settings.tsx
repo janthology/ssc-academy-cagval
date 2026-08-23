@@ -639,7 +639,7 @@ export function ProfileSettings() {
                 <h4 className="font-medium">Account Security</h4>
                 <div className="space-y-2">
                   <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
-                    <Link href="/forgot-password">Change Password</Link>
+                    <Link href="/forgot-password?from=/dashboard/profile">Change Password</Link>
                   </Button>
                   <p className="text-xs text-muted-foreground px-1">
                     We&apos;ll email you a secure link to set a new password.
