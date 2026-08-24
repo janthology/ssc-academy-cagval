@@ -15,6 +15,7 @@ import {
 import Link from "next/link"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import { useUser } from "@/components/providers/user-provider"
+import { NotificationBell } from "@/components/notifications/notification-bell"
 import { ProfileAvatar } from "@/components/ui/profile-avatar"
 
 export function AdminHeader() {
@@ -46,7 +47,8 @@ export function AdminHeader() {
             </div>
           </Link>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4">
+            <NotificationBell />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative rounded-full">
