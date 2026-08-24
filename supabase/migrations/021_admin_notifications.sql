@@ -8,22 +8,30 @@
 -- ===========================================================================
 -- 1. Widen notifications.type CHECK to allow module_submitted
 -- ===========================================================================
+-- Drop by known name first (014 / prior runs), then any leftover type CHECKs
+-- whose auto-generated names or definitions differ on the live DB.
+ALTER TABLE public.notifications
+  DROP CONSTRAINT IF EXISTS notifications_type_check;
+
 DO $$
 DECLARE
-  conname text;
+  r record;
 BEGIN
-  SELECT c.conname INTO conname
-  FROM pg_constraint c
-  JOIN pg_class t ON c.conrelid = t.oid
-  JOIN pg_namespace n ON t.relnamespace = n.oid
-  WHERE n.nspname = 'public'
-    AND t.relname = 'notifications'
-    AND c.contype = 'c'
-    AND pg_get_constraintdef(c.oid) ILIKE '%type%IN%';
-
-  IF conname IS NOT NULL THEN
-    EXECUTE format('ALTER TABLE public.notifications DROP CONSTRAINT %I', conname);
-  END IF;
+  FOR r IN
+    SELECT c.conname
+    FROM pg_constraint c
+    JOIN pg_class t ON c.conrelid = t.oid
+    JOIN pg_namespace n ON t.relnamespace = n.oid
+    WHERE n.nspname = 'public'
+      AND t.relname = 'notifications'
+      AND c.contype = 'c'
+      AND (
+        pg_get_constraintdef(c.oid) ILIKE '%type%'
+        OR c.conname ILIKE '%type%'
+      )
+  LOOP
+    EXECUTE format('ALTER TABLE public.notifications DROP CONSTRAINT %I', r.conname);
+  END LOOP;
 END $$;
 
 ALTER TABLE public.notifications
