@@ -121,7 +121,7 @@ export function CertificateVerification() {
             <p className="text-xs text-muted-foreground font-mono break-all">ID: {id}</p>
           ) : null}
           <Button variant="outline" asChild>
-            <Link href="/">Back to home</Link>
+            <Link href="/verify">Verify another certificate</Link>
           </Button>
         </CardContent>
       </>
@@ -170,6 +170,9 @@ export function CertificateVerification() {
               A certificate with this ID exists but is no longer valid. It has been revoked by DOST
               Region 2 and should not be accepted as proof of completion.
             </p>
+            <Button variant="outline" asChild className="mt-2">
+              <Link href="/verify">Verify another certificate</Link>
+            </Button>
           </div>
         </CardContent>
       </>
@@ -235,6 +238,11 @@ export function CertificateVerification() {
               </div>
             ) : null}
           </div>
+        </div>
+        <div className="pt-2 text-center">
+          <Button variant="outline" asChild>
+            <Link href="/verify">Verify another certificate</Link>
+          </Button>
         </div>
       </CardContent>
     </>

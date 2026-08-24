@@ -162,8 +162,13 @@ export default function HomePage() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/verify" className="hover:text-foreground">
+                    Verify Certificate
+                  </Link>
+                </li>
+                <li>
                   <Link href="/dashboard/certificates" className="hover:text-foreground">
-                    Certificates
+                    My Certificates
                   </Link>
                 </li>
                 <li>

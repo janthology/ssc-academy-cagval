@@ -70,6 +70,12 @@ export function Header() {
               </Button>
             )}
 
+            {!pathname?.startsWith("/verify") && (
+              <Button variant="ghost" size="sm" className="hidden cursor-pointer sm:inline-flex" asChild>
+                <Link href="/verify">Verify</Link>
+              </Button>
+            )}
+
             <NotificationBell />
 
             <DropdownMenu>
@@ -127,6 +133,9 @@ export function Header() {
           </div>
         ) : (
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <Button variant="ghost" size="sm" asChild className="hidden sm:inline-flex">
+              <Link href="/verify">Verify</Link>
+            </Button>
             <Button variant="outline" size="sm" asChild>
               <Link href="/login">Sign In</Link>
             </Button>
