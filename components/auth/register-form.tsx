@@ -236,6 +236,7 @@ export function RegisterForm() {
         region: "Region 2",
         province: formData.province,
         city: formData.city,
+        status: "pending",
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       })
@@ -246,7 +247,13 @@ export function RegisterForm() {
         return
       }
 
-      setMessage({ type: "success", text: "Account created successfully! Redirecting to login..." })
+      // Drop any session from signUp — pending accounts cannot use the app until approved.
+      await supabaseBrowser.auth.signOut().catch(() => {})
+
+      setMessage({
+        type: "success",
+        text: "Account created. An administrator must approve your account before you can sign in. Redirecting to login...",
+      })
 
       // Reset form
       setFormData({

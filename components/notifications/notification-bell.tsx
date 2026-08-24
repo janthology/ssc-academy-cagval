@@ -25,6 +25,7 @@ function timeAgo(iso: string): string {
 function typeLabel(type: string): string | null {
   if (type === "module_submitted") return "Review queue"
   if (type === "module_needs_assignment") return "Assign"
+  if (type === "user_pending") return "Pending user"
   if (type === "module_approved") return "Approved"
   if (type === "module_rejected") return "Needs changes"
   if (type === "module_assigned") return "Assigned"

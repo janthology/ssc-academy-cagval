@@ -65,6 +65,18 @@ export function LoginForm() {
         return
       }
 
+      if (dbUser.status === "pending") {
+        await supabaseBrowser.auth.signOut()
+        setError("Your account is awaiting administrator approval. You will be able to sign in once approved.")
+        return
+      }
+
+      if (dbUser.status === "inactive") {
+        await supabaseBrowser.auth.signOut()
+        setError("Your account has been suspended. Contact an administrator if you believe this is a mistake.")
+        return
+      }
+
       window.location.href = safeNextPath(searchParams.get("next"))
       
     } catch (err: any) {
