@@ -22,6 +22,15 @@ function timeAgo(iso: string): string {
   return `${Math.floor(diff / 86400)}d ago`
 }
 
+function typeLabel(type: string): string | null {
+  if (type === "module_submitted") return "Review queue"
+  if (type === "module_approved") return "Approved"
+  if (type === "module_rejected") return "Needs changes"
+  if (type === "module_assigned") return "Assigned"
+  if (type === "certificate_issued") return "Certificate"
+  return null
+}
+
 /**
  * Real notification bell — unread-count badge + a dropdown of recent items, each
  * linking to the relevant page (mark-read-then-navigate) plus a mark-all-read
@@ -82,7 +91,14 @@ export function NotificationBell() {
               >
                 <span className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${n.read ? "bg-transparent" : "bg-primary"}`} />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">{n.title}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="truncate text-sm font-medium">{n.title}</p>
+                    {typeLabel(n.type) && (
+                      <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
+                        {typeLabel(n.type)}
+                      </span>
+                    )}
+                  </div>
                   <p className="line-clamp-2 text-xs text-muted-foreground">{n.message}</p>
                   <p className="mt-0.5 text-[10px] text-muted-foreground" suppressHydrationWarning>
                     {mounted ? timeAgo(n.created_at) : ""}
