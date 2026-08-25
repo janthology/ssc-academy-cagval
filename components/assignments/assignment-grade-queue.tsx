@@ -46,7 +46,7 @@ export function AssignmentGradeQueue({
     try {
       const { data, error: qErr } = await supabaseBrowser
         .from("assignment_submissions")
-        .select("id, body, status, score_pct, feedback, submitted_at, lesson_id, user_id, user:users(name, email), lesson:lessons(title)")
+        .select("id, body, status, score_pct, feedback, submitted_at, lesson_id, user_id, user:users!user_id(name, email), lesson:lessons!lesson_id(title)")
         .eq("course_id", courseId)
         .in("status", ["submitted", "returned", "graded"])
         .order("submitted_at", { ascending: false })
