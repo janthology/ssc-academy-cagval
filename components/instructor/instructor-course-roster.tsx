@@ -147,6 +147,7 @@ export function InstructorCourseRoster() {
                     <th className="py-2 pr-4 font-medium">Learner</th>
                     <th className="py-2 pr-4 font-medium">Status</th>
                     <th className="py-2 pr-4 font-medium">Progress</th>
+                    <th className="py-2 pr-4 font-medium">Grade</th>
                     <th className="py-2 pr-4 font-medium">Enrolled</th>
                     <th className="py-2 font-medium">Last access</th>
                   </tr>
@@ -173,6 +174,9 @@ export function InstructorCourseRoster() {
                           </div>
                           <span className="tabular-nums text-xs w-8">{r.progress}%</span>
                         </div>
+                      </td>
+                      <td className="py-3 pr-4 text-muted-foreground whitespace-nowrap">
+                        {r.grade != null ? `${r.grade}%` : "—"}
                       </td>
                       <td className="py-3 pr-4 text-muted-foreground whitespace-nowrap">
                         {new Date(r.enrolled_at).toLocaleDateString("en-US", {

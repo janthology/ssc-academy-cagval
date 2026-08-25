@@ -5,11 +5,12 @@ import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, CheckCircle, Book, AlertCircle } from "lucide-react"
+import { Loader2, CheckCircle, Book, AlertCircle, HelpCircle } from "lucide-react"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Module, Lesson, Resource } from "@/lib/types/database"
 import dynamic from "next/dynamic"
 import Confetti from "react-confetti"
+import { QuizPlayer } from "@/components/quizzes/quiz-player"
 
 // react-pdf (pdfjs) touches browser-only APIs (DOMMatrix) at import time, which
 // crashes server rendering. Load the viewer client-only so it never runs on the
@@ -51,6 +52,7 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
   const [error, setError] = useState<string | null>(null)
   const [showConfetti, setShowConfetti] = useState(false)
   const [showCompletionMessage, setShowCompletionMessage] = useState(false)
+  const [activeLessonId, setActiveLessonId] = useState<string | null>(null)
 
   useEffect(() => {
 
@@ -90,6 +92,8 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
         if (lessonsError) throw lessonsError
         if (!lessonsData || lessonsData.length === 0) throw new Error("No lessons found for this module")
         setLessons(lessonsData)
+        const firstText = lessonsData.find((l: Lesson) => l.type !== "quiz")
+        setActiveLessonId((firstText ?? lessonsData[0]).id)
 
         if (!isReviewMode) {
           const { data: { user } } = await supabaseBrowser.auth.getUser()
@@ -121,20 +125,25 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
           .maybeSingle()
 
         if (resourceError) throw resourceError
+        const hasQuiz = lessonsData.some((l: Lesson) => l.type === "quiz")
         if (!resourceData) {
-          setError("No PDF materials available for this module yet. Please contact the instructor.")
-          setIsLoading(false)
-          return
+          if (!hasQuiz) {
+            setError("No PDF materials available for this module yet. Please contact the instructor.")
+            setIsLoading(false)
+            return
+          }
+          setResource(null)
+          setPdfUrl("")
+        } else {
+          setResource(resourceData)
+          const { data: signedData, error: signedError } = await supabaseBrowser.storage
+            .from('course-materials')
+            .createSignedUrl(resourceData.path, 86400)
+
+          if (signedError) throw signedError
+          if (!signedData?.signedUrl) throw new Error("Failed to generate signed URL for PDF")
+          setPdfUrl(signedData.signedUrl)
         }
-        setResource(resourceData)
-
-        const { data: signedData, error: signedError } = await supabaseBrowser.storage
-          .from('course-materials')
-          .createSignedUrl(resourceData.path, 86400)
-
-        if (signedError) throw signedError
-        if (!signedData?.signedUrl) throw new Error("Failed to generate signed URL for PDF")
-        setPdfUrl(signedData.signedUrl)
       } catch (err: any) {
         setError(err.message || "Failed to load module content. Please try again.")
       } finally {
@@ -337,13 +346,16 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
     )
   }
 
-  if (!module || !course || !resource || !pdfUrl) {
+  if (!module || !course) {
     return (
       <div className="container mx-auto px-4 py-8">
         <p className="text-muted-foreground">Module content not available.</p>
       </div>
     )
   }
+
+  const activeLesson = lessons.find((l) => l.id === activeLessonId) ?? lessons[0]
+  const activeIsQuiz = activeLesson?.type === "quiz"
 
   return (
     <div className="container mx-auto px-4 py-8 grid lg:grid-cols-4 gap-8">
@@ -378,7 +390,40 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
             )}
           </CardHeader>
           <CardContent>
-            <PdfViewer url={pdfUrl} initialPage={lessons[0]?.start_page || 1} />
+            {activeIsQuiz && activeLesson ? (
+              <QuizPlayer
+                lessonId={activeLesson.id}
+                lessonTitle={activeLesson.title}
+                alreadyCompleted={completedLessons.has(activeLesson.id)}
+                onPassed={async () => {
+                  setCompletedLessons((prev) => new Set([...prev, activeLesson.id]))
+                  const { data: { user } } = await supabaseBrowser.auth.getUser()
+                  if (user?.id) {
+                    const progressPercent = await updateCourseProgress(user.id)
+                    const allComplete = lessons.every(
+                      (l: Lesson) => completedLessons.has(l.id) || l.id === activeLesson.id
+                    )
+                    if (allComplete && progressPercent === 100) {
+                      setShowConfetti(true)
+                      setShowCompletionMessage(true)
+                      setTimeout(() => router.push(`/courses/${courseId}`), 4000)
+                    }
+                  }
+                }}
+              />
+            ) : pdfUrl ? (
+              <PdfViewer
+                key={`${activeLesson?.id ?? "pdf"}-${activeLesson?.start_page ?? 1}`}
+                url={pdfUrl}
+                initialPage={
+                  activeLesson?.start_page ||
+                  lessons.find((l) => l.type !== "quiz")?.start_page ||
+                  1
+                }
+              />
+            ) : (
+              <p className="text-muted-foreground">PDF content is not available for this module.</p>
+            )}
           </CardContent>
         </Card>
       </div>
@@ -393,10 +438,23 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
             )}
             {lessons.map((lesson: Lesson) => (
               <div key={lesson.id} className="flex flex-col gap-2">
-                <div className="flex items-center">
-                  <Book className="w-4 h-4 mr-2" />
-                  <span>{lesson.title} (Page {lesson.start_page})</span>
-                </div>
+                <button
+                  type="button"
+                  className={`flex items-center text-left rounded-md px-2 py-1 hover:bg-muted ${
+                    activeLessonId === lesson.id ? "bg-muted font-medium" : ""
+                  }`}
+                  onClick={() => setActiveLessonId(lesson.id)}
+                >
+                  {lesson.type === "quiz" ? (
+                    <HelpCircle className="w-4 h-4 mr-2 shrink-0" />
+                  ) : (
+                    <Book className="w-4 h-4 mr-2 shrink-0" />
+                  )}
+                  <span>
+                    {lesson.title}
+                    {lesson.type === "quiz" ? " (Quiz)" : ` (Page ${lesson.start_page})`}
+                  </span>
+                </button>
                 {isReviewMode ? (
                   <Badge
                     variant="secondary"
@@ -416,9 +474,19 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
                         <CheckCircle className="w-4 h-4 mr-2" />
                         Completed
                       </Button>
+                    ) : lesson.type === "quiz" ? (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="cursor-pointer"
+                        onClick={() => setActiveLessonId(lesson.id)}
+                      >
+                        Take quiz
+                      </Button>
                     ) : (
                       <Button
-                        size="sm" className="cursor-pointer"
+                        size="sm"
+                        className="cursor-pointer"
                         onClick={() => handleMarkLessonComplete(lesson.id)}
                       >
                         <CheckCircle className="w-4 h-4 mr-2" />
