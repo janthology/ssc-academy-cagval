@@ -35,14 +35,19 @@ export default function HomePage() {
           <p className="mx-auto mb-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
             Master SSCP implementation with courses for LGUs, academe, students, and private learners across Region 02.
           </p>
-          <div className="flex flex-col justify-center gap-3 sm:flex-row">
-            <Button size="lg" className="px-8 text-lg" asChild>
-              <Link href={isAuthenticated ? "/dashboard" : "/register"}>
-                {isAuthenticated ? "Go to Dashboard" : "Start Learning"}
-              </Link>
-            </Button>
-            <Button size="lg" variant="secondary" className="px-8 text-lg" asChild>
-              <Link href="/courses">Browse Courses</Link>
+          <div className="flex flex-col items-center justify-center gap-3">
+            <div className="flex flex-col justify-center gap-3 sm:flex-row">
+              <Button size="lg" className="px-8 text-lg" asChild>
+                <Link href={isAuthenticated ? "/dashboard" : "/register"}>
+                  {isAuthenticated ? "Go to Dashboard" : "Start Learning"}
+                </Link>
+              </Button>
+              <Button size="lg" variant="secondary" className="px-8 text-lg" asChild>
+                <Link href="/courses">Browse Courses</Link>
+              </Button>
+            </div>
+            <Button size="lg" variant="outline" className="px-8 text-lg" asChild>
+              <Link href="/verify">Verify Certificate</Link>
             </Button>
           </div>
         </div>
