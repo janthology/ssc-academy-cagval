@@ -7,7 +7,7 @@ import { useUser } from "@/components/providers/user-provider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { BookOpen, Plus, FileText } from "lucide-react"
+import { BookOpen, Plus, FileText, Users } from "lucide-react"
 
 type ModuleRow = {
   id: string
@@ -176,12 +176,20 @@ export function InstructorCourseList() {
                   {!course.is_active && " — course is inactive"}
                 </CardDescription>
               </div>
-              <Button asChild size="sm" className="gap-2 shrink-0">
-                <Link href={`/instructor/courses/${course.id}/modules/new`}>
-                  <Plus className="w-4 h-4" />
-                  New Module
-                </Link>
-              </Button>
+              <div className="flex shrink-0 gap-2">
+                <Button asChild size="sm" variant="outline" className="gap-2">
+                  <Link href={`/instructor/courses/${course.id}`}>
+                    <Users className="w-4 h-4" />
+                    Roster
+                  </Link>
+                </Button>
+                <Button asChild size="sm" className="gap-2">
+                  <Link href={`/instructor/courses/${course.id}/modules/new`}>
+                    <Plus className="w-4 h-4" />
+                    New Module
+                  </Link>
+                </Button>
+              </div>
             </div>
           </CardHeader>
           <CardContent>

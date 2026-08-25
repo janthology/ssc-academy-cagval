@@ -124,10 +124,19 @@ export async function verifyViaAdmin(ref: string): Promise<NextResponse> {
     return NextResponse.json({ status: "not_found" }, { status: 404 })
   }
 
-  const [{ data: user }, { data: course }] = await Promise.all([
+  const [{ data: user }, { data: course }, { data: prefs }] = await Promise.all([
     admin.from("users").select("name").eq("id", cert.user_id).maybeSingle(),
     admin.from("courses").select("title").eq("id", cert.course_id).maybeSingle(),
+    admin
+      .from("user_preferences")
+      .select("privacy_certificate_verification")
+      .eq("user_id", cert.user_id)
+      .maybeSingle(),
   ])
+
+  if (prefs && prefs.privacy_certificate_verification === false) {
+    return NextResponse.json({ status: "not_found" }, { status: 404 })
+  }
 
   return validPayload({
     status: "valid",

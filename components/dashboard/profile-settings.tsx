@@ -139,6 +139,18 @@ export function ProfileSettings() {
     province: "",
     city: "",
   })
+  const [prefs, setPrefs] = useState({
+    notify_course_updates: true,
+    notify_certificates: true,
+    notify_team_activity: true,
+    notify_event_reminders: true,
+    notify_marketing: false,
+    privacy_profile_visibility: true,
+    privacy_progress_sharing: true,
+    privacy_certificate_verification: true,
+  })
+  const [prefsLoading, setPrefsLoading] = useState(false)
+  const [prefsSaving, setPrefsSaving] = useState(false)
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [uploadLoading, setUploadLoading] = useState(false)
@@ -169,6 +181,29 @@ export function ProfileSettings() {
           province: userData.province || "",
           city: userData.city || "",
         })
+
+        setPrefsLoading(true)
+        const { data: prefRow } = await supabaseBrowser
+          .from("user_preferences")
+          .select(
+            "notify_course_updates, notify_certificates, notify_team_activity, notify_event_reminders, notify_marketing, privacy_profile_visibility, privacy_progress_sharing, privacy_certificate_verification"
+          )
+          .eq("user_id", userData.id)
+          .maybeSingle()
+        if (prefRow) {
+          setPrefs({
+            notify_course_updates: prefRow.notify_course_updates,
+            notify_certificates: prefRow.notify_certificates,
+            notify_team_activity: prefRow.notify_team_activity,
+            notify_event_reminders: prefRow.notify_event_reminders,
+            notify_marketing: prefRow.notify_marketing,
+            privacy_profile_visibility: prefRow.privacy_profile_visibility,
+            privacy_progress_sharing: prefRow.privacy_progress_sharing,
+            privacy_certificate_verification: prefRow.privacy_certificate_verification,
+          })
+        }
+        setPrefsLoading(false)
+
         setAvatarPreview(null)
         if (userData.avatar) {
           const { data, error } = await supabaseBrowser.storage
@@ -304,6 +339,31 @@ export function ProfileSettings() {
 
   const handleChange = (field: keyof typeof formData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
+  }
+
+  const handleSavePreferences = async () => {
+    if (!user?.id) {
+      setMessage({ type: "error", text: "Cannot save preferences: User ID is missing." })
+      return
+    }
+    setPrefsSaving(true)
+    setMessage(null)
+    try {
+      const payload = {
+        user_id: user.id,
+        ...prefs,
+        updated_at: new Date().toISOString(),
+      }
+      const { error } = await supabaseBrowser.from("user_preferences").upsert(payload, {
+        onConflict: "user_id",
+      })
+      if (error) throw new Error(error.message)
+      setMessage({ type: "success", text: "Preferences saved." })
+    } catch (err: any) {
+      setMessage({ type: "error", text: `Failed to save preferences: ${err.message || "Unknown error"}` })
+    } finally {
+      setPrefsSaving(false)
+    }
   }
 
   if (isLoading) {
@@ -524,65 +584,84 @@ export function ProfileSettings() {
               <CardDescription>Choose how you want to be notified about course updates and activities</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* These switches are NOT wired to any storage. Rather than let them
-                  look interactive and silently discard the user's choice, they are
-                  disabled and unchecked, and the note below says why. */}
               <Alert>
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>
-                  <span className="font-medium">Not yet available.</span> Notification preferences
-                  can&apos;t be changed yet — these controls are disabled until the setting is built.
-                  You still receive in-app notifications (the bell in the header) for module reviews,
-                  course assignments and issued certificates; this page just can&apos;t turn them on
-                  or off yet.
+                  Certificate notifications control the in-app bell when a certificate is issued.
+                  Course, team, event, and marketing toggles are stored for future digests; module
+                  review alerts for instructors still always deliver.
                 </AlertDescription>
               </Alert>
 
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Course Updates</Label>
-                    <p className="text-sm text-muted-foreground">New lessons, assignments, and announcements</p>
+              {prefsLoading ? (
+                <p className="text-sm text-muted-foreground">Loading preferences…</p>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Course Updates</Label>
+                      <p className="text-sm text-muted-foreground">New lessons, assignments, and announcements</p>
+                    </div>
+                    <Switch
+                      checked={prefs.notify_course_updates}
+                      onCheckedChange={(v) => setPrefs((p) => ({ ...p, notify_course_updates: v }))}
+                      aria-label="Course Updates"
+                    />
                   </div>
-                  <Switch disabled aria-label="Course Updates (not yet available)" />
-                </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Certificate Notifications</Label>
-                    <p className="text-sm text-muted-foreground">When certificates are ready for download</p>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Certificate Notifications</Label>
+                      <p className="text-sm text-muted-foreground">When certificates are ready for download</p>
+                    </div>
+                    <Switch
+                      checked={prefs.notify_certificates}
+                      onCheckedChange={(v) => setPrefs((p) => ({ ...p, notify_certificates: v }))}
+                      aria-label="Certificate Notifications"
+                    />
                   </div>
-                  <Switch disabled aria-label="Certificate Notifications (not yet available)" />
-                </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Team Activity</Label>
-                    <p className="text-sm text-muted-foreground">Updates from your organization team</p>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Team Activity</Label>
+                      <p className="text-sm text-muted-foreground">Updates from your organization team</p>
+                    </div>
+                    <Switch
+                      checked={prefs.notify_team_activity}
+                      onCheckedChange={(v) => setPrefs((p) => ({ ...p, notify_team_activity: v }))}
+                      aria-label="Team Activity"
+                    />
                   </div>
-                  <Switch disabled aria-label="Team Activity (not yet available)" />
-                </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Event Reminders</Label>
-                    <p className="text-sm text-muted-foreground">Webinars, workshops, and conferences</p>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Event Reminders</Label>
+                      <p className="text-sm text-muted-foreground">Webinars, workshops, and conferences</p>
+                    </div>
+                    <Switch
+                      checked={prefs.notify_event_reminders}
+                      onCheckedChange={(v) => setPrefs((p) => ({ ...p, notify_event_reminders: v }))}
+                      aria-label="Event Reminders"
+                    />
                   </div>
-                  <Switch disabled aria-label="Event Reminders (not yet available)" />
-                </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Marketing Communications</Label>
-                    <p className="text-sm text-muted-foreground">New courses and platform updates</p>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Marketing Communications</Label>
+                      <p className="text-sm text-muted-foreground">New courses and platform updates</p>
+                    </div>
+                    <Switch
+                      checked={prefs.notify_marketing}
+                      onCheckedChange={(v) => setPrefs((p) => ({ ...p, notify_marketing: v }))}
+                      aria-label="Marketing Communications"
+                    />
                   </div>
-                  <Switch disabled aria-label="Marketing Communications (not yet available)" />
-                </div>
 
-                {/* Grouped inside the same dimmed block so its disabled state reads
-                    as belonging to the controls above, not as a broken button. */}
-                <Button disabled>Save Preferences</Button>
-              </div>
+                  <Button onClick={handleSavePreferences} disabled={prefsSaving}>
+                    {prefsSaving ? "Saving…" : "Save Preferences"}
+                  </Button>
+                </div>
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -597,43 +676,51 @@ export function ProfileSettings() {
               <CardDescription>Manage your privacy settings and account security</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {/* Same reasoning as the notifications tab: not wired to storage,
-                  so disabled and unchecked rather than falsely interactive. */}
-              <Alert>
-                <AlertCircle className="h-4 w-4" />
-                <AlertDescription>
-                  <span className="font-medium">Not yet available.</span> Privacy controls
-                  can&apos;t be changed yet. Note that certificates you earn remain publicly
-                  verifiable by their verification link — that is how employers confirm a
-                  credential, and it is not currently optional.
-                </AlertDescription>
-              </Alert>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Profile Visibility</Label>
-                    <p className="text-sm text-muted-foreground">Show your profile to other learners</p>
+              {prefsLoading ? (
+                <p className="text-sm text-muted-foreground">Loading preferences…</p>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Profile Visibility</Label>
+                      <p className="text-sm text-muted-foreground">Show your profile to other learners</p>
+                    </div>
+                    <Switch
+                      checked={prefs.privacy_profile_visibility}
+                      onCheckedChange={(v) => setPrefs((p) => ({ ...p, privacy_profile_visibility: v }))}
+                      aria-label="Profile Visibility"
+                    />
                   </div>
-                  <Switch disabled aria-label="Profile Visibility (not yet available)" />
-                </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Progress Sharing</Label>
-                    <p className="text-sm text-muted-foreground">Allow team members to see your progress</p>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Progress Sharing</Label>
+                      <p className="text-sm text-muted-foreground">Allow team members to see your progress</p>
+                    </div>
+                    <Switch
+                      checked={prefs.privacy_progress_sharing}
+                      onCheckedChange={(v) => setPrefs((p) => ({ ...p, privacy_progress_sharing: v }))}
+                      aria-label="Progress Sharing"
+                    />
                   </div>
-                  <Switch disabled aria-label="Progress Sharing (not yet available)" />
-                </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="space-y-0.5">
-                    <Label>Certificate Verification</Label>
-                    <p className="text-sm text-muted-foreground">Allow public verification of your certificates</p>
+                  <div className="flex items-center justify-between">
+                    <div className="space-y-0.5">
+                      <Label>Certificate Verification</Label>
+                      <p className="text-sm text-muted-foreground">Allow public verification of your certificates</p>
+                    </div>
+                    <Switch
+                      checked={prefs.privacy_certificate_verification}
+                      onCheckedChange={(v) => setPrefs((p) => ({ ...p, privacy_certificate_verification: v }))}
+                      aria-label="Certificate Verification"
+                    />
                   </div>
-                  <Switch disabled aria-label="Certificate Verification (not yet available)" />
+
+                  <Button onClick={handleSavePreferences} disabled={prefsSaving}>
+                    {prefsSaving ? "Saving…" : "Save Privacy Settings"}
+                  </Button>
                 </div>
-              </div>
+              )}
 
               <div className="space-y-4">
                 <h4 className="font-medium">Account Security</h4>

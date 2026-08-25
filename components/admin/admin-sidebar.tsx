@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Home, Users, BookOpen, BarChart3, ClipboardCheck, FolderInput, Calendar, Target } from "lucide-react"
+import { Home, Users, BookOpen, BarChart3, ClipboardCheck, FolderInput, Calendar, Target, Award } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { formatNumber } from "@/lib/utils/dates"
@@ -34,6 +34,7 @@ export function AdminSidebar() {
       icon: BookOpen,
       badge: !loading ? formatNumber(courseCount) : undefined,
     },
+    { title: "Certificates", href: "/admin/certificates", icon: Award },
     {
       title: "Content Review",
       href: "/admin/review",
