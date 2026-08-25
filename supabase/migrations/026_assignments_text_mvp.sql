@@ -131,16 +131,19 @@ DECLARE
 BEGIN
   SELECT AVG(score_pct) INTO v_avg
   FROM (
-    SELECT DISTINCT ON (a.lesson_id) a.score_pct
-    FROM public.quiz_attempts a
-    JOIN public.lessons l ON l.id = a.lesson_id
-    JOIN public.modules m ON m.id = l.module_id
-    WHERE a.user_id = p_user_id
-      AND a.course_id = p_course_id
-      AND a.passed = true
-      AND l.type = 'quiz'
-      AND m.course_id = p_course_id
-    ORDER BY a.lesson_id, a.score_pct DESC
+    SELECT q.score_pct
+    FROM (
+      SELECT DISTINCT ON (a.lesson_id) a.score_pct
+      FROM public.quiz_attempts a
+      JOIN public.lessons l ON l.id = a.lesson_id
+      JOIN public.modules m ON m.id = l.module_id
+      WHERE a.user_id = p_user_id
+        AND a.course_id = p_course_id
+        AND a.passed = true
+        AND l.type = 'quiz'
+        AND m.course_id = p_course_id
+      ORDER BY a.lesson_id, a.score_pct DESC
+    ) q
 
     UNION ALL
 
