@@ -8,6 +8,7 @@ import { useUser } from "@/components/providers/user-provider"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { AssignmentGradeQueue } from "@/components/assignments/assignment-grade-queue"
 import { ArrowLeft, Loader2, Users } from "lucide-react"
 
 type RosterRow = {
@@ -134,7 +135,7 @@ export function InstructorCourseRoster() {
             <Users className="w-5 h-5" />
             Learners
           </CardTitle>
-          <CardDescription>Enrollment and progress for your course. Read-only.</CardDescription>
+          <CardDescription>Enrollment and progress for your course.</CardDescription>
         </CardHeader>
         <CardContent>
           {rows.length === 0 ? (
@@ -202,6 +203,8 @@ export function InstructorCourseRoster() {
           )}
         </CardContent>
       </Card>
+
+      <AssignmentGradeQueue courseId={courseId} onGraded={load} />
     </div>
   )
 }

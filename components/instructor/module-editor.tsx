@@ -13,8 +13,9 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
-import { ArrowLeft, Upload, Plus, Trash2, Send, Save, Lock, HelpCircle } from "lucide-react"
+import { ArrowLeft, Upload, Plus, Trash2, Send, Save, Lock, HelpCircle, FileText } from "lucide-react"
 import { QuizEditor } from "@/components/quizzes/quiz-editor"
+import { AssignmentPromptEditor } from "@/components/assignments/assignment-prompt-editor"
 
 // Same SSR guard as module-content.tsx: react-pdf touches DOMMatrix at import
 // time, which crashes server rendering.
@@ -26,10 +27,16 @@ const PdfViewer = dynamic(
 type Lesson = {
   id?: string
   title: string
-  type: "text" | "quiz"
+  type: "text" | "quiz" | "assignment"
   start_page: number
   duration: number
   order: number
+}
+
+function mapLessonType(t: string): Lesson["type"] {
+  if (t === "quiz") return "quiz"
+  if (t === "assignment") return "assignment"
+  return "text"
 }
 
 const EDITABLE = new Set(["draft", "rejected"])
@@ -73,6 +80,7 @@ export function ModuleEditor({
   const [lessonTitle, setLessonTitle] = useState("")
   const [lessonDuration, setLessonDuration] = useState("5")
   const [selectedQuizLessonId, setSelectedQuizLessonId] = useState<string | null>(null)
+  const [selectedAssignmentLessonId, setSelectedAssignmentLessonId] = useState<string | null>(null)
 
   const editable = EDITABLE.has(status)
 
@@ -149,7 +157,7 @@ export function ModuleEditor({
           (lessonRows ?? []).map((l: any) => ({
             id: l.id,
             title: l.title,
-            type: l.type === "quiz" ? "quiz" : "text",
+            type: mapLessonType(l.type),
             start_page: l.start_page ?? 1,
             duration: l.duration ?? 5,
             order: l.order,
@@ -289,7 +297,7 @@ export function ModuleEditor({
     // Keep quiz lesson titles/order in sync with local list.
     for (let i = 0; i < lessons.length; i++) {
       const lesson = lessons[i]
-      if (lesson.type === "quiz" && lesson.id) {
+      if ((lesson.type === "quiz" || lesson.type === "assignment") && lesson.id) {
         await supabaseBrowser.from("lessons").update({ order: i + 1, title: lesson.title }).eq("id", lesson.id)
       }
     }
@@ -304,7 +312,7 @@ export function ModuleEditor({
         refreshed.map((l: any) => ({
           id: l.id,
           title: l.title,
-          type: l.type === "quiz" ? "quiz" : "text",
+          type: mapLessonType(l.type),
           start_page: l.start_page ?? 1,
           duration: l.duration ?? 5,
           order: l.order,
@@ -375,8 +383,8 @@ export function ModuleEditor({
       order: lessons.length + 1,
     }]
     const sections = next.filter((l) => l.type === "text").sort((a, b) => a.start_page - b.start_page)
-    const quizzes = next.filter((l) => l.type === "quiz")
-    const merged = [...sections, ...quizzes].map((l, i) => ({ ...l, order: i + 1 }))
+    const assessments = next.filter((l) => l.type === "quiz" || l.type === "assignment")
+    const merged = [...sections, ...assessments].map((l, i) => ({ ...l, order: i + 1 }))
 
     const problem = validateLessons(merged)
     if (problem) { setError(problem); return }
@@ -425,6 +433,7 @@ export function ModuleEditor({
         },
       ])
       setSelectedQuizLessonId(row.id)
+      setSelectedAssignmentLessonId(null)
       setLessonTitle("")
       setNotice("Quiz lesson added. Add questions below, then save the quiz.")
     } catch (err: any) {
@@ -434,15 +443,67 @@ export function ModuleEditor({
     }
   }
 
+  const addAssignmentLesson = async () => {
+    setError(null)
+    if (!lessonTitle.trim()) { setError("Give the assignment a title before adding it."); return }
+    const id = savedModuleId || (await saveDraft())
+    if (!id) return
+
+    setBusy(true)
+    try {
+      const orderNum = lessons.length + 1
+      const { data: row, error: insErr } = await supabaseBrowser
+        .from("lessons")
+        .insert({
+          module_id: id,
+          title: lessonTitle.trim(),
+          type: "assignment",
+          order: orderNum,
+          duration: Number(lessonDuration) || 15,
+          start_page: 1,
+        })
+        .select("id, title, type, start_page, duration, order")
+        .single()
+      if (insErr) throw new Error(insErr.message)
+
+      await supabaseBrowser.from("assignment_prompts").upsert({
+        lesson_id: row.id,
+        instructions: "",
+        pass_threshold: 70,
+      })
+
+      setLessons((prev) => [
+        ...prev,
+        {
+          id: row.id,
+          title: row.title,
+          type: "assignment",
+          start_page: 1,
+          duration: row.duration,
+          order: row.order,
+        },
+      ])
+      setSelectedAssignmentLessonId(row.id)
+      setSelectedQuizLessonId(null)
+      setLessonTitle("")
+      setNotice("Assignment lesson added. Write the prompt below, then save.")
+    } catch (err: any) {
+      setError(err.message || "Failed to add assignment.")
+    } finally {
+      setBusy(false)
+    }
+  }
+
   const removeLesson = async (index: number) => {
     const target = lessons[index]
-    if (target.type === "quiz" && target.id) {
+    if ((target.type === "quiz" || target.type === "assignment") && target.id) {
       const { error: delErr } = await supabaseBrowser.from("lessons").delete().eq("id", target.id)
       if (delErr) {
         setError(delErr.message)
         return
       }
       if (selectedQuizLessonId === target.id) setSelectedQuizLessonId(null)
+      if (selectedAssignmentLessonId === target.id) setSelectedAssignmentLessonId(null)
     }
     setLessons(lessons.filter((_, idx) => idx !== index).map((x, idx) => ({ ...x, order: idx + 1 })))
   }
@@ -450,7 +511,7 @@ export function ModuleEditor({
   const submitForReview = async () => {
     setError(null); setNotice(null)
     if (!pdfPath) { setError("Upload the module PDF before submitting for review."); return }
-    if (lessons.length === 0) { setError("Add at least one PDF section or quiz before submitting for review."); return }
+    if (lessons.length === 0) { setError("Add at least one PDF section, quiz, or assignment before submitting for review."); return }
 
     const id = await saveDraft()
     if (!id) return
@@ -655,11 +716,15 @@ export function ModuleEditor({
                 <HelpCircle className="w-4 h-4" />
                 Add quiz
               </Button>
+              <Button onClick={addAssignmentLesson} disabled={busy} variant="outline" className="gap-2">
+                <FileText className="w-4 h-4" />
+                Add assignment
+              </Button>
             </div>
           )}
 
           {lessons.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No sections or quizzes yet.</p>
+            <p className="text-sm text-muted-foreground">No sections, quizzes, or assignments yet.</p>
           ) : (
             <div className="space-y-2">
               {lessons.map((l, i) => (
@@ -668,15 +733,38 @@ export function ModuleEditor({
                   <div className="flex-1 min-w-0">
                     <p className="font-medium truncate flex items-center gap-2">
                       {l.title}
-                      <Badge variant="outline">{l.type === "quiz" ? "Quiz" : "PDF section"}</Badge>
+                      <Badge variant="outline">
+                        {l.type === "quiz" ? "Quiz" : l.type === "assignment" ? "Assignment" : "PDF section"}
+                      </Badge>
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {l.type === "quiz" ? `Quiz · ${l.duration} min` : `Starts on page ${l.start_page} · ${l.duration} min`}
+                      {l.type === "quiz" || l.type === "assignment"
+                        ? `${l.type === "quiz" ? "Quiz" : "Assignment"} · ${l.duration} min`
+                        : `Starts on page ${l.start_page} · ${l.duration} min`}
                     </p>
                   </div>
                   {l.type === "quiz" && l.id && (
-                    <Button variant="secondary" size="sm" onClick={() => setSelectedQuizLessonId(l.id!)}>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedQuizLessonId(l.id!)
+                        setSelectedAssignmentLessonId(null)
+                      }}
+                    >
                       Edit questions
+                    </Button>
+                  )}
+                  {l.type === "assignment" && l.id && (
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      onClick={() => {
+                        setSelectedAssignmentLessonId(l.id!)
+                        setSelectedQuizLessonId(null)
+                      }}
+                    >
+                      Edit prompt
                     </Button>
                   )}
                   {editable && (
@@ -698,6 +786,10 @@ export function ModuleEditor({
 
       {selectedQuizLessonId && (
         <QuizEditor lessonId={selectedQuizLessonId} editable={editable} />
+      )}
+
+      {selectedAssignmentLessonId && (
+        <AssignmentPromptEditor lessonId={selectedAssignmentLessonId} editable={editable} />
       )}
 
       {error && <p className="text-sm text-destructive">{error}</p>}

@@ -5,12 +5,13 @@ import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, CheckCircle, Book, AlertCircle, HelpCircle } from "lucide-react"
+import { Loader2, CheckCircle, Book, AlertCircle, HelpCircle, FileText } from "lucide-react"
 import { supabaseBrowser } from "@/lib/supabase/browser-client"
 import type { Module, Lesson, Resource } from "@/lib/types/database"
 import dynamic from "next/dynamic"
 import Confetti from "react-confetti"
 import { QuizPlayer } from "@/components/quizzes/quiz-player"
+import { AssignmentPlayer } from "@/components/assignments/assignment-player"
 
 // react-pdf (pdfjs) touches browser-only APIs (DOMMatrix) at import time, which
 // crashes server rendering. Load the viewer client-only so it never runs on the
@@ -92,8 +93,10 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
         if (lessonsError) throw lessonsError
         if (!lessonsData || lessonsData.length === 0) throw new Error("No lessons found for this module")
         setLessons(lessonsData)
-        const firstText = lessonsData.find((l: Lesson) => l.type !== "quiz")
-        setActiveLessonId((firstText ?? lessonsData[0]).id)
+        const firstContent = lessonsData.find(
+          (l: Lesson) => l.type !== "quiz" && l.type !== "assignment"
+        )
+        setActiveLessonId((firstContent ?? lessonsData[0]).id)
 
         if (!isReviewMode) {
           const { data: { user } } = await supabaseBrowser.auth.getUser()
@@ -125,9 +128,11 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
           .maybeSingle()
 
         if (resourceError) throw resourceError
-        const hasQuiz = lessonsData.some((l: Lesson) => l.type === "quiz")
+        const hasAssessment = lessonsData.some(
+          (l: Lesson) => l.type === "quiz" || l.type === "assignment"
+        )
         if (!resourceData) {
-          if (!hasQuiz) {
+          if (!hasAssessment) {
             setError("No PDF materials available for this module yet. Please contact the instructor.")
             setIsLoading(false)
             return
@@ -356,6 +361,7 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
 
   const activeLesson = lessons.find((l) => l.id === activeLessonId) ?? lessons[0]
   const activeIsQuiz = activeLesson?.type === "quiz"
+  const activeIsAssignment = activeLesson?.type === "assignment"
 
   return (
     <div className="container mx-auto px-4 py-8 grid lg:grid-cols-4 gap-8">
@@ -411,13 +417,22 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
                   }
                 }}
               />
+            ) : activeIsAssignment && activeLesson ? (
+              <AssignmentPlayer
+                lessonId={activeLesson.id}
+                lessonTitle={activeLesson.title}
+                alreadyCompleted={completedLessons.has(activeLesson.id)}
+                onPassed={() => {
+                  /* completion happens after instructor grades; progress refresh on revisit */
+                }}
+              />
             ) : pdfUrl ? (
               <PdfViewer
                 key={`${activeLesson?.id ?? "pdf"}-${activeLesson?.start_page ?? 1}`}
                 url={pdfUrl}
                 initialPage={
                   activeLesson?.start_page ||
-                  lessons.find((l) => l.type !== "quiz")?.start_page ||
+                  lessons.find((l) => l.type !== "quiz" && l.type !== "assignment")?.start_page ||
                   1
                 }
               />
@@ -447,12 +462,18 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
                 >
                   {lesson.type === "quiz" ? (
                     <HelpCircle className="w-4 h-4 mr-2 shrink-0" />
+                  ) : lesson.type === "assignment" ? (
+                    <FileText className="w-4 h-4 mr-2 shrink-0" />
                   ) : (
                     <Book className="w-4 h-4 mr-2 shrink-0" />
                   )}
                   <span>
                     {lesson.title}
-                    {lesson.type === "quiz" ? " (Quiz)" : ` (Page ${lesson.start_page})`}
+                    {lesson.type === "quiz"
+                      ? " (Quiz)"
+                      : lesson.type === "assignment"
+                        ? " (Assignment)"
+                        : ` (Page ${lesson.start_page})`}
                   </span>
                 </button>
                 {isReviewMode ? (
@@ -482,6 +503,15 @@ export function ModuleContent({ courseId, moduleId }: { courseId: string; module
                         onClick={() => setActiveLessonId(lesson.id)}
                       >
                         Take quiz
+                      </Button>
+                    ) : lesson.type === "assignment" ? (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="cursor-pointer"
+                        onClick={() => setActiveLessonId(lesson.id)}
+                      >
+                        Open assignment
                       </Button>
                     ) : (
                       <Button
