@@ -1,0 +1,39 @@
+# Keeps a Free-tier Supabase project from auto-pausing (~7 days without Postgres activity).
+# Only PostgREST/table reads count — Auth, Storage, and static site traffic do not.
+#
+# Setup (repo → Settings → Secrets and variables → Actions):
+#   SUPABASE_URL          e.g. https://xxxx.supabase.co
+#   SUPABASE_ANON_KEY     anon/public key only (never service_role)
+
+name: Supabase heartbeat
+
+on:
+  schedule:
+    # Daily 06:00 UTC — well within the 7-day inactivity window
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+jobs:
+  ping-database:
+    runs-on: ubuntu-latest
+    steps:
+      - name: PostgREST read (courses)
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "Missing SUPABASE_URL or SUPABASE_ANON_KEY in repository secrets."
+            exit 1
+          fi
+          BASE="${SUPABASE_URL%/}"
+          HTTP=$(curl -sS -o /tmp/supabase-heartbeat-body -w "%{http_code}" \
+            -X GET "${BASE}/rest/v1/courses?select=id&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
+          echo "HTTP ${HTTP}"
+          if [ "$HTTP" -lt 200 ] || [ "$HTTP" -ge 300 ]; then
+            cat /tmp/supabase-heartbeat-body
+            exit 1
+          fi
+          echo "Database activity recorded."
