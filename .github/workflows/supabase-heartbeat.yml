@@ -5,35 +5,72 @@
 #   SUPABASE_URL          e.g. https://xxxx.supabase.co
 #   SUPABASE_ANON_KEY     anon/public key only (never service_role)
 
+
 name: Supabase heartbeat
 
 on:
   schedule:
-    # Daily 06:00 UTC — well within the 7-day inactivity window
+    # Daily at 06:00 UTC (14:00 Philippine time)
     - cron: "0 6 * * *"
   workflow_dispatch:
 
 jobs:
   ping-database:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
     steps:
-      - name: PostgREST read (courses)
+      - name: Check Supabase database activity
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        shell: bash
         run: |
-          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
-            echo "Missing SUPABASE_URL or SUPABASE_ANON_KEY in repository secrets."
+          set -u
+
+          if [[ -z "${SUPABASE_URL:-}" ||
+                -z "${SUPABASE_ANON_KEY:-}" ]]; then
+            echo "::error::Missing Supabase repository secrets."
             exit 1
           fi
+
           BASE="${SUPABASE_URL%/}"
-          HTTP=$(curl -sS -o /tmp/supabase-heartbeat-body -w "%{http_code}" \
-            -X GET "${BASE}/rest/v1/courses?select=id&limit=1" \
-            -H "apikey: ${SUPABASE_ANON_KEY}" \
-            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
-          echo "HTTP ${HTTP}"
-          if [ "$HTTP" -lt 200 ] || [ "$HTTP" -ge 300 ]; then
-            cat /tmp/supabase-heartbeat-body
-            exit 1
-          fi
-          echo "Database activity recorded."
+          API="${BASE}/rest/v1/courses?select=id&limit=1"
+
+          for attempt in 1 2 3; do
+            echo "Database read ${attempt}/3"
+
+            BODY=$(mktemp)
+
+            HTTP=$(curl --silent --show-error \
+              --connect-timeout 15 \
+              --max-time 30 \
+              --output "$BODY" \
+              --write-out "%{http_code}" \
+              --request GET "$API" \
+              --header "apikey: ${SUPABASE_ANON_KEY}" \
+              --header "Authorization: Bearer ${SUPABASE_ANON_KEY}") || {
+                echo "::error::Supabase request failed at the network level."
+                rm -f "$BODY"
+                exit 1
+              }
+
+            echo "HTTP status: ${HTTP}"
+            echo "Response body:"
+            head -c 1000 "$BODY"
+            echo
+
+            if [[ ! "$HTTP" =~ ^2[0-9][0-9]$ ]]; then
+              echo "::error::Supabase API request was unsuccessful."
+              rm -f "$BODY"
+              exit 1
+            fi
+
+            rm -f "$BODY"
+
+            if [[ "$attempt" -lt 3 ]]; then
+              sleep 30
+            fi
+          done
+
+          echo "All three database read requests succeeded."
